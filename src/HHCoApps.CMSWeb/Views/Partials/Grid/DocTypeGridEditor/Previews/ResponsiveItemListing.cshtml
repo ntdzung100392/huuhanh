@@ -1,0 +1,30 @@
+﻿@model ResponsiveItemListing
+@{
+    var starterNodeName = Model.StarterNode != null ? $"Alias {Model.StarterNode.ContentType.Alias} - Title {Model.StarterNode.Name}" : "Starter node is empty!";
+    var numberItemsPerPage = Model.NumberItemsPerPage == 0 ? 9 : Model.NumberItemsPerPage;
+}
+This layout rendered by React Js. Only accapble to view in preview and publish.
+<h2>Name: Listing Component</h2>
+<br />
+<table style="width:100%">
+    <tr>
+        <th>Layout</th>
+        <th>Content Sources</th>
+        <th>Sorting</th>
+    </tr>
+    <tr>
+        <td>TemplateName: @(string.IsNullOrEmpty(Model.LayoutPicker) ? "2 Columns" : Model.LayoutPicker)</td>
+        <td>Starter Node: @starterNodeName</td>
+        <td>Sort Type: @(string.IsNullOrEmpty(Model.SortType) ? "Node Order" : Model.SortType)</td>
+    </tr>
+    <tr>
+        <td>Number Items per Page: @numberItemsPerPage</td>
+        <td>Have Additional Items: @(Model.AdditionalItems.Any() ? "Yes" : "No")</td>
+        <td>Sort Order: @(string.IsNullOrEmpty(Model.SortOrderBy) ? "Ascending" : Model.SortOrderBy)</td>
+    </tr>
+    <tr>
+        <td>Filter Enabled: @(Model.EnableFilter ? "Yes" : "No")</td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>

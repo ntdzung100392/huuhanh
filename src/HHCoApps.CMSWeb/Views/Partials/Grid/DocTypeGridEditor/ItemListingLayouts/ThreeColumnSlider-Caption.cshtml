@@ -1,0 +1,61 @@
+﻿@using HHCoApps.CMSWeb.Helpers
+@using HHCoApps.CMSWeb.Helpers.Enum
+@model HHCoApps.CMSWeb.Models.ItemListingViewModel
+
+<div class="homepage__items-wrapper">
+    <section class="homepage__items-wrapper--exterior">
+        <div class="row">
+            @if (Model.DisplayLabel)
+            {
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 px-0">
+                    <h2 class="text-uppercase">@Model.Label</h2>
+                </div>
+            }
+            @if (Model.DisplayViewMoreLink)
+            {
+                <div class="col-xs-6 col-sm-6 col-md-9 col-lg-9 text-right view-all">
+                    <a href="@Model.ViewMoreUrl" class="text-uppercase text-yellow is-flex align-items-center justify-content-end">@Html.Raw(Model.ViewMoreLabel)<i class="icon-arrow-right-circle icon-arrow-on-top"></i> </a>
+                </div>
+            }
+        </div>
+        <div class="row homepage__items-wrapper--exterior__slider">
+            @if (Model.ContentInfos.Count() > 3)
+            {
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-0">
+                    <div class="carousel-progress-bar">
+                        <div class="steps is-flex">
+                            <div><div class="indicator"></div></div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 40px"><hr /></div>
+            }
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 homepage__items-wrapper__intro">
+                @if (!string.IsNullOrEmpty(Model.Caption))
+                {
+                    @Html.Raw(Model.Caption)
+                }
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                <div class="slider-nav carousel">
+                    @foreach (var contentInfo in Model.ContentInfos)
+                    {
+                        <div class="product-block text-center">
+                            <a href="@contentInfo.Url" class="product-block__nav" target="@contentInfo.Target">
+                                <img class="product-block__image lozad" data-src="@Url.GetCropImageUrl(contentInfo.ImageUrl, ImageCropProfile.ThreeColumnSlider)" alt="@contentInfo.ImageAlt" />
+                                <h4 class="text-capitalize product-block__name responsive-title">@contentInfo.Title</h4>
+                                <p class="product-block__intro responsive-caption">
+                                    @(contentInfo.Caption)
+                                </p>
+                                <i class="icon-arrow-right-circle"></i>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

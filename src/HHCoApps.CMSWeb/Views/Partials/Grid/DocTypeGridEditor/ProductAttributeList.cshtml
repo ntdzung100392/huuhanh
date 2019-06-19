@@ -1,0 +1,12 @@
+﻿@model ProductAttributeList
+<div class="row">
+    <div class="product-detail--attribute product-detail__mobile-wrapper col-lg-12 col-md-12 col-xs-12 col-sm-12 is-flex flex-wrap">
+        @foreach (var attribute in Model.ProductAttributes)
+        {
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 product-detail__block-attribute">
+                <h3>@attribute.Label</h3>
+                @Html.Raw(attribute.Value)
+            </div>
+        }
+    </div>
+</div>

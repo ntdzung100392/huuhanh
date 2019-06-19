@@ -1,0 +1,25 @@
+﻿@model ButtonComponent
+@{
+    var position = string.Empty;
+    switch (Model.ButtonPosition)
+    {
+        case "Left Aligned":
+            position = "Left";
+            break;
+        case "Center Aligned":
+            position = "Center";
+            break;
+        case "Right Aligned":
+            position = "Right";
+            break;
+        default:
+            position = "Left";
+            break;
+    }
+}
+@if (!string.IsNullOrEmpty(Model.ButtonTitle))
+{
+    <div class="cmp-btn" style="text-align: @position">
+        <a target="@(Model.SelectLink?.Target)" class="btn" href="@(Model.SelectLink?.Url)">@Model.ButtonTitle</a>
+    </div>
+}

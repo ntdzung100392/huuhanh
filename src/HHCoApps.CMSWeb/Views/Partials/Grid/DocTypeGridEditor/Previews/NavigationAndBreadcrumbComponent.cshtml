@@ -1,0 +1,22 @@
+﻿@using HHCoApps.CMSWeb.Services
+@using HHCoApps.CMSWeb.Models.Enums;
+@using Umbraco.Core.Composing
+@inherits UmbracoViewPage<NavigationAndBreadcrumbComponent>
+@{
+    var starterNodeName = Model.StarterNode != null ? $"Alias {Model.StarterNode.ContentType.Alias} - Title {Model.StarterNode.Name}" : "Starter node is empty!";
+    var inDepthLevel = Model.InDepthLevel ?? "Level 1";
+    var enableNavigation = Model.EnableNavigation;
+    var enableBreadcrumb = Model.EnableBreadcrumb;
+}
+
+This layout rendered in Preview Mode. Only accapble to view in preview and publish.
+<h2>Name: Navigation And Breadcrumb Component</h2>
+<br />
+<table style="width:100%">
+    <tr>
+        <td>Starter Node: @starterNodeName</td>
+        <td>Depth Level: @inDepthLevel</td>
+        <td>Enable Navigation: @(enableNavigation ? "Yes" : "No")</td>
+        <td>Enable Breadcrumb: @(enableBreadcrumb ? "Yes" : "No")</td>
+    </tr>
+</table>

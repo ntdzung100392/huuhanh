@@ -1,0 +1,32 @@
+﻿@using HHCoApps.CMSWeb.Services
+@using Umbraco.Core.Composing
+@model ItemListing
+
+@{
+    var layoutName = string.Empty;
+    var viewModel = Current.Factory.GetInstance<IItemListingService>().GetViewModel(Model);
+    viewModel.ViewMoreLabel = string.IsNullOrEmpty(viewModel.ViewMoreLabel) ? "View more" : viewModel.ViewMoreLabel;
+
+    switch (Model.ItemListingLayout)
+    {
+        case "Three columns slider - with caption":
+            layoutName = "ThreeColumnSlider-Caption";
+            break;
+        case "One column slider":
+            layoutName = "OneColumnSlider";
+            break;
+        case "Three columns slider":
+            layoutName = "ThreeColumnSlider";
+            break;
+        case "Three columns slider - center aligned":
+            layoutName = "ThreeColumnSlider-CenterAligned";
+            break;
+        case "Three columns slider without caption":
+            layoutName = "ThreeColumnSlider-WithoutCaption";
+            break;
+        default:
+            layoutName = "ThreeColumnSlider";
+            break;
+    }
+}
+@Html.Partial($"~/Views/Partials/Grid/DocTypeGridEditor/ItemListingLayouts/{layoutName}.cshtml", viewModel)

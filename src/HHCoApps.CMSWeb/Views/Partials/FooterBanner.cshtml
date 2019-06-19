@@ -1,0 +1,13 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using HHCoApps.CMSWeb.Helpers
+@using HHCoApps.CMSWeb.Helpers.Enum
+@using IBannerBase = Umbraco.Web.PublishedModels.IBannerBase
+
+@if (Model is IBannerBase banner && banner.FooterBannerImage != null)
+{
+    var bannerImage = Url.GetCropImageUrl(banner.FooterBannerImage?.Url, ImageCropProfile.FooterBannerImage);
+
+    <section class="hero-bottom">
+        <img class="lozad" data-src="@bannerImage" alt="Footer Banner Image">
+    </section>
+}

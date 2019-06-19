@@ -1,0 +1,36 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<NavigationManagement>
+@using Umbraco.Web;
+@using HHCoApps.CMSWeb.Helpers
+@using HHCoApps.CMSWeb.Helpers.Enum
+@using HHCoApps.CMSWeb.Services
+@using Umbraco.Web.Composing
+
+@{
+    var topNavigationLinks = Model.TopNavigationLinks ?? Enumerable.Empty<LinkItem>();
+    var topNavigationIcons = Model.TopNavigationIcons ?? Enumerable.Empty<IconLink>();
+    var topIconLinks = Current.Factory.GetInstance<IMenuItemService>().GetIconLinks(topNavigationIcons);
+}
+
+<div class="header__logo__audience hide-for-small-only col-md-9 col-sm-10">
+    <ul>
+        @foreach (var link in topNavigationLinks)
+        {
+            <li><a href="@(link.Link?.Url)" target="@(link.Link?.Target)">@link.Title</a></li>
+        }
+    </ul>
+    <div class="header__social-sharing">
+        <ul class="unstyled horizontal brand-header__social-sharing">
+            @foreach (var icon in topIconLinks)
+            {
+                <li class="brand-footer__social-item">
+                    <a target="@icon.Target" class="button button--social" href="@icon.Url">
+                        @if (string.IsNullOrEmpty(icon.IconCssClass))
+                        {<img class="brand-header__social-sharing" src="@Url.GetCropImageUrl(icon.ImgUrl, ImageCropProfile.IconLink)" alt="@icon.Title">}
+                        else
+                        {<i class="icon icon-@icon.IconCssClass"></i>}
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

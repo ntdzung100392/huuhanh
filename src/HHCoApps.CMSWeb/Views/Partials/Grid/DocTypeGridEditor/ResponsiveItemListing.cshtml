@@ -1,0 +1,26 @@
+﻿@using HHCoApps.CMSWeb.Services
+@using Newtonsoft.Json
+@using Umbraco.Core
+@using Umbraco.Core.Composing
+@model ResponsiveItemListing
+@{
+    var viewModel = Current.Factory.GetInstance<IListingComponentService>().GetViewModel(Model);
+}
+
+<div class="react-app-root"
+     data-page="ResponsiveItemListingPage"
+     data-content-id="@viewModel.StarterNodeId"
+     data-item-per-row="@viewModel.NumberItemsPerPage"
+     data-filtering-by="@JsonConvert.SerializeObject(viewModel.FilteringBy)"
+     data-isgroupby-subcategory="@viewModel.IsGroupBySubCategory"
+     data-enabled-filtering="@viewModel.IsEnabledFilter"
+     data-template-name="@viewModel.TemplateName"
+     data-sort-by="@viewModel.SortingRequest.SortBy"
+     data-order-type="@viewModel.SortingRequest.OrderType"
+     data-content-type="@viewModel.ContentType"
+     data-included-items="@JsonConvert.SerializeObject(viewModel.IncludedContentIds)"
+     data-default-filter="@JsonConvert.SerializeObject(viewModel.DefaultFilteringBy)"
+     data-primary-filter-ids="@JsonConvert.SerializeObject(viewModel.PrimaryFilterIds)"
+     data-view-more-label="@viewModel.ViewMoreLabel"
+     data-view-details-label="@viewModel.ViewDetailsLabel"
+     data-group-by-filter="@viewModel.GroupByFilter"></div>

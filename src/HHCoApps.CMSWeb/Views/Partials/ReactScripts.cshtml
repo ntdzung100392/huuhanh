@@ -1,0 +1,66 @@
+﻿@using System.Configuration
+@using HHCoApps.CMSWeb.Controllers
+
+@{
+    var isDevelopment = ConfigurationManager.AppSettings["Environment"].Equals("Development");
+    var reactScriptUrl = isDevelopment ? Url.Content("~/scripts/app.js") : Url.Content("~/scripts/app.min.js");
+    var appVersion = ConfigurationManager.AppSettings["version"] ?? "1.0.0";
+
+    if (!isDevelopment)
+    {
+        reactScriptUrl = $"{reactScriptUrl}?v={appVersion}";
+    }
+}
+
+<script type="text/javascript">
+    const AppConfig = {
+        apis: {
+            getProductsUrl: '@(Url.GetUmbracoApiService<ContentsController>("GetProducts"))',
+            getArticlesUrl: '@(Url.GetUmbracoApiService<ContentsController>("GetArticles"))',
+            getOthersUrl: '@(Url.GetUmbracoApiService<ContentsController>("GetOthers"))',
+            getQuestionsFilterCategoryByIdUrl: '@(Url.GetUmbracoApiService<QuestionsController>("GetQuestions"))',
+            searchQuestionsFilterUrl: '@(Url.GetUmbracoApiService<QuestionsController>("SearchQuestions"))',
+            getPrimaryFilterCategoryModels: '@(Url.GetUmbracoApiService<ResponsiveReactController>("GetPrimaryFilterCategoryModels"))',
+            getFilterCategoryModel: '@(Url.GetUmbracoApiService<ResponsiveReactController>("GetFilterCategoryModel"))',
+            getFilterCategoryModelStatics: '@(Url.GetUmbracoApiService<ResponsiveReactController>("GetFilterCategoryModelStatics"))',
+            searchContents: '@(Url.GetUmbracoApiService<ContentsController>("SearchContents"))',
+            searchContentsByFiltersAndGrandParentId: '@(Url.GetUmbracoApiService<ContentsController>("SearchContentsByFiltersAndGrandParentId"))',
+            getProductDetailSelectorUrl: '@(Url.GetUmbracoApiService<ProductDetailSelectorController>("GetProductDetailSelector"))',
+            getProductDetailInfo: '@(Url.GetUmbracoApiService<ProductDetailSelectorController>("GetProductDetailInfo"))',
+            getProductDetailsByIds: '@(Url.GetUmbracoApiService<ProductDetailSelectorController>("GetProductDetailsByIds"))',
+            sendWishListEmail: '@(Url.GetUmbracoApiService<WishListController>("SendWishListEmail"))',
+            getMenuItemsUrl: '@(Url.GetUmbracoApiService<NavigationController>("GetMenuItems"))',
+            getProductListUrl: '@(Url.GetUmbracoApiService<NavigationController>("GetProductList"))',
+            getProductDetailUrl: '@(Url.GetUmbracoApiService<NavigationController>("GetProductContent"))',
+            searchNearbyStores: '@(Url.GetUmbracoApiService<StoresLocatorController>("SearchStores"))',
+            getMapSettings: '@(Url.GetUmbracoApiService<StoresLocatorController>("GetMapSettings"))',
+            isEmailSubscribed: '@(Url.GetUmbracoApiService<SubscribedController>("IsEmailSubscribed"))'
+        },
+        imageSizes: {
+            thumbnail: { width: 150, height: 120 },
+            productList: { width: 400, height: 400 },
+            monthlyArticleList: { width: 383, height: 307 },
+            twoColumn: { width: 180, height: 144, mode: 'boxpad' },
+            threeColumnTopAlign: { width: 393, height: 315, mode: 'boxpad' },
+            threeColumnLeftAlign: { width: 150, height: 120, mode: 'boxpad' },
+            sixColumn: { width: 177, height: 141 },
+            twoColumnProductSelector: { width: 400, height: 320, mode: 'boxpad' }
+        },
+        images: {
+            noImageUrl: '@(Url.Content("~/images/no-image.jpg"))'
+        },
+        googleRecaptchaKey: {
+            publicKey: '@(Umbraco.Forms.Core.Configuration.GetSetting("RecaptchaPublicKey"))'
+        }
+    };
+</script>
+
+@if (!isDevelopment)
+{
+    <script defer type="text/javascript" crossorigin="anonymous" src="https://unpkg.com/react@16.12.0/umd/react.production.min.js"></script>
+    <script defer type="text/javascript" crossorigin="anonymous" src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.production.min.js"></script>
+    <script defer type="text/javascript" crossorigin="anonymous" src="https://unpkg.com/react-bootstrap@0.33.1/dist/react-bootstrap.min.js"></script>
+    <script defer type="text/javascript" crossorigin="anonymous" src="https://unpkg.com/axios@0.19.2/dist/axios.min.js"></script>
+    <script defer type="text/javascript" crossorigin="anonymous" src="https://unpkg.com/react-slick@0.26.1/dist/react-slick.min.js"></script>
+}
+<script defer type="text/javascript" src="@reactScriptUrl"></script>

@@ -1,0 +1,50 @@
+﻿@using HHCoApps.CMSWeb.Helpers
+@using HHCoApps.CMSWeb.Helpers.Enum
+@using HHCoApps.CMSWeb.Services
+@using Umbraco.Core.Composing
+@model GalleryComponent
+
+@{
+    var viewModel = Current.Factory.GetInstance<IGalleryComponentService>().GetViewModel(Model);
+}
+
+<div class="text get-inspire">
+    <ul>
+        <li><a class="btn-gallery-prev" data-target-uid="@viewModel.UId"><i class="icon-left-arrow" aria-label="Previous" alt="icon-prev"></i></a></li>
+        <li><a>@viewModel.Title</a></li>
+        <li><a class="btn-gallery-next" data-target-uid="@viewModel.UId"><i class="icon-right-arrow" aria-label="Next" alt="icon-next"></i></a></li>
+    </ul>
+</div>
+
+<div id="@viewModel.UId">
+    @foreach (var contentInfos in viewModel.Rows)
+    {
+        <section class="gallery-component instagram-images visible-md visible-lg hidden-xs hidden-sm px-0">
+            @foreach (var contentInfoModel in contentInfos)
+            {
+                <div class="img-padding">
+                    <a href="@contentInfoModel.Url" target=@contentInfoModel.Target><img data-lazy="@Url.GetCropImageUrl(contentInfoModel.ImageUrl, ImageCropProfile.Gallery)" alt="@contentInfoModel.ImageAlt"></a>
+                </div>
+            }
+        </section>
+    }
+
+    <section class="gallery-component instagram-images visible-xs visible-sm hidden-lg hidden-md">
+        @foreach (var contentInfos in viewModel.Rows)
+        {
+            foreach (var contentInfoModel in contentInfos)
+            {
+                <div class="img-padding">
+                    <a href="@contentInfoModel.Url" target=@contentInfoModel.Target><img data-lazy="@Url.GetCropImageUrl(contentInfoModel.ImageUrl, ImageCropProfile.Gallery)" alt="@contentInfoModel.ImageAlt"></a>
+                </div>
+            }
+        }
+    </section>
+</div>
+
+@if (!string.IsNullOrEmpty(viewModel.ViewMoreUrl))
+{
+    <div class="text view-more">
+        <a href="@viewModel.ViewMoreUrl" target=@viewModel.ViewMoreTarget>@viewModel.ViewMoreLabel<i class="icon-arrow-right-circle"></i></a>
+    </div>
+}

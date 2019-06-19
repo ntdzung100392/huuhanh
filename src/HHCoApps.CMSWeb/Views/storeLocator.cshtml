@@ -1,0 +1,13 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<Stores>
+@{
+    Layout = "master.cshtml";
+    var apiKey = Model.APikey;
+}
+@Html.GetGridHtml(Model, "bodyText", "bootstrap3-fluid")
+@{
+    if (!string.IsNullOrEmpty(apiKey))
+    {
+        <div class="react-app-root" data-page="StoreLocatorPage" data-content-id="@Model.Id"></div>
+    }
+    @Html.Partial("~/views/partials/ReactScripts.cshtml")
+}

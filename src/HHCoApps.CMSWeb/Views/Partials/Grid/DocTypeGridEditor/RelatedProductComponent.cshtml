@@ -1,0 +1,19 @@
+﻿@using HHCoApps.CMSWeb.Services
+@using Umbraco.Core.Composing
+@using HHCoApps.CMSWeb.Models.Enums
+@inherits UmbracoViewPage<RelatedProductComponent>
+@{
+    var currentModel = Umbraco.AssignedContentItem;
+    var viewModels = Current.Factory.GetInstance<IRelatedProductService>().GetViewModel(currentModel);
+}
+
+<div class="get-the-look-category__btn">
+    @foreach (var relatedProduct in viewModels.RelatedProducts)
+    {
+        var cssClass = !string.IsNullOrEmpty(relatedProduct.ProductSubCategory) ? $"icon icon-{Icon.FromDisplayName(relatedProduct.ProductSubCategory).Value.ToLower()}" : string.Empty;
+        <a class="btn" href="@relatedProduct.ProductUrl">
+            <span class="icon-relate-product"><i class="@cssClass"></i></span>
+            @relatedProduct.Title
+        </a>
+    }
+</div>

@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{40A38426-C968-4404-BCAD-356EE731D8C6}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>WareHouseApps</RootNamespace>
+    <AssemblyName>WareHouseApps</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoMapper.10.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\CategoryViewModel.cs" />
+    <Compile Include="Models\ContactViewModel.cs" />
+    <Compile Include="Models\ProductViewModel.cs" />
+    <Compile Include="Models\VendorViewModel.cs" />
+    <Compile Include="Views\Product\NewProductForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Product\NewProductForm.Designer.cs">
+      <DependentUpon>NewProductForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Vendor\NewVendorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Vendor\NewVendorForm.Designer.cs">
+      <DependentUpon>NewVendorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Category\CategoryListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Category\CategoryListForm.Designer.cs">
+      <DependentUpon>CategoryListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Note\ExportProduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Note\ExportProduct.Designer.cs">
+      <DependentUpon>ExportProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\BaseMethod.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Helper\MapperInit.cs" />
+    <Compile Include="Views\Note\ImportProduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Note\ImportProduct.Designer.cs">
+      <DependentUpon>ImportProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Note\NoteList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Note\NoteList.Designer.cs">
+      <DependentUpon>NoteList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Product\ProductListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Product\ProductListForm.Designer.cs">
+      <DependentUpon>ProductListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Vendor\VendorListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Vendor\VendorListForm.Designer.cs">
+      <DependentUpon>VendorListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Report\Report.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Report\Report.Designer.cs">
+      <DependentUpon>Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainMenuForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MainMenuForm.Designer.cs">
+      <DependentUpon>MainMenuForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Account\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Account\LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserViewModel.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Helper\BaseMethod.resx">
+      <DependentUpon>BaseMethod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Account\LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Category\CategoryListForm.resx">
+      <DependentUpon>CategoryListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\MainMenuForm.resx">
+      <DependentUpon>MainMenuForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Product\NewProductForm.resx">
+      <DependentUpon>NewProductForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Product\ProductListForm.resx">
+      <DependentUpon>ProductListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Vendor\NewVendorForm.resx">
+      <DependentUpon>NewVendorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Vendor\VendorListForm.resx">
+      <DependentUpon>VendorListForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\WareHouseApps.Models.CategoryViewModel.datasource" />
+    <None Include="Properties\DataSources\WareHouseApps.Models.ContactViewModel.datasource" />
+    <None Include="Properties\DataSources\WareHouseApps.Models.ProductViewModel.datasource" />
+    <None Include="Properties\DataSources\WareHouseApps.Models.UserViewModel.datasource" />
+    <None Include="Properties\DataSources\WareHouseApps.Models.VendorViewModel.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HHCoApps.Libs\HHCoApps.Libs.csproj">
+      <Project>{C9015688-D621-41EB-9D80-549C015F7E7A}</Project>
+      <Name>HHCoApps.Libs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HHCoApps.Repository\HHCoApps.Repository.csproj">
+      <Project>{489BEFA8-5AF6-4D20-9E00-C2D6F082CFBF}</Project>
+      <Name>HHCoApps.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HHCoApps.Services\HHCoApps.Services.csproj">
+      <Project>{FE048EAA-DCD3-4D17-BBB7-62B312C1D299}</Project>
+      <Name>HHCoApps.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\storage.png" />
+    <None Include="Resources\icon128x128.ico" />
+    <None Include="Resources\outsourcing-outside-foreign-supplier-people-340a2c5b01012deb-192x192.png" />
+    <None Include="Resources\Report-Icon.png" />
+    <None Include="Resources\application-exit.png" />
+    <None Include="Resources\1384943818.png" />
+    <Content Include="Resources\Background-Warehouse1.jpg" />
+    <None Include="Resources\free-shipping.png" />
+    <None Include="Resources\kho-hang.png" />
+    <Content Include="Resources\logo1.png" />
+    <Content Include="Resources\logo2.png" />
+    <Content Include="Resources\logo2_yNI_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+</Project>

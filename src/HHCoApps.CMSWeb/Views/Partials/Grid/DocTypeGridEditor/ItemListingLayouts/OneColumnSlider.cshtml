@@ -1,0 +1,50 @@
+﻿@using HHCoApps.CMSWeb.Helpers
+@using HHCoApps.CMSWeb.Helpers.Enum
+@model HHCoApps.CMSWeb.Models.ItemListingViewModel
+@{
+    var backgroundColor = string.IsNullOrEmpty(Model.BackgroundColour) ? "#fffff" : $"#{Model.BackgroundColour}";
+}
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 get-the-look__box" style="background-color:@backgroundColor">
+    <div class="get-the-look__intro text-center">
+        @if (Model.DisplayLabel)
+        {
+            <h3 class="text-uppercase mt-0">@Model.Label</h3>
+        }
+        @{
+            if (!string.IsNullOrEmpty(Model.Caption))
+            {
+                @Html.Raw(Model.Caption)
+            }
+        }
+        @if (Model.DisplayViewMoreLink)
+        {
+            <a href="@Model.ViewMoreUrl">
+                <span class="text-uppercase dashed-text">@Html.Raw(Model.ViewMoreLabel)</span>
+                <img src="~/assets/images/icons/icon-plus.png" alt="more inspiration" />
+            </a>
+        }
+
+    </div>
+    <div class="carousel get-the-look__slider">
+        @foreach (var contentInfo in Model.ContentInfos)
+        {
+            var imgUrl = contentInfo.ImageUrl.GetCropImageUrl(contentInfo.ImageWidth, contentInfo.ImageHeight, ImageCropProfile.OneColumnSlider);
+            <div class="slider-box text-center">
+                <a href="@contentInfo.Url" target="@contentInfo.Target">
+                    <img class="mx-auto lozad" data-src="@imgUrl" alt="@contentInfo.ImageAlt" />
+                    <span>@contentInfo.Title</span>
+                    <i class="icon-arrow-right-circle"></i>
+                </a>
+            </div>
+        }
+    </div>
+    @if (Model.ContentInfos.Count() > 1)
+    {
+        <div class="carousel-progress-bar">
+            <div class="steps is-flex">
+                <div><div class="indicator"></div></div>
+            </div>
+        </div>
+    }
+</div>

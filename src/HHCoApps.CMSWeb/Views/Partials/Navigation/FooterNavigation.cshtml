@@ -1,0 +1,35 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<NavigationManagement>
+
+@{
+    var footerMenu = Model?.FooterMenu ?? Enumerable.Empty<MenuItem>();
+}
+
+<div class="footer-nav">
+    @if (footerMenu.Any())
+    {
+        foreach (var menuItem in footerMenu)
+        {
+            <div>
+                <h4 class="footer-nav__heading">
+                    @if (menuItem.Link != null && !string.IsNullOrEmpty(menuItem.Link.Url))
+                    {
+                        <a href="@(menuItem.Link?.Url ?? string.Empty)">@menuItem.Title</a>
+                    }
+                    else
+                    {
+                        @menuItem.Title
+                    }
+                </h4>
+                @if (menuItem.ChildItems != null && menuItem.ChildItems.Any())
+                {
+                    <ul>
+                        @foreach (var childItem in menuItem.ChildItems)
+                        {
+                            <li><a href="@(childItem.Link?.Url ?? string.Empty)">@childItem.Title</a></li>
+                        }
+                    </ul>
+                }
+            </div>
+        }
+    }
+</div>

@@ -1,0 +1,32 @@
+﻿@using HHCoApps.CMSWeb.Services
+@using Umbraco.Core.Composing
+@model ArticleExperience
+@{
+    var viewModel = Current.Factory.GetInstance<IArticleExperienceService>().GetViewModel(Model);
+}
+
+<div class="article-difficulty">
+    <div class="row small-collapse container">
+        @{
+            if (viewModel.Labels.Count() > 0)
+            {
+                <div class="col-md-8 col-sm-6 col-xs-6 column">
+                    <div class="article-difficulty__ratings">
+                        @{
+                            foreach (var label in viewModel.Labels)
+                            {
+                                <span class="article-difficulty__rating @(label.Active? "article-difficulty__rating--active" : string.Empty)">@label.LabelName</span>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        }
+        <div class="col-md-4 col-sm-6 col-xs-6">
+            <div class="article-difficulty__time">
+                <i class="icon icon-clock"></i>
+                <span class="article-difficulty__time-value">@viewModel.Time</span>
+            </div>
+        </div>
+    </div>
+</div>

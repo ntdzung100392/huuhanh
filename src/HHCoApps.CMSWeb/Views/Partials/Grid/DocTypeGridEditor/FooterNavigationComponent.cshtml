@@ -1,0 +1,28 @@
+﻿@using HHCoApps.CMSWeb.Services
+@using Umbraco.Core.Composing
+@inherits UmbracoViewPage<FooterNavigationComponent>
+
+@{
+    var viewModel = Current.Factory.GetInstance<IFooterNavigationService>().GetViewModel(Model, Umbraco.AssignedContentItem);
+}
+
+<section class="product-list__filter blog-detail-next-prev">
+    <div class="container visible-xs visible-sm hidden-lg hidden-md">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pl-0-laptop px-0">
+                <ul class="nav nav-tabs">
+                    <li class="li-prev-link">
+                        <a href="@(viewModel.PreviousUrl)" class="prev-link prev-link-project">
+                            <i class="icon-left-arrow"></i> PREVIOUS
+                        </a>
+                    </li>
+                    <li class="li-next-link">
+                        <a href="@(viewModel.NextUrl)" class="prev-link prev-link-project">
+                            NEXT <i class="icon-right-arrow"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

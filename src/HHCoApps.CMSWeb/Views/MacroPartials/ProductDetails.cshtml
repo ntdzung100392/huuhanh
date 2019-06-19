@@ -1,0 +1,61 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@using HHCoApps.CMSWeb.Services
+@using Umbraco.Web.Composing
+@using HHCoApps.CMSWeb.Models
+@using HHCoApps.CMSWeb.Helpers
+@{
+    var viewModel = Current.Factory.GetInstance<IProductDetailService>().GetProductDetailFromMacro(this);
+    var tabItemViewModels = new Dictionary<Guid, MvcHtmlString>();
+    foreach (var tab in viewModel.Tabs)
+    {
+        tabItemViewModels[tab.Key] = Html.GetGridHtml(tab.Content, "bootstrap3-fluid");
+    }
+}
+<div class="product-detail--guides">
+    <div class="row visible-lg visible-md hidden-xs hidden-sm">
+        <div>
+            <ul class="nav nav-tabs">
+                @foreach(var tab in viewModel.Tabs)
+                {
+                      <li class="@(viewModel.Tabs.IndexOf(tab) == 0 ? "active": string.Empty)">
+                        <a data-toggle="tab" data-target="#@tab.Key" class="text-uppercase" href="#">@tab.TabName</a>
+                    </li>
+                }
+            </ul>
+            <div class="tab-content">
+                @foreach (var tabItem in viewModel.Tabs)
+                {
+                    <div id="@tabItem.Key" class="tab-pane fade @(viewModel.Tabs.IndexOf(tabItem) == 0 ? "in active" : string.Empty)">
+                        <div class="row text-content">
+                            @tabItemViewModels[tabItem.Key]
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- Mobile display  -->
+    <div class="row visible-xs visible-sm hidden-md hidden-lg">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 product-detail__mobile-wrapper">
+            <div class="panel-group">
+                @foreach (var tab in viewModel.Tabs)
+                {
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-target="#@(tab.Key + "xs")" aria-expanded="false" class="text-uppercase @(viewModel.Tabs.IndexOf(tab) > 0 ? "collapsed": string.Empty)">
+                                    <strong>@tab.TabName</strong>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="@(tab.Key + "xs")" class="panel-collapse collapse @(viewModel.Tabs.IndexOf(tab) == 0 ? "in" : string.Empty)">
+                            <div class="panel-body">
+                                @tabItemViewModels[tab.Key]
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

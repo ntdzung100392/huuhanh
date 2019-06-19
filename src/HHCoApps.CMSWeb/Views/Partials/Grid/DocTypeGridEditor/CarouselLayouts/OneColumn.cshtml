@@ -1,0 +1,36 @@
+﻿@using AutoMapper
+@using HHCoApps.CMSWeb.Models
+@using HHCoApps.CMSWeb.Helpers
+@using HHCoApps.CMSWeb.Helpers.Enum
+@using Umbraco.Web.Composing
+@model CarouselImage
+@{
+    var carouselInfos = Model.CarouselInfo ?? Enumerable.Empty<CarouselInfo>();
+    var carouselInfoModels = Current.Factory.GetInstance<IMapper>().Map<IEnumerable<CarouselInfoModel>>(carouselInfos);
+
+    var isScrolling = Model.FreezeScrolling;
+    var isAutoPlay = Model.AutoPlay.ToString().ToLower();
+    var duration = (Model.Duration == 0 ? 5 : Model.Duration) * 1000;
+    var customRandomId = Guid.NewGuid();
+}
+
+<div id="@customRandomId" class="top-page slider-nav-carousel" data-slick='{"autoplay": @isAutoPlay,"autoplaySpeed": @duration}'>
+    @foreach (var carouselInfoModel in carouselInfoModels)
+    {
+        var linkButtonColor = string.IsNullOrEmpty(carouselInfoModel.LinkButtonColor) ? "#fff" : $"#{carouselInfoModel.LinkButtonColor}";
+        var captionColor = string.IsNullOrEmpty(carouselInfoModel.CaptionColor) ? "#fff" : $"#{carouselInfoModel.CaptionColor}";
+        var carouselImgUrl = Url.GetCropImageUrl(carouselInfoModel.ImageUrl, ImageCropProfile.CarouselLarge);
+        <section class="homepage__banner text-center" style="background: url(@carouselImgUrl) no-repeat;background-size: cover; background-position: center; height: 100vh;">
+            <div class="homepage__banner--text">
+                <div style="color: @captionColor; padding: inherit;">@Html.Raw(carouselInfoModel.Caption)</div>
+                <a href="@carouselInfoModel.Url" target="@carouselInfoModel.Target">
+                    <span class="text-uppercase dashed-text" style="color: @linkButtonColor">@carouselInfoModel.Title</span>
+                </a>
+            </div>
+            @if (!isScrolling)
+            {
+                <div class="scroll-btn scroll-animate" data-custom-id="@customRandomId"><a href=""><span class="icon-chevron-down"></span></a></div>
+            }
+        </section>
+    }
+</div>

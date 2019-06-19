@@ -1,0 +1,18 @@
+﻿@using HHCoApps.CMSWeb.Caching
+@using Newtonsoft.Json
+@using Umbraco.Core
+@using Umbraco.Core.Composing
+@{
+    Layout = "master.cshtml";
+    var umbracoHelper = Current.Factory.GetInstance<UmbracoHelper>();
+    var searchPage = (SearchPage)umbracoHelper.ContentQuery.ContentSingleFromCache(CachedContent.SearchPageContent);
+    var productsStarterNodePath = searchPage?.ProductsStarterNode != null ? searchPage.ProductsStarterNode.Path : string.Empty;
+    var blogsStarterNodePath = searchPage?.BlogsStarterNode != null ? searchPage.BlogsStarterNode.Path : string.Empty;
+    var othersStarterNodeIds = searchPage?.OthersStarterNode != null ? searchPage.OthersStarterNode.Select(x => x.Id) : Enumerable.Empty<int>();
+    var othersStartNodePaths = othersStarterNodeIds.Any() ? umbracoHelper.ContentQuery.Content(othersStarterNodeIds).Select(x => x.Path) : Enumerable.Empty<string>();
+}
+
+<div class="container react-app-root" data-page="SearchPage" data-products-path="@productsStarterNodePath" data-blogs-path="@blogsStarterNodePath" data-others-paths="@JsonConvert.SerializeObject(othersStartNodePaths)"></div>
+@section Scripts {
+    @Html.Partial("~/views/partials/ReactScripts.cshtml")
+}

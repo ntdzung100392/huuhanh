@@ -1,0 +1,19 @@
+﻿@model CarouselImage
+@{
+    var layoutName = string.Empty;
+
+    switch (Model.Layout)
+    {
+        case "2 columns":
+            layoutName = "TwoColumns";
+            break;        
+        case "1 column in content layout":
+            layoutName = "OneColumnInContentLayout";
+            break;
+        default:
+            layoutName = "OneColumn";
+            break;
+    }
+}
+
+@Html.Partial($"~/Views/Partials/Grid/DocTypeGridEditor/CarouselLayouts/{layoutName}.cshtml", Model)

@@ -1,0 +1,31 @@
+﻿@using AutoMapper
+@using HHCoApps.CMSWeb.Models
+@using Umbraco.Web.Composing
+@model CarouselImage
+@{
+    var carouselInfos = Model.CarouselInfo ?? Enumerable.Empty<CarouselInfo>();
+    var carouselInfoModels = Current.Factory.GetInstance<IMapper>().Map<IEnumerable<CarouselInfoModel>>(carouselInfos).ToArray();
+}
+
+<section>
+    <div class="container-fluid">
+        <div class="row is-flex flex-wrap">
+            @for (int i = 0; i < carouselInfoModels.Length; i++)
+            {
+                var carouselInfoModel = carouselInfoModels[i];
+                var linkButtonColor = string.IsNullOrEmpty(carouselInfoModel.LinkButtonColor) ? "#fff" : $"#{carouselInfoModel.LinkButtonColor}";
+                var captionColor = string.IsNullOrEmpty(carouselInfoModel.CaptionColor) ? "#fff" : $"#{carouselInfoModel.CaptionColor}";
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 get-the-look__listing--@(i == 0 ? "left" : "right") px-0 is-flex">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background:url(@carouselInfoModel.ImageUrl) no-repeat center; background-size:cover; height: 100vh">
+                        <div class="get-the-look__banner-caption text-center">
+                            <div style="color: @captionColor">@Html.Raw(carouselInfoModel.Caption)</div>
+                            <a href="@carouselInfoModel.Url" target="@carouselInfoModel.Target">
+                                <span class="text-uppercase dashed-text" style="color: @linkButtonColor">@carouselInfoModel.Title</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

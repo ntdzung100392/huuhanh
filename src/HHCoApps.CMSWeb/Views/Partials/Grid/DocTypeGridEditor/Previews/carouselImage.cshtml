@@ -1,0 +1,14 @@
+﻿@model CarouselImage
+
+<div class="heroCarousel">
+    <div class="carousel carousel--home">
+        <div class="carousel__frame">
+            <div class="carousel__nav hide-for-small-only" data-dg-nav></div>
+            <div class="slick" aria-label="Dulux promotions" data-slick data-dg-carousel data-dg-autoplay="5">
+                <h2>Preview Mode: CarouselImage will display here!</h2>
+                <h3>Carousel items: @Model.CarouselInfo.Count()</h3>
+            </div>
+            <div class="carousel__indicator" data-dg-indicators></div>
+        </div>
+    </div>
+</div>

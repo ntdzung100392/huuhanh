@@ -1,0 +1,14 @@
+﻿@using HHCoApps.CMSWeb.Caching
+@using Umbraco.Web.Composing
+@using IShareContentBase = Umbraco.Web.PublishedModels.IShareContentBase
+@{
+    var umbracoHelper = Current.Factory.GetInstance<UmbracoHelper>();
+    var integration = (Integration)umbracoHelper.ContentQuery.ContentSingleFromCache(CachedContent.IntegrationContent);
+    var isEnabled = Model is IShareContentBase shareContent && shareContent.EnableShare;
+
+    if (isEnabled && integration != null)
+    {
+        var scriptContent = integration.EmbeddedSharingScripts ?? string.Empty;
+        @Html.Raw(scriptContent)
+    }
+}

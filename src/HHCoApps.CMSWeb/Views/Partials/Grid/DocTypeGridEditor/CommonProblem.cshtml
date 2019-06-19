@@ -1,0 +1,58 @@
+﻿@using Umbraco.Core.Composing
+@using AutoMapper
+@using HHCoApps.CMSWeb.Helpers
+@using HHCoApps.CMSWeb.Helpers.Enum
+@using HHCoApps.CMSWeb.Models
+@model CommonProblem
+@{
+    var imgs = Model.Images ?? Enumerable.Empty<IPublishedContent>();
+    var products = Current.Factory.GetInstance<IMapper>().Map<IEnumerable<ContentInfoModel>>(Model.RelatedProducts) ?? Enumerable.Empty<ContentInfoModel>();
+    var isCarousel = Model.IsCarouselImage;
+    var isAutoPlay = Model.IsCarouselAutoPlay ? 5 : 0;
+    var attrCarousel = (imgs.Count() >= 2 && isCarousel) ? "data-dg-carousel" : string.Empty;
+}
+
+<div class="commonProblems">
+    <div class="related-product-carousel row row--container">
+        <div class="col-md-4 col-sm-4">
+            <div class="carousel carousel--generic">
+                <div class="carousel__frame">
+                    <div class="carousel__nav carousel__nav--show" data-dg-nav></div>
+
+                    <div class="slick gallery-parent" @attrCarousel data-center-mode="true" data-dg-autoplay="@isAutoPlay">
+                        @foreach (var img in imgs)
+                        {
+                            <div class="slick-slide gallery-item">
+                                <img class="gallery-image" src="@Url.GetCropImageUrl(img.Url, ImageCropProfile.CommonProblemImageThumbnail)" alt="@img.Name">
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-8">
+            <h3 class="related-product-carousel__heading"></h3>
+            <div>
+                @Html.Raw(@Model.Description)
+            </div>
+            <div class="row display-flex">
+                @foreach (var product in products)
+                {
+                    <div class="cmp-list__item col-md-6 col-xs-12">
+                        <div class="product-tile">
+                            <div class="product-tile__image">
+                                <a href="@product.Url"><img src="@Url.GetCropImageUrl(product.ImageUrl, ImageCropProfile.ProductImage)" alt="@product.ImageAlt"></a>
+                            </div>
+                            <div class="product-tile__content-block">
+                                <h3 class="product-tile__heading h5"><a href="@product.Url">@product.Title</a></h3>
+                                <div class="product-tile__desc p4">
+                                    @(product?.Caption ?? product.SubTitle)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

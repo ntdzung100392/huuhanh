@@ -1,0 +1,70 @@
+﻿<?xml version="1.0"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Migrate">
+    <PropertyGroup>
+        <DatabaseProvider></DatabaseProvider>
+        <ConnectionStringConfigPath Condition="'$(ConnectionStringConfigPath)' == ''"></ConnectionStringConfigPath>
+        <ConnectionStringName Condition="'$(ConnectionStringName)' == ''"></ConnectionStringName>
+        <MigrationsProjectName Condition="'$(MigrationsProjectName)' == ''">Migrations</MigrationsProjectName>
+        <MigrationsProjectRootPath Condition="'$(MigrationsProjectRootPath)' == ''">$(MSBuildProjectDirectory)</MigrationsProjectRootPath>
+        <MigratorReferencesDirectory Condition="'$(MigratorReferencesDirectory)' == ''"></MigratorReferencesDirectory>
+        <MigratorTimeout Condition="'$(MigratorTimeout)' == ''">30</MigratorTimeout>
+        <MigrationsProjectBuildDLL Condition="'$(MigrationsProjectBuildDLL)' == ''">$(MigrationsProjectRootPath)\bin\Debug\$(MigrationsProjectName).dll</MigrationsProjectBuildDLL>
+        <MigrationsProjectCsproj Condition="'$(MigrationsProjectCsproj)' == ''">$(MigrationsProjectRootPath)\$(MigrationsProjectName).csproj</MigrationsProjectCsproj>
+    </PropertyGroup>
+
+    <UsingTask TaskName="FluentMigrator.MSBuild.Migrate" AssemblyFile="$(MigratorReferencesDirectory)FluentMigrator.MSBuild.dll"/>
+
+    <Target Name="Build">
+        <MSBuild Projects="$(MigrationsProjectCsproj)" Properties="Configuration=Debug"/>
+    </Target>
+
+    <Target Name="migrate" DependsOnTargets="Build">
+        <Message Text="Starting FluentMigrator Migration"/>
+        <Migrate Database="$(DatabaseProvider)"
+                 Connection="$(ConnectionStringName)"
+                 ConnectionStringConfigPath="$(ConnectionStringConfigPath)"
+                 Target="$(MigrationsProjectBuildDLL)"
+                 Timeout="$(MigratorTimeout)" 
+                 Output="True"
+                 Verbose="True">
+        </Migrate>
+    </Target>
+
+    <Target Name="migrate-on-deploy">
+        <Message Text="Starting FluentMigrator Migration on environment"/>
+        <Migrate Database="$(DatabaseProvider)"
+                 Connection="$(ConnectionStringName)"
+                 ConnectionStringConfigPath="$(ConnectionStringConfigPath)"
+                 Target="$(MigrationsProjectBuildDLL)"
+                 Timeout="$(MigratorTimeout)"                  
+                 Output="True"
+                 Verbose="True">
+        </Migrate>
+    </Target>
+
+    <Target Name="migrate-rollback" DependsOnTargets="Build">
+        <Message Text="Starting FluentMigrator Migration"/>
+        <Migrate Database="$(DatabaseProvider)"
+                 Connection="$(ConnectionStringName)"
+                 ConnectionStringConfigPath="$(ConnectionStringConfigPath)"
+                 Target="$(MigrationsProjectBuildDLL)"
+                 Timeout="$(MigratorTimeout)"                  
+                 Output="True"
+                 Verbose="True"
+                 Task="rollback">
+        </Migrate>
+    </Target>
+
+    <Target Name="migrate-rollback-all" DependsOnTargets="Build">
+        <Message Text="Starting FluentMigrator Migration"/>
+        <Migrate Database="$(DatabaseProvider)"
+                 Connection="$(ConnectionStringName)"
+                 ConnectionStringConfigPath="$(ConnectionStringConfigPath)"
+                 Target="$(MigrationsProjectBuildDLL)"
+                 Timeout="$(MigratorTimeout)"                  
+                 Output="True"
+                 Verbose="True"
+                 Task="rollback:all">
+        </Migrate>
+    </Target>
+</Project>

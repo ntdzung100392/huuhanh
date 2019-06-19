@@ -1,0 +1,28 @@
+﻿@using AutoMapper
+@using HHCoApps.CMSWeb.Models
+@using HHCoApps.CMSWeb.Helpers
+@using HHCoApps.CMSWeb.Helpers.Enum
+@using Umbraco.Web.Composing
+@model CarouselImage
+@{
+    var carouselInfos = Model.CarouselInfo ?? Enumerable.Empty<CarouselInfo>();
+    var carouselInfoModels = Current.Factory.GetInstance<IMapper>().Map<IEnumerable<CarouselInfoModel>>(carouselInfos);
+}
+
+<section>
+    @foreach (var carouselInfoModel in carouselInfoModels)
+    {
+        var captionColor = string.IsNullOrEmpty(carouselInfoModel.CaptionColor) ? "#fff" : $"#{carouselInfoModel.CaptionColor}";
+        var linkButtonColor = string.IsNullOrEmpty(carouselInfoModel.LinkButtonColor) ? "#fff" : $"#{carouselInfoModel.LinkButtonColor}";
+        var carouselImgUrl = Url.GetCropImageUrl(carouselInfoModel.ImageUrl, ImageCropProfile.CarouselOneColumn);
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background:url(@carouselImgUrl); background-size:cover; height: 100vh">
+            <div class="get-the-look__banner-caption text-center">
+                <div style="color: @captionColor">@Html.Raw(carouselInfoModel.Caption)</div>
+                <a href="@carouselInfoModel.Url" target="@carouselInfoModel.Target">
+                    <span class="text-uppercase dashed-text" style="color: @linkButtonColor">@carouselInfoModel.Title</span>
+                </a>
+
+            </div>
+        </div>
+    }
+</section>

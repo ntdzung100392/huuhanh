@@ -1,0 +1,52 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using HHCoApps.CMSWeb.Caching
+@using Umbraco.Web.Composing
+@using IContentBase = Umbraco.Web.PublishedModels.IContentBase
+@{
+    var title = string.Empty;
+    var imageUrls = new List<string>();
+    var description = string.Empty;
+}
+
+@if (Model is Home)
+{
+    var umbracoHelper = Current.Factory.GetInstance<UmbracoHelper>();
+    var content = (NavigationManagement)umbracoHelper.ContentQuery.ContentSingleFromCache(CachedContent.NavigationManagementContent);
+    if (content != null)
+    {
+        title = content.SiteName ?? string.Empty;
+        var image = content.Logo?.Url(mode: UrlMode.Absolute) ?? string.Empty;
+        description = content.SiteDescription ?? string.Empty;
+        imageUrls.Add(image);
+    }
+}
+else if (Model is IContentBase)
+{
+    var content = (IContentBase)Model;
+    title = content.PageTitle ?? string.Empty;
+    foreach (var publishedContent in content.Images)
+    {
+        var imageUrl = publishedContent.Url(mode: UrlMode.Absolute);
+        imageUrls.Add(imageUrl);
+    }
+
+    description = !string.IsNullOrEmpty(content.Description) ? content.Description : content.PageTitle;
+}
+
+<meta property="og:title" content="@title" />
+<meta property="og:type" content="website" />
+@foreach (var imageUrl in imageUrls)
+{
+<meta property="og:image" content="@imageUrl" />
+}
+<meta property="og:url" content="@Model.Url(mode: UrlMode.Absolute)" />
+<meta property="og:description" content="@description" />
+
+<meta name="twitter:title" content="@title">
+<meta name="twitter:description" content="@description">
+@foreach (var imageUrl in imageUrls)
+{
+<meta name="twitter:image" content="@imageUrl">
+}
+<meta name="twitter:url" content="@Model.Url(mode: UrlMode.Absolute)">
+<meta name="twitter:card" content="summary">

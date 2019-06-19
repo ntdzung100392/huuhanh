@@ -1,0 +1,56 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@{
+    Layout = null;
+    Response.ContentType = "text/xml";
+    var siteHomePage = Model.Root();
+    var maxSiteMapDepth = Model.HasValue("maxSiteMapDepth") ? Model.Value<int>("maxSiteMapDepth") : 100;
+    var defaultPriority = Model.Value<string>("defaultSearchEngineRelativePriority");
+    var defaultFrequency = Model.Value<string>("defaultSearchEngineChangeFrequency");
+    var excludedDocumentTypes = Model.Value<IEnumerable<IPublishedContent>>("excludedDocumentTypes");
+    var excludedContentIds = excludedDocumentTypes != null ? excludedDocumentTypes.Select(s => s.Id).ToArray() : new int[0];
+}
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemalocation="http://www.google.com/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+    @RenderSiteMapUrlEntry(siteHomePage, defaultPriority, defaultFrequency)
+    @RenderSiteMapUrlEntriesForChildren(siteHomePage, maxSiteMapDepth, excludedContentIds, defaultPriority, defaultFrequency)</urlset>
+@helper RenderSiteMapUrlEntry(IPublishedContent node, string priority, string changeFreq)
+{
+    <url>
+        <loc>@node.Url(mode: UrlMode.Absolute)</loc>
+        <lastmod>@(string.Format("{0:s}", node.UpdateDate))</lastmod>
+        <changefreq>@changeFreq</changefreq>
+        <priority>@priority</priority>
+    </url>
+}
+
+@helper RenderSiteMapUrlEntriesForChildren(IPublishedContent parentPage, int maxSiteMapDepth, int[] excludedContentIds, string defaultPriority, string defaultFrequency)
+{
+    foreach (var page in parentPage.Children.Where(f => !excludedContentIds.Contains(f.Id) && !f.Value<bool>("hideFromXmlSiteMap")))
+    {
+        var changeFreq = string.Empty;
+        var priority = string.Empty;
+        var inheritedSettingsFromParent = true;
+
+        if (page.HasProperty("inheritedSettingsFromParent"))
+        {
+            inheritedSettingsFromParent = page.Value<bool>("inheritedSettingsFromParent");
+        }
+
+        if (inheritedSettingsFromParent)
+        {
+            changeFreq = defaultFrequency;
+            priority = defaultPriority;
+        }
+        else
+        {
+            changeFreq = !string.IsNullOrEmpty((string)page.Value("searchEngineChangeFrequency", fallback: Fallback.ToAncestors)) ? page.Value("searchEngineChangeFrequency", fallback: Fallback.ToAncestors).ToString() : defaultFrequency;
+            priority = page.HasValue("searchEngineRelativePriority", fallback: Fallback.ToAncestors) ? page.Value<string>("searchEngineRelativePriority", fallback: Fallback.ToAncestors) : defaultPriority;
+        }
+
+        @RenderSiteMapUrlEntry(page, priority, changeFreq)
+        if (page.Level < maxSiteMapDepth && page.Children.Any(f => !excludedContentIds.Contains(f.Id) && !f.Value<bool>("hideFromXmlSiteMap")))
+        {
+            @RenderSiteMapUrlEntriesForChildren(page, maxSiteMapDepth, excludedContentIds, priority, changeFreq)
+        }
+    }
+}

@@ -1,0 +1,39 @@
+﻿@using AutoMapper
+@using HHCoApps.CMSWeb.Helpers
+@using HHCoApps.CMSWeb.Helpers.Enum
+@using HHCoApps.CMSWeb.Models
+@using Umbraco.Web.Composing
+@model BannerComponent
+@{
+    var bannerInfoModels = Current.Factory.GetInstance<IMapper>().Map<BannerComponentViewModel>(Model);
+    var backgroundColor = string.IsNullOrEmpty(bannerInfoModels.BackgroundColor) ? "#000" : $"#{bannerInfoModels.BackgroundColor}";
+    var titleColor = string.IsNullOrEmpty(bannerInfoModels.TitleColor) ? "#fff" : $"#{bannerInfoModels.TitleColor}";
+
+    var leftImg = @Url.GetCropImageUrl(bannerInfoModels.LeftImageUrl, ImageCropProfile.BannerImage);
+    var rightImg = @Url.GetCropImageUrl(bannerInfoModels.RightImageUrl, ImageCropProfile.BannerImage);
+}
+
+<section class="get-the-look">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 get-the-look__img--left px-0" style="background: url(@leftImg) no-repeat center;background-size: cover"></div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 get-the-look__img--right px-0" style="background: url(@rightImg) no-repeat center;background-size: cover"></div>
+    <div class="get-the-look__content">
+        <h3 class="get-the-look__title" style="color:@titleColor;">@bannerInfoModels.Title</h3>
+        @Html.Raw(bannerInfoModels.Caption)
+        <div class="get-the-look__ellipse" style="background-color:@backgroundColor;">
+            <ul>
+                <li>
+                    <a href="@bannerInfoModels.LeftUrl">
+                        @bannerInfoModels.LeftImageTitle
+                        <span class="icon icon-left-arrow"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@bannerInfoModels.RightUrl">
+                        @bannerInfoModels.RightImageTitle
+                        <span class="icon icon-right-arrow"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>

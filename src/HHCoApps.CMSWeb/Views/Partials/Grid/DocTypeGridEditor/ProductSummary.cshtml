@@ -1,0 +1,75 @@
+﻿@using HHCoApps.CMSWeb.Caching
+@using HHCoApps.CMSWeb.Services
+@using Umbraco.Core.Composing
+@using HHCoApps.CMSWeb.Helpers
+@using HHCoApps.CMSWeb.Helpers.Enum
+@inherits UmbracoViewPage<ProductSummary>
+
+@{
+    var viewModel = Current.Factory.GetInstance<IProductDetailService>().GetSummaryViewModelFromComponent(Model, Umbraco.AssignedContentItem);
+
+    var umbracoHelper = Current.Factory.GetInstance<UmbracoHelper>();
+    var integration = (Integration)umbracoHelper.ContentQuery.ContentSingleFromCache(CachedContent.IntegrationContent);
+    var findYourStockistLink = string.Empty;
+    if (integration != null)
+    {
+        findYourStockistLink = integration.FindYourStockistLink?.Url ?? string.Empty;
+    }
+    
+}
+<div class="row product-detail--info product-detail__mobile-wrapper">
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 px-0 text-center product-detail--left product-detail-smal-center">
+        @if (viewModel.Images.Any())
+        {
+            var additionalCssClass = viewModel.Images.Count() == 1 ? string.Empty : "product-detail__slider";
+            <div class="carousel @additionalCssClass">
+                @foreach (var image in viewModel.Images)
+                {
+                    <img src="@Url.GetCropImageUrl(image.Url, ImageCropProfile.ProductImage)" alt="@image.Name" data-size="@image.ProductImageSize" />
+                }
+            </div>
+        }
+        else
+        {
+            <img src="~/images/no-image.jpg" alt="no image" />
+        }
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 px-0">
+        <h1 class="text-capitalize product-detail__name">@viewModel.Title</h1>
+        <div class="row product-detail__intro">
+            @Html.GetGridHtml(viewModel.Summary, "bootstrap3-fluid-summary")
+        </div>
+        @foreach (var downloadLink in viewModel.DownloadLinks)
+        {
+            <div class="safety-data-sheet-download">
+                <a href="@downloadLink.Url" target="@downloadLink.Target">
+                    <img src="~/assets/images/icons/icon-download-safety-sheet.svg" alt="download" />
+                    <span>@downloadLink.Name</span>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+<div class="react-app-root" data-page="ProductDetailPage" data-content-id="@Umbraco.AssignedContentItem.Id" data-product-title="@viewModel.Title"></div>
+<div class="row product-detail__mobile-wrapper">
+    <div class="product-detail__actions is-flex flex-wrap">
+        @if (viewModel.AddToWishListEnabled)
+        {
+            <div class="add-to-wishlist-btn">
+                <button class="text-uppercase is-flex align-items-center" id="wishListBtn"
+                        data-product-id="@Umbraco.AssignedContentItem.Id">
+                    <i class="icon-heart"></i>
+                    <span>Add to wish list</span>
+                </button>
+            </div>
+        }
+
+        @if (viewModel.FindAStockistEnabled && !string.IsNullOrEmpty(findYourStockistLink))
+        {
+            <div class="find-a-stock-list-btn is-flex align-items-center">
+                <a href="@findYourStockistLink" class="text-uppercase">Find a stockist</a>
+            </div>
+        }
+    </div>
+</div>

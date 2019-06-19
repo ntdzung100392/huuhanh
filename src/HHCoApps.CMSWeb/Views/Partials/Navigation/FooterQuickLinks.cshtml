@@ -1,0 +1,29 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<NavigationManagement>
+@using HHCoApps.CMSWeb.Models.Enums
+
+@{
+    var quickLinks = Model.QuickLinks ?? Enumerable.Empty<IconLink>();
+}
+
+<div class="quickLinks">
+    <div class="quicklinks quicklinks--footer bg-light-gray" style="background-color:#66a000;">
+        <div class="row container" data-equalizer="u1s8y0-equalizer" data-resize="u1s8y0-equalizer" data-events="resize">
+            @foreach (var item in quickLinks)
+            {
+                var cssClass = $"icon icon-{ Icon.FromDisplayName(item?.Icon).Value}" ?? string.Empty;
+                var linkUrl = item?.Link?.Url ?? string.Empty;
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <a target="@(item.Link?.Target)" class="quicklink " href="@linkUrl" data-equalizer-watch="" data-cust-key="quickLinks" style="height: 118px;">
+                        <div class="quicklink__icon" style="color: #FFF">
+                            <span class="icon__round quicklink__icon-bg" style="background-color: transparent">
+                                <i class="@cssClass"></i>
+                            </span>
+                        </div>
+                        <h4 class="quicklink__title">@item.Title</h4>
+                        <p class="quicklink__copy"></p>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

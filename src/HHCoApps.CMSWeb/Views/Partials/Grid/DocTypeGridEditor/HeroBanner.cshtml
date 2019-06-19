@@ -1,0 +1,29 @@
+﻿@using HHCoApps.CMSWeb.Helpers
+@using HHCoApps.CMSWeb.Helpers.Enum
+@using HHCoApps.CMSWeb.Models.Enums
+@model HeroBanner
+@{
+    var imageAligned = Model.ImageOnTheLeft ? Position.Left : Position.Right;
+    var image = Url.GetCropImageUrl(Model.Image?.Url, ImageCropProfile.Banner);
+    var titleColor = string.IsNullOrEmpty(Model.TitleColour) ? "#000000" : $"#{Model.TitleColour}";
+    var imgAlt = string.IsNullOrEmpty(Model.Label) ? (Model.Image == null ? string.Empty : Model.Image.Name) : Model.Label;
+}
+
+<div class="heroBanner">
+    <div class="promo-tile promo-tile--feature promo-tile--image-on-@imageAligned.ToString().ToLower()">
+        <figure class="promo-tile__inner row">
+            <div class="promo-tile__image-container col-md-6 col-sm-6 col-xs-12">
+                <img class="promo-tile__hero lozad" alt="@imgAlt" data-src="@image">
+            </div>
+            <figcaption class="promo-tile__text col-md-6 col-sm-6 col-xs-12">
+                @if (!string.IsNullOrEmpty(Model.Label))
+                {
+                    <h3 class="promo-tile__title h3 promo-tile__title--left" style="color:@titleColor;">@Model.Label</h3>
+                }
+                <div class="promo-tile__text--herobanner p1">
+                    @Html.Raw(Model.Description)
+                </div>
+            </figcaption>
+        </figure>
+    </div>
+</div>

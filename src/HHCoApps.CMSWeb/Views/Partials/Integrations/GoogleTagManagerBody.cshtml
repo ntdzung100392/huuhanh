@@ -1,0 +1,20 @@
+﻿@using HHCoApps.CMSWeb.Caching
+@using Umbraco.Web.Composing
+@{
+    var umbracoHelper = Current.Factory.GetInstance<UmbracoHelper>();
+    var integration = (Integration)umbracoHelper.ContentQuery.ContentSingleFromCache(CachedContent.IntegrationContent);
+    var isEnabled = false;
+
+    if (integration != null)
+    {
+        isEnabled = integration.GtmEnabled && !string.IsNullOrEmpty(integration.GtmContainerId);
+    }
+}
+
+@if (isEnabled)
+{
+    var noScriptUrl = $"https://www.googletagmanager.com/ns.html?id={integration.GtmContainerId}";
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="@noScriptUrl" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+}

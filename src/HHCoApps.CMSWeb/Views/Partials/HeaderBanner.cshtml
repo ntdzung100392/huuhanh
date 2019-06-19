@@ -1,0 +1,39 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using HHCoApps.CMSWeb.Helpers
+@using HHCoApps.CMSWeb.Helpers.Enum
+@using IBannerBase = Umbraco.Web.PublishedModels.IBannerBase
+
+@if (Model is IBannerBase banner && banner.HeaderBannerImage != null)
+{
+    var bannerImage = Url.GetCropImageUrl(banner.HeaderBannerImage?.Url, ImageCropProfile.HeaderBannerImage);
+    var bannerPosition = "left";
+    var bannerTitlePadding = banner.BannerTitlePadding != 0 ? banner.BannerTitlePadding : 0;
+
+    switch (banner.BannerTitlePosition)
+    {
+        case "Left":
+            bannerPosition = "left";
+            break;
+        case "Middle":
+            bannerPosition = "center";
+            break;
+        case "Right":
+            bannerPosition = "right";
+            break;
+    }
+
+    <div class="page_banner" style="background-image: url(@bannerImage)">
+        <div class="container">
+            @if (banner.ApplyPaddingForMobile)
+            {
+                <h1 style="text-align: @bannerPosition; padding-left: @(bannerTitlePadding)px">@banner.BannerTitle</h1>
+            }
+            else
+            {
+                <h1 class="visible-md visible-lg hidden-xs hidden-sm" style="text-align: @bannerPosition; padding-left: @(bannerTitlePadding)px">@banner.BannerTitle</h1>
+                <h1 class="visible-xs visible-sm hidden-md hidden-lg" style="text-align: @bannerPosition">@banner.BannerTitle</h1>
+            }
+        </div>
+        
+    </div>
+}

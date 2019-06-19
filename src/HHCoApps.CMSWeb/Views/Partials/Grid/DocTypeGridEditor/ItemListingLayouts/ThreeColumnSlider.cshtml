@@ -1,0 +1,41 @@
+﻿@using HHCoApps.CMSWeb.Helpers
+@using HHCoApps.CMSWeb.Helpers.Enum
+@model HHCoApps.CMSWeb.Models.ItemListingViewModel
+
+<div class="homepage__items-wrapper">
+    <section class="suggested-products container">
+        <div class="suggest-title is-flex align-items-center justify-content-between">
+            @if (Model.DisplayLabel)
+            {
+                <p class="text-uppercase">@Model.Label</p>
+            }
+
+            @if (Model.DisplayViewMoreLink)
+            {
+                <div class="text-right view-all">
+                    <a href="@Model.ViewMoreUrl" class="text-uppercase text-yellow is-flex align-items-center justify-content-end">@Html.Raw(Model.ViewMoreLabel)<i class="icon-arrow-right-circle icon-arrow-on-top"></i> </a>
+                </div>
+            }
+        </div>
+        <div class="row">
+            <div class="slider-nav carousel">
+                @foreach (var contentInfo in Model.ContentInfos)
+                {
+                    <div class="blog-item col-md-4">
+                        <a href="@contentInfo.Url" target="@contentInfo.Target">
+                            <img class="lozad" data-src="@Url.GetCropImageUrl(contentInfo.ImageUrl, ImageCropProfile.ThreeColumnFull)" alt="@contentInfo.ImageAlt" />
+                            <h4 class="blog-item__title responsive-title">@contentInfo.Title</h4>
+                            <p class="blog-item__desc responsive-caption">
+                                @(contentInfo.Caption)
+                            </p>
+                            <div class="blog-item__btn">
+                                <span>View post</span>
+                                <i class="icon-arrow-right-circle"></i>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</div>
