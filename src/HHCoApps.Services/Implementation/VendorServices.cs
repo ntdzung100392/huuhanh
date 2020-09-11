@@ -15,18 +15,19 @@ namespace HHCoApps.Services.Implementation
         private readonly IVendorRepository _vendorRepository;
         private readonly IContactServices _contactServices;
         private readonly IProductServices _productServices;
-
-        public VendorServices(IVendorRepository vendorRepository, IContactServices contactServices, IProductServices productServices)
+        private readonly IMapper _mapper;
+        public VendorServices(IVendorRepository vendorRepository, IContactServices contactServices, IProductServices productServices, IMapper mapper)
         {
             _vendorRepository = vendorRepository;
             _contactServices = contactServices;
             _productServices = productServices;
+            _mapper = mapper;
         }
 
         public IEnumerable<VendorModel> GetVendors()
         {
             var vendors = _vendorRepository.GetVendors();
-            return vendors.Any() ? Mapper.Map<IEnumerable<VendorModel>>(vendors) : Enumerable.Empty<VendorModel>();
+            return vendors.Any() ? _mapper.Map<IEnumerable<VendorModel>>(vendors) : Enumerable.Empty<VendorModel>();
         }
 
         public void InsertVendor(VendorModel model)
@@ -37,7 +38,7 @@ namespace HHCoApps.Services.Implementation
                 var contactId = _contactServices.GetContactByUniqueIds(new[] { contact.UniqueId }).First().Id;
                 model.ContactId = contactId;
 
-                var entity = Mapper.Map<Vendor>(model);
+                var entity = _mapper.Map<Vendor>(model);
                 _vendorRepository.InsertVendor(entity);
                 transactionScope.Complete();
             }
@@ -54,13 +55,13 @@ namespace HHCoApps.Services.Implementation
 
         public void UpdateVendor(VendorModel model)
         {
-            var entity = Mapper.Map<Vendor>(model);
+            var entity = _mapper.Map<Vendor>(model);
             _vendorRepository.UpdateVendor(entity);
         }
 
         public void DeleteVendorWithProducts(VendorModel model)
         {
-            var entity = Mapper.Map<Vendor>(model);
+            var entity = _mapper.Map<Vendor>(model);
             var productUniqueIds = _productServices.GetProductUniqueIdsByVendorUniqueIds(new[] { entity.UniqueId });
 
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, TimeSpan.FromMinutes(1)))

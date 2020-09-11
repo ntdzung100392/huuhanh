@@ -49,7 +49,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+      <HintPath>..\..\packages\AutoMapper.10.0.0\lib\net461\AutoMapper.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="ClientDependency.Core, Version=1.9.9.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ClientDependency.1.9.9\lib\net45\ClientDependency.Core.dll</HintPath>
@@ -480,136 +481,11 @@
     <Content Include="App_Plugins\StarterKit\tours\views\medialibrary\uploadimages.html" />
     <Content Include="App_Plugins\StarterKit\tours\views\validatetext.controller.js" />
     <Content Include="App_Plugins\StarterKit\tours\views\validatetext.html" />
-    <Content Include="App_Plugins\UmbracoForms\Assets\BaremetricsCalendar\public\css\application.css" />
-    <Content Include="App_Plugins\UmbracoForms\Assets\BaremetricsCalendar\public\js\Calendar.js" />
-    <Content Include="App_Plugins\UmbracoForms\Assets\datepicker.init.js" />
-    <Content Include="App_Plugins\UmbracoForms\Assets\defaultform.css" />
-    <Content Include="App_Plugins\UmbracoForms\Assets\Email-Example\sample-image.jpg" />
-    <Content Include="App_Plugins\UmbracoForms\Assets\Email-Example\umbraco-logo.png" />
-    <Content Include="App_Plugins\UmbracoForms\Assets\moment\min\moment-with-locales.min.js" />
-    <Content Include="App_Plugins\UmbracoForms\Assets\pikaday\pikaday.css" />
-    <Content Include="App_Plugins\UmbracoForms\Assets\pikaday\pikaday.js" />
-    <Content Include="App_Plugins\UmbracoForms\Assets\themes\default\style.css" />
-    <Content Include="App_Plugins\UmbracoForms\Assets\themes\default\umbracoforms.js" />
-    <Content Include="App_Plugins\UmbracoForms\Assets\umbracoforms-conditions.js" />
-    <Content Include="App_Plugins\UmbracoForms\Assets\umbracoforms-dependencies.js" />
-    <Content Include="App_Plugins\UmbracoForms\Assets\umbracoforms.js" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\FieldTypes\checkbox.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\FieldTypes\checkboxlist.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\FieldTypes\dataconsent.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\FieldTypes\datepicker.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\FieldTypes\dropdownlist.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\FieldTypes\fileupload.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\FieldTypes\hiddenfield.html" />
     <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\FieldTypes\imageFileUpload.html" />
     <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\FieldTypes\MailchimpEmail.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\FieldTypes\password.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\FieldTypes\radiobuttonlist.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\FieldTypes\recaptcha.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\FieldTypes\Recaptcha2.html" />
     <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\FieldTypes\Recaptcha3.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\FieldTypes\text.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\FieldTypes\textarea.html" />
     <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\FieldTypes\TextAreaEditor.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\FieldTypes\textfield.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\RenderTypes\date.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\RenderTypes\file.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\RenderTypes\member.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\RenderTypes\text.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\SettingTypes\checkbox.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\SettingTypes\documentmapper.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\SettingTypes\dropdownlist.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\SettingTypes\emailtemplatepicker.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\SettingTypes\fieldmapper.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\SettingTypes\file-upload.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\SettingTypes\file.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\SettingTypes\password.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\SettingTypes\pickers.connectionstring.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\SettingTypes\pickers.content.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\SettingTypes\pickers.contentwithxpath.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\SettingTypes\pickers.datatype.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\SettingTypes\pickers.documenttype.html" />
     <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\SettingTypes\richtext.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\SettingTypes\textarea.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\SettingTypes\textfield.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\SettingTypes\textstring.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Dashboards\forms.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\DataSource\delete.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\DataSource\dialogs\wizard.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\DataSource\edit.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\FormSecurity\edit.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\copy.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\create.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\delete.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\dialogs\additem.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\dialogs\entriesdetail.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\dialogs\entriessettings.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\dialogs\fieldsetsettings.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\dialogs\fieldsettings.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\dialogs\formsettings.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\edit.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\entries.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\overlays\fieldsetsettings\fieldset-settings.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\overlays\fieldsettings\field-settings.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\overlays\fieldtypepicker\field-type-picker.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\overlays\formpicker\formpicker.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\overlays\themepicker\themepicker.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\overlays\workflows\submit-message-workflow-settings.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\overlays\workflows\workflow-settings.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\overlays\workflows\workflow-types.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\overlays\workflows\workflows-overview.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\views\design\design.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\views\settings\settings.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\Form\workflows.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\GridEditors\FormPicker.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\PreValueSource\delete.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\PreValueSource\edit.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\PropertyEditors\formpicker.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\PropertyEditors\formpicker.prevalues.html" />
-    <Content Include="App_Plugins\UmbracoForms\Backoffice\PropertyEditors\themepicker.html" />
-    <Content Include="App_Plugins\UmbracoForms\css\umbraco.forms.css" />
-    <Content Include="App_Plugins\UmbracoForms\Directives\umb-forms-content-picker.html" />
-    <Content Include="App_Plugins\UmbracoForms\Directives\umb-forms-designer-new.html" />
-    <Content Include="App_Plugins\UmbracoForms\Directives\umb-forms-entry-detail.html" />
-    <Content Include="App_Plugins\UmbracoForms\Directives\umb-forms-inline-prevalue-editor.html" />
-    <Content Include="App_Plugins\UmbracoForms\Directives\umb-forms-legacy-content-picker.html" />
-    <Content Include="App_Plugins\UmbracoForms\Directives\umb-forms-prevalue-editor.html" />
-    <Content Include="App_Plugins\UmbracoForms\Directives\umb-forms-regexpicker.html" />
-    <Content Include="App_Plugins\UmbracoForms\Directives\umb-forms-render-type.html" />
-    <Content Include="App_Plugins\UmbracoForms\Fonts\icomoon.svg" />
-    <Content Include="App_Plugins\UmbracoForms\Images\close.png" />
-    <Content Include="App_Plugins\UmbracoForms\Images\recaptcha.png" />
-    <Content Include="App_Plugins\UmbracoForms\Images\recaptcha2.png" />
-    <Content Include="App_Plugins\UmbracoForms\Images\succes-green.png" />
-    <Content Include="App_Plugins\UmbracoForms\Images\workflows\slack\icon.svg" />
-    <Content Include="App_Plugins\UmbracoForms\js\umbraco.forms.js" />
-    <Content Include="App_Plugins\UmbracoForms\lang\cs-CZ.xml" />
-    <Content Include="App_Plugins\UmbracoForms\lang\da-DK.xml" />
-    <Content Include="App_Plugins\UmbracoForms\lang\de-DE.xml" />
-    <Content Include="App_Plugins\UmbracoForms\lang\en-GB.xml" />
-    <Content Include="App_Plugins\UmbracoForms\lang\en-US.xml" />
-    <Content Include="App_Plugins\UmbracoForms\lang\es-ES.xml" />
-    <Content Include="App_Plugins\UmbracoForms\lang\fr-FR.xml" />
-    <Content Include="App_Plugins\UmbracoForms\lang\he-IL.xml" />
-    <Content Include="App_Plugins\UmbracoForms\lang\it-IT.xml" />
-    <Content Include="App_Plugins\UmbracoForms\lang\ja-JP.xml" />
-    <Content Include="App_Plugins\UmbracoForms\lang\ko-KR.xml" />
-    <Content Include="App_Plugins\UmbracoForms\lang\nb-NO.xml" />
-    <Content Include="App_Plugins\UmbracoForms\lang\nl-NL.xml" />
-    <Content Include="App_Plugins\UmbracoForms\lang\pl-PL.xml" />
-    <Content Include="App_Plugins\UmbracoForms\lang\pt-BR.xml" />
-    <Content Include="App_Plugins\UmbracoForms\lang\ru-RU.xml" />
-    <Content Include="App_Plugins\UmbracoForms\lang\sv-SE.xml" />
-    <Content Include="App_Plugins\UmbracoForms\lang\zh-CN.xml" />
-    <Content Include="App_Plugins\UmbracoForms\Xslt\DataTables_json.xslt" />
-    <Content Include="App_Plugins\UmbracoForms\Xslt\DataTables_json_medtrust.xslt" />
-    <Content Include="App_Plugins\UmbracoForms\Xslt\excel.xslt" />
-    <Content Include="App_Plugins\UmbracoForms\Xslt\Html.xslt" />
-    <Content Include="App_Plugins\UmbracoForms\Xslt\postAsXmlSample.xslt" />
-    <Content Include="App_Plugins\UmbracoForms\Xslt\sendXsltEmailSample.xslt" />
-    <Content Include="App_Plugins\UmbracoForms\Xslt\Templates\Schema2\UmbracoContourListComments.xslt" />
-    <Content Include="App_Plugins\UmbracoForms\Xslt\Templates\UmbracoContourListComments.xslt" />
-    <Content Include="App_Plugins\UmbracoForms\Xslt\xml.xslt" />
     <Content Include="App_Plugins\uSync8\backoffice\uSync8\dashboard.html" />
     <Content Include="App_Plugins\uSync8\backoffice\uSync8\uSyncDashboardController.js" />
     <Content Include="App_Plugins\uSync8\changeDialog.html" />
@@ -696,13 +572,6 @@
     <Content Include="assets\Web.config" />
     <Content Include="assets\images\icons\Web.config" />
     <Content Include="assets\images\Web.config" />
-    <Content Include="App_Plugins\UmbracoForms\RazorTemplates\HtmlTable.cshtml" />
-    <Content Include="App_Plugins\UmbracoForms\package.manifest" />
-    <Content Include="App_Plugins\UmbracoForms\Fonts\icomoon.woff" />
-    <Content Include="App_Plugins\UmbracoForms\Fonts\icomoon.ttf" />
-    <Content Include="App_Plugins\UmbracoForms\Fonts\icomoon.eot" />
-    <Content Include="App_Plugins\UmbracoForms\Data\Templates\contactform.json" />
-    <Content Include="App_Plugins\UmbracoForms\Data\Templates\commentform.json" />
     <Content Include="App_Plugins\UmbracoForms\UmbracoForms.config" />
     <None Include="scripts\Web.config" />
     <None Include="config\imageprocessor\cache.Debug.config">
@@ -803,30 +672,16 @@
     <Compile Include="Composers\Indexing\CustomIndexComponent.cs" />
     <Compile Include="Composers\Indexing\CustomIndexComposer.cs" />
     <Compile Include="Composers\Indexing\IndexConstants.cs" />
-    <Compile Include="Composers\Integrations\MailchimpIntegrationComposer.cs" />
-    <Compile Include="Composers\Integrations\HubSpotIntegrationComposer.cs" />
     <Compile Include="Composers\MappingComposer.cs" />
     <Compile Include="Composers\Indexing\Creators\ContentIndexCreator.cs" />
     <Compile Include="Composers\RegisterApiControllerComposer.cs" />
     <Compile Include="Composers\ServiceComposer.cs" />
     <Compile Include="Composers\CompositionExtensions.cs" />
-    <Compile Include="Controllers\ExportProductController.cs" />
-    <Compile Include="Controllers\ImportProductShopifyMappingController.cs" />
-    <Compile Include="Controllers\ShopifyWebhookController.cs" />
-    <Compile Include="Forms\Constants\Enums.cs" />
-    <Compile Include="Forms\Constants\ShopifyOrderFormConstants.cs" />
-    <Compile Include="Forms\FieldTypes\MailchimpEmail.cs" />
-    <Compile Include="Forms\FieldTypes\Recaptcha3.cs" />
-    <Compile Include="Forms\Workflows\HubSpotSubmitShopifyOrderFormWorkFlow.cs" />
     <Compile Include="Helpers\AsyncExtensions.cs" />
     <Compile Include="Helpers\DownloadResult.cs" />
     <Compile Include="Models\Constants\ProductConstants.cs" />
     <Compile Include="Models\ContactInfo.cs" />
-    <Compile Include="Controllers\RefreshTokenHubSpotController.cs" />
     <Compile Include="Controllers\ContentsController.cs" />
-    <Compile Include="Controllers\SubscribedController.cs" />
-    <Compile Include="Forms\Workflows\MailchimpSubmitSubscribeFormWorkflow.cs" />
-    <Compile Include="Forms\Workflows\HubSpotSubmitContactUsFormWorkflow.cs" />
     <Compile Include="Models\EmailTemplateViewModel.cs" />
     <Compile Include="Controllers\NavigationController.cs" />
     <Compile Include="Controllers\StoresLocatorController.cs" />
@@ -835,9 +690,6 @@
     <Compile Include="Controllers\ResponsiveReactController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\WishListController.cs" />
-    <Compile Include="Forms\Extensions\FieldExtensions.cs" />
-    <Compile Include="Forms\FieldTypes\ImageFileUpload.cs" />
-    <Compile Include="Forms\FieldTypes\TextAreaEditor.cs" />
     <Compile Include="Headspring\Enumeration.cs" />
     <Compile Include="Helpers\CdnUrlResolvers\ICdnUrlResolver.cs" />
     <Compile Include="Helpers\ContentExtensions.cs" />
@@ -1019,7 +871,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\PublishedContentExtensions.cs" />
     <Compile Include="Services\EmailTemplateService.cs" />
-    <Compile Include="Services\RecaptchaService.cs" />
     <Compile Include="Services\RelatedProductService.cs" />
     <Compile Include="Services\ContentInfoService.cs" />
     <Compile Include="Services\FilterCategoryService.cs" />
@@ -1050,9 +901,7 @@
     <Compile Include="Services\ItemListingService.cs" />
     <Compile Include="Services\MenuItemService.cs" />
     <Compile Include="Services\SeoMetadataService.cs" />
-    <Compile Include="Services\ShopifyOrderService.cs" />
     <Compile Include="Services\ToolAndTipService.cs" />
-    <Compile Include="Services\HubSpotTokenService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Plugins\OsmMaps\package.manifest" />
@@ -1207,39 +1056,6 @@
     <Content Include="Views\Partials\Forms\Fieldtypes\Fieldtype.Recaptcha3.cshtml" />
     <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.MailchimpEmail.cshtml" />
     <Content Include="Views\Partials\CartPage.cshtml" />
-    <Content Include="Views\Partials\Forms\Themes\default\Submitted.cshtml" />
-    <Content Include="Views\Partials\Forms\Themes\default\ScrollToFormScript.cshtml" />
-    <Content Include="Views\Partials\Forms\Themes\default\Script.cshtml" />
-    <Content Include="Views\Partials\Forms\Themes\default\Render.cshtml" />
-    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.Text.cshtml" />
-    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\Fieldtype.Recaptcha2.cshtml" />
-    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.RadioButtonList.cshtml" />
-    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.PasswordField.cshtml" />
-    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.HiddenField.cshtml" />
-    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.FileUpload.cshtml" />
-    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.DropDownList.cshtml" />
-    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.DatePicker.cshtml" />
-    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.DataConsent.cshtml" />
-    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.CheckBoxList.cshtml" />
-    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.CheckBox.cshtml" />
-    <Content Include="Views\Partials\Forms\Themes\default\DatePicker.cshtml" />
-    <Content Include="Views\Partials\Forms\Themes\bootstrap3-horizontal\Form.cshtml" />
-    <Content Include="Views\Partials\Forms\Themes\bootstrap3-horizontal\Fieldtypes\FieldType.RadioButtonList.cshtml" />
-    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.Textarea.cshtml" />
-    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.Text.cshtml" />
-    <Content Include="Views\Partials\Forms\Fieldtypes\Fieldtype.Recaptcha2.cshtml" />
-    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.RadioButtonList.cshtml" />
-    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.PasswordField.cshtml" />
-    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.HiddenField.cshtml" />
-    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.FileUpload.cshtml" />
-    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.DropDownList.cshtml" />
-    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.DatePicker.cshtml" />
-    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.DataConsent.cshtml" />
-    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.CheckBoxList.cshtml" />
-    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.CheckBox.cshtml" />
-    <Content Include="Views\Partials\Forms\Export\excel.cshtml" />
-    <Content Include="Views\Partials\Forms\Emails\Example-Template.cshtml" />
-    <Content Include="Views\MacroPartials\InsertUmbracoFormWithTheme.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1252,37 +1068,13 @@
     <Folder Include="App_Data\UmbracoForms\Data\forms\" />
     <Folder Include="App_Data\UmbracoForms\Data\prevaluesources\" />
     <Folder Include="App_Data\UmbracoForms\Data\workflows\" />
+    <Folder Include="App_Plugins\UmbracoForms\Data\" />
+    <Folder Include="App_Plugins\UmbracoForms\Images\" />
     <Folder Include="Views\Partials\Forms\Themes\contact-us\Fieldtypes\" />
     <Folder Include="Views\Partials\Forms\Themes\subscribe\Fieldtypes\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DuluxGroup.Integrations.HubSpot\DuluxGroup.Integrations.HubSpot.csproj">
-      <Project>{5d59d2ec-8d8b-449d-b821-42cb9beab571}</Project>
-      <Name>DuluxGroup.Integrations.HubSpot</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DuluxGroup.Integrations.HubSpot.Tests\DuluxGroup.Integrations.HubSpot.Tests.csproj">
-      <Project>{6ba3930b-ce0d-4cf1-aa52-898bc125e3b1}</Project>
-      <Name>DuluxGroup.Integrations.HubSpot.Tests</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DuluxGroup.Integrations.Shoptify\DuluxGroup.Integrations.Shoptify.csproj">
-      <Project>{1551f175-1754-443d-a107-44983582c0c4}</Project>
-      <Name>DuluxGroup.Integrations.Shoptify</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DuluxGroup.Plugins.Tools\DuluxGroup.Plugins.Tools.csproj">
-      <Project>{bc3c816d-258b-4105-84c4-3cbf493f4ec3}</Project>
-      <Name>DuluxGroup.Plugins.Tools</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DuluxGroup.Integration.Mailchimp\DuluxGroup.Integration.Mailchimp.csproj">
-      <Project>{474dc571-a4d3-4ba6-a5e4-9532ec8e55bb}</Project>
-      <Name>DuluxGroup.Integration.Mailchimp</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

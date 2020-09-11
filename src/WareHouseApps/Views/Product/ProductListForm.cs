@@ -20,7 +20,7 @@ namespace WareHouseApps
         private IList<ProductViewModel> _productList;
         private ProductViewModel _currentProduct;
 
-        public ProductList(ICategoryServices categoryServices, IVendorServices vendorServices, IProductServices productServices)
+        public ProductList(ICategoryServices categoryServices, IVendorServices vendorServices, IProductServices productServices, IMapper mapper) : base(mapper)
         {
             _categoryServices = categoryServices;
             _vendorServices = vendorServices;
@@ -118,7 +118,7 @@ namespace WareHouseApps
                 var result = _productServices.GetProductsOrderByIssuedDate();
                 if (result.Any())
                 {
-                    _productList = result.Select(Mapper.Map<ProductViewModel>).ToList();
+                    _productList = result.Select(_mapper.Map<ProductViewModel>).ToList();
                 }
 
                 dataGridProducts.DataSource = _productList;
@@ -138,7 +138,7 @@ namespace WareHouseApps
 
         private void LoadAddProduct(object sender, EventArgs e)
         {
-            var addProductForm = new NewProduct(_productServices, _categoryServices, _vendorServices);
+            var addProductForm = new NewProduct(_productServices, _categoryServices, _vendorServices, _mapper);
             addProductForm.FormClosed += AddProductFormClosed;
             addProductForm.ShowDialog();
         }
@@ -198,7 +198,7 @@ namespace WareHouseApps
                 _currentProduct.Status = cbxStatus.SelectedValue.ToString();
                 _currentProduct.IsActive = cbxIsActive.Checked;
 
-                _productServices.UpdateProductByUniqueId(Mapper.Map<ProductModel>(_currentProduct));
+                _productServices.UpdateProductByUniqueId(_mapper.Map<ProductModel>(_currentProduct));
             }
             catch (Exception ex)
             {

@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using AutoMapper;
 using WareHouseApps.Helper;
 
 namespace WareHouseApps
 {
     public partial class ExportProduct : BaseMethod
     {
-        public ExportProduct()
+        public ExportProduct(IMapper mapper) : base(mapper)
         {
             InitializeComponent();
         }

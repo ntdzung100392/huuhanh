@@ -17,7 +17,7 @@ namespace WareHouseApps
         private IList<VendorViewModel> _filterList;
         private VendorViewModel _currentVendor;
 
-        public VendorListForm(IVendorServices vendorServices)
+        public VendorListForm(IVendorServices vendorServices, IMapper mapper) : base(mapper)
         {
             _vendorServices = vendorServices;
             InitializeComponent();
@@ -46,7 +46,7 @@ namespace WareHouseApps
 
             try
             {
-                _vendorServices.UpdateVendor(Mapper.Map<VendorModel>(_currentVendor));
+                _vendorServices.UpdateVendor(_mapper.Map<VendorModel>(_currentVendor));
                 GetVendors();
                 SuccessMessage();
             }
@@ -64,7 +64,7 @@ namespace WareHouseApps
 
             try
             {
-                _vendorServices.DeleteVendorWithProducts(Mapper.Map<VendorModel>(_currentVendor));
+                _vendorServices.DeleteVendorWithProducts(_mapper.Map<VendorModel>(_currentVendor));
                 _currentVendor = null;
                 SuccessMessage();
             }
@@ -82,7 +82,7 @@ namespace WareHouseApps
 
         private void LoadAddForm(object sender, EventArgs e)
         {
-            var addSupplierForm = new NewVendor(_vendorServices);
+            var addSupplierForm = new NewVendor(_vendorServices, _mapper);
             addSupplierForm.FormClosed += NewVendorFormClosed;
             addSupplierForm.ShowDialog();
         }
@@ -97,11 +97,11 @@ namespace WareHouseApps
             try
             {
                 var result = _vendorServices.GetVendors();
-                _vendorList = Mapper.Map<IEnumerable<VendorViewModel>>(result).ToList();
+                _vendorList = _mapper.Map<IEnumerable<VendorViewModel>>(result).ToList();
 
                 vendorViewModelBindingSource.DataSource = _vendorList;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.Error(ex.Message);
                 ErrorMessage();

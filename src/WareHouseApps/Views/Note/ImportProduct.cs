@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,7 +14,7 @@ namespace WareHouseApps
 {
     public partial class ImportProduct : BaseMethod
     {
-        public ImportProduct()
+        public ImportProduct(IMapper mapper) : base(mapper)
         {
             InitializeComponent();
             CenterToParent();

@@ -14,7 +14,7 @@ namespace WareHouseApps
         [Inject]
         private readonly IVendorServices _vendorServices;
 
-        public NewVendor(IVendorServices vendorServices)
+        public NewVendor(IVendorServices vendorServices, IMapper mapper) : base(mapper)
         {
             InitializeComponent();
             CenterToParent();
@@ -40,7 +40,7 @@ namespace WareHouseApps
 
             FormClosing += PreventClosingFormWithErrorProvider;
         }
-        
+
         private void InsertNewVendor(object sender, EventArgs e)
         {
             if (FormValid(out var errorMessage))
@@ -58,15 +58,13 @@ namespace WareHouseApps
                         TaxCode = txtTaxCode.Text.Trim()
                     };
 
-                    _vendorServices.InsertVendor(Mapper.Map<VendorModel>(viewModel));
+                    _vendorServices.InsertVendor(_mapper.Map<VendorModel>(viewModel));
                     if (YesNoDialog("Thành Công!", "Bạn có muốn tiếp tục không ?") == DialogResult.Yes)
                     {
                         ClearForm();
                     }
-                    else
-                    {
-                        Close();
-                    }
+
+                    Close();
                 }
                 catch (Exception ex)
                 {
@@ -85,7 +83,7 @@ namespace WareHouseApps
             errorMessage = string.Empty;
             return ValidEmailAddress(txtEmail.Text.Trim(), out errorMessage);
         }
-        
+
         private void ClearForm()
         {
             txtAddress.Clear();

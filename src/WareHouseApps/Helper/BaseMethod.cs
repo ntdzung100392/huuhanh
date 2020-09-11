@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.ComponentModel;
 using System.Security.Principal;
 using System.Threading;
@@ -13,11 +14,13 @@ namespace WareHouseApps.Helper
         private IContainer components;
         protected BindingSource mainBindingSource;
         public readonly log4net.ILog _logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        public readonly IMapper _mapper;
 
-        public BaseMethod()
+        public BaseMethod(IMapper mapper)
         {
             InitializeComponent();
             Icon = Properties.Resources.icon128x128;
+            _mapper = mapper;
         }
 
         public void ShowMessage(string message)

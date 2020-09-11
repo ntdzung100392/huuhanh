@@ -22,10 +22,7 @@ namespace HHCoApps.CMSWeb.Composers
             composition.Register<INavigationService, NavigationService>();
             composition.Register<IFooterNavigationService, FooterNavigationService>();
             composition.Register<IRelatedProductService, RelatedProductService>();
-            composition.Register<IEmailTemplateService, EmailTemplateService>();
-            composition.Register<IRecaptchaService, RecaptchaService>();
-            composition.Register<IShopifyOrderService, ShopifyOrderService>();
-            composition.Register<IHubSpotTokenService, HubSpotTokenService>();            
+            composition.Register<IEmailTemplateService, EmailTemplateService>(); 
         }
     }
 }

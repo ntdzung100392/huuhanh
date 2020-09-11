@@ -2,41 +2,33 @@
 using AutoMapper.Configuration;
 using HHCoApps.Services;
 using HHCoApps.Services.Models;
-using WareHouseApps.Models;
+using Ninject;
+using Ninject.Modules;
 
 namespace WareHouseApps.Helper
 {
-    public class MapperInit
-    { 
-        /// <summary>
-      /// Mapper configuration
-      /// </summary>
-        public MapperConfigurationExpression Configuration { get; } = new MapperConfigurationExpression();
-
-        /// <summary>
-        /// Initialize mapper
-        /// </summary>
-        public void Init()
+    public class MapperInit : NinjectModule
+    {
+        public override void Load()
         {
-            Configuration.Mapping();
-            // Static mapper
 
-            Configuration.CreateMap<VendorModel, VendorViewModel>()
-                .ForMember(d => d.VendorName, o => o.MapFrom(s => s.Name))
-                .ForMember(d => d.Address, o => o.MapFrom(s => s.Contact.Address))
-                .ForMember(d => d.Email, o => o.MapFrom(s => s.Contact.Email))
-                .ForMember(d => d.Fax, o => o.MapFrom(s => s.Contact.Fax))
-                .ForMember(d => d.Phone, o => o.MapFrom(s => s.Contact.Phone))
-                .ForMember(d => d.TaxCode, o => o.MapFrom(s => s.Contact.TaxCode))
-                .ReverseMap();
-            Configuration.CreateMap<CategoryModel, CategoryViewModel>().ReverseMap();
-            Configuration.CreateMap<ProductModel, ProductViewModel>()
-                .ForMember(d => d.CategoryName, o => o.MapFrom(s => s.Category.Name))
-                .ForMember(d => d.VendorName, o => o.MapFrom(s => s.Vendor.Name))
-                .ReverseMap();
-            Configuration.CreateMap<ContactModel, ContactViewModel>().ReverseMap();
+            var mapperConfiguration = CreateConfiguration();
+            Bind<MapperConfiguration>().ToConstant(mapperConfiguration).InSingletonScope();
 
-            Mapper.Initialize(Configuration);
+            // This teaches Ninject how to create automapper instances say if for instance
+            // MyResolver has a constructor with a parameter that needs to be injected
+            Bind<IMapper>().ToMethod(ctx => new Mapper(mapperConfiguration, type => ctx.Kernel.Get(type)));
+        }
+
+        private MapperConfiguration CreateConfiguration()
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+            // Add all profiles in current assembly
+            cfg.AddMaps(GetType().Assembly);
+            });
+
+            return config;
         }
     }
 }

@@ -21,13 +21,11 @@ namespace HHCoApps.CMSWeb.Controllers
     {
         private readonly UmbracoHelper _umbracoHelper;
         private readonly IEmailTemplateService _emailTemplateService;
-        private readonly IRecaptchaService _recaptchaService;
 
-        public WishListController(UmbracoHelper umbracoHelper, IEmailTemplateService emailTemplateService, IRecaptchaService recaptchaService)
+        public WishListController(UmbracoHelper umbracoHelper, IEmailTemplateService emailTemplateService)
         {
             _umbracoHelper = umbracoHelper;
             _emailTemplateService = emailTemplateService;
-            _recaptchaService = recaptchaService;
         }
 
         [HttpPost]
@@ -48,12 +46,6 @@ namespace HHCoApps.CMSWeb.Controllers
             var integration = (Umbraco.Web.PublishedModels.Integration)_umbracoHelper.ContentQuery.ContentSingleFromCache(CachedContent.IntegrationContent);
             if (integration == null)
                 throw new ArgumentNullException(nameof(integration));
-
-            if (!_recaptchaService.VerifyRecaptcha(wishList.ReCaptchaToken, integration.HumanScore))
-            {
-                Logger.Info(GetType(), $"Recaptcha Failed with response {wishList.ReCaptchaToken}");
-                return new WishListEmailResponse { IsSuccess = false, Message = "We are unable to process your request. Please try again later." };
-            }
 
             var sendGridApi = integration.SendGridApiKey ?? string.Empty;
             if (string.IsNullOrWhiteSpace(sendGridApi))

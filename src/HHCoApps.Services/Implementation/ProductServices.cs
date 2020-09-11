@@ -13,11 +13,13 @@ namespace HHCoApps.Services.Implementation
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryServices _categoryServices;
+        private readonly IMapper _mapper;
 
-        public ProductServices(IProductRepository productRepository, ICategoryServices categoryServices)
+        public ProductServices(IProductRepository productRepository, ICategoryServices categoryServices, IMapper mapper)
         {
             _productRepository = productRepository;
             _categoryServices = categoryServices;
+            _mapper = mapper;
         }
 
         public IEnumerable<Guid> GetProductUniqueIdsByVendorUniqueIds(IEnumerable<Guid> vendorUniqueIds)
@@ -29,19 +31,19 @@ namespace HHCoApps.Services.Implementation
         public IEnumerable<ProductModel> GetProductsOrderByIssuedDate()
         {
             var products = _productRepository.GetProductsOrderByIssuedDate();
-            return products.Any() ? products.Select(Mapper.Map<ProductModel>).ToList() : Enumerable.Empty<ProductModel>();
+            return products.Any() ? products.Select(_mapper.Map<ProductModel>).ToList() : Enumerable.Empty<ProductModel>();
         }
 
         public void InsertProduct(ProductModel model)
         {
-            var entity = Mapper.Map<Product>(model);
+            var entity = _mapper.Map<Product>(model);
             entity.ProductCode = GenerateProductCode();
             _productRepository.InsertProduct(entity);
         }
 
         public void UpdateProductByUniqueId(ProductModel model)
         {
-            var entity = Mapper.Map<Product>(model);
+            var entity = _mapper.Map<Product>(model);
             _productRepository.UpdateProductByUniqueId(entity);
         }
 
@@ -57,7 +59,7 @@ namespace HHCoApps.Services.Implementation
 
         public IEnumerable<ProductModel> GetAllProduct()
         {
-            return _productRepository.GetProducts().Select(Mapper.Map<ProductModel>).ToList();
+            return _productRepository.GetProducts().Select(_mapper.Map<ProductModel>).ToList();
         }
 
         public void DeleteProductsByUniqueIds(IEnumerable<Guid> productUniqueIds)

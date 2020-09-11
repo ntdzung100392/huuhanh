@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Security.Principal;
 using System.Threading;
 using WareHouseApps.Helper;
+using AutoMapper;
 
 namespace WareHouseApps
 {
@@ -18,11 +19,13 @@ namespace WareHouseApps
         [STAThread]
         private static void Main()
         {
-            IKernel standardKernel = new StandardKernel(new NinjectBindingRepositories(), new NinjectBindingServices());
-            log4net.Config.XmlConfigurator.Configure();
-            new MapperInit().Init();
+            IKernel standardKernel = new StandardKernel(new BindingRepositories(), new NinjectBindingServices());
+            //log4net.Config.XmlConfigurator.Configure();
+            new MapperInit().Load();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
             var windowsPrincipal = (WindowsPrincipal)Thread.CurrentPrincipal;
 #if DEBUG
@@ -30,7 +33,8 @@ namespace WareHouseApps
                 new MainMenu(
                     standardKernel.Get<IVendorServices>(),
                     standardKernel.Get<ICategoryServices>(),
-                    standardKernel.Get<IProductServices>()
+                    standardKernel.Get<IProductServices>(),
+                    standardKernel.Get<IMapper>()
                     ));
 #else
             Application.Run(new Login(standardKernel.Get<IUserServices>()));

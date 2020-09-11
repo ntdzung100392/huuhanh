@@ -12,20 +12,22 @@ namespace HHCoApps.Services.Implementation
     internal class ContactServices : IContactServices
     {
         private readonly IContactRepository _contactRepository;
+        private readonly IMapper _mapper;
 
-        public ContactServices(IContactRepository contactRepository)
+        public ContactServices(IContactRepository contactRepository, IMapper mapper)
         {
             _contactRepository = contactRepository;
+            _mapper = mapper;
         }
 
         public ContactModel InsertContact(ContactModel model)
         {
-            var entity = Mapper.Map<Contact>(model);
+            var entity = _mapper.Map<Contact>(model);
             entity.IsActive = true;
             entity.UniqueId = Guid.NewGuid();
 
             _contactRepository.InsertContact(entity);
-            return Mapper.Map<ContactModel>(entity);
+            return _mapper.Map<ContactModel>(entity);
         }
 
         public IEnumerable<ContactModel> GetContactByUniqueIds(IEnumerable<Guid> contactUniqueIds)
@@ -34,7 +36,7 @@ namespace HHCoApps.Services.Implementation
                 return Enumerable.Empty<ContactModel>();
 
             var contacts = _contactRepository.GetContactsByUniqueIds(contactUniqueIds);
-            return Mapper.Map<IEnumerable<ContactModel>>(contacts);
+            return _mapper.Map<IEnumerable<ContactModel>>(contacts);
         }
 
         public Guid? GetContactUniqueIdByContactId(int contactId)

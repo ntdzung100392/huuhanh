@@ -16,7 +16,7 @@ namespace WareHouseApps
         private readonly ICategoryServices _categoryServices;
         private IList<CategoryViewModel> _categoryList;
         private CategoryViewModel _selectedCategory;
-        public CategoryList(ICategoryServices categoryServices)
+        public CategoryList(ICategoryServices categoryServices, IMapper mapper) : base(mapper)
         {
             _categoryServices = categoryServices;
             InitializeComponent();
@@ -34,7 +34,7 @@ namespace WareHouseApps
             var result = _categoryServices.GetCategories();
             if (result.Any())
             {
-                _categoryList = result.Select(Mapper.Map<CategoryViewModel>).OrderBy(c => c.Code).ToList();
+                _categoryList = result.Select(_mapper.Map<CategoryViewModel>).OrderBy(c => c.Code).ToList();
             }
             categoryViewModelBindingSource.DataSource = _categoryList;
         }

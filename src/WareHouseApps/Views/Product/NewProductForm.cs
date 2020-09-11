@@ -16,7 +16,7 @@ namespace WareHouseApps
         private readonly ICategoryServices _categoryServices;
         private readonly IVendorServices _vendorServices;
 
-        public NewProduct(IProductServices productServices, ICategoryServices categoryServices, IVendorServices vendorServices)
+        public NewProduct(IProductServices productServices, ICategoryServices categoryServices, IVendorServices vendorServices, IMapper mapper) : base (mapper)
         {
             _productServices = productServices;
             _categoryServices = categoryServices;
@@ -92,7 +92,7 @@ namespace WareHouseApps
             };
             try
             {
-                _productServices.InsertProduct(Mapper.Map<ProductModel>(viewModel));
+                _productServices.InsertProduct(_mapper.Map<ProductModel>(viewModel));
                 if (YesNoDialog("Thành Công!", "Bạn có muốn tiếp tục không ?") == DialogResult.Yes)
                 {
                     ClearForm();
