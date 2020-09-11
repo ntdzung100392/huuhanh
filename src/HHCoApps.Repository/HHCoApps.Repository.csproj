@@ -71,7 +71,7 @@
     <Compile Include="Interfaces\IProductRepository.cs" />
     <Compile Include="Interfaces\IVendorRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
-    <Compile Include="BindingRepositories.cs" />
+    <Compile Include="RepositoriesComposer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

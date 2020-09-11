@@ -4,7 +4,7 @@ using Ninject.Modules;
 
 namespace HHCoApps.Services
 {
-    public class NinjectBindingServices : NinjectModule
+    public class ServicesComposer : NinjectModule
     {
         public override void Load()
         {

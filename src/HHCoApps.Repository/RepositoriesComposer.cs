@@ -4,7 +4,7 @@ using Ninject.Modules;
 
 namespace HHCoApps.Repository
 {
-    public class BindingRepositories : NinjectModule
+    public class RepositoriesComposer : NinjectModule
     {
         public override void Load()
         {

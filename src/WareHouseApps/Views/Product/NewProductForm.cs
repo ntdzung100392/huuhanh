@@ -104,7 +104,6 @@ namespace WareHouseApps
             }
             catch (Exception ex)
             {
-                _logger.Error(ex.Message);
                 ErrorMessage();
             }
         }

@@ -65,7 +65,6 @@ namespace WareHouseApps
             }
             catch (Exception ex)
             {
-                _logger.Error(ex.Message);
                 ErrorMessage();
             }
         }
@@ -89,7 +88,6 @@ namespace WareHouseApps
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex.Message);
                     ErrorMessage();
                 }
             }

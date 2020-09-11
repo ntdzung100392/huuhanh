@@ -13,7 +13,6 @@ namespace WareHouseApps.Helper
         private ErrorProvider errorTextBox;
         private IContainer components;
         protected BindingSource mainBindingSource;
-        public readonly log4net.ILog _logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public readonly IMapper _mapper;
 
         public BaseMethod(IMapper mapper)
