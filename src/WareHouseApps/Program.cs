@@ -20,7 +20,7 @@ namespace WareHouseApps
         private static void Main()
         {
             IKernel standardKernel = new StandardKernel(new BindingRepositories(), new NinjectBindingServices());
-            //log4net.Config.XmlConfigurator.Configure();
+            log4net.Config.XmlConfigurator.Configure();
             new MapperInit().Load();
 
             Application.EnableVisualStyles();

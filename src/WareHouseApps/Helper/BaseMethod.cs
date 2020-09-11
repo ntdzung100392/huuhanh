@@ -102,10 +102,10 @@ namespace WareHouseApps.Helper
         #region Private Method
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.errorTextBox = new System.Windows.Forms.ErrorProvider(this.components);
+            this.components = new Container();
+            this.errorTextBox = new ErrorProvider(this.components);
             this.mainBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.errorTextBox)).BeginInit();
+            ((ISupportInitialize)(this.errorTextBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
