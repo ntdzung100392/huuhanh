@@ -1,0 +1,104 @@
+trigger:
+  branches:
+    include:
+    - master
+    - releases/*
+    exclude:
+    - azure-pipelines-*
+
+variables:
+  Version.MajorMinor: 1.0
+  solution: '*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  npmPackageFolder: "src/HHCoApps.Client"
+  Version.Revision: $[counter(variables['Version.MajorMinor'], 0)]
+  project: HHCoApps.CMSWeb
+  buildId: $(Build.BuildId)
+
+name: $(Version.MajorMinor).$(Version.Revision)
+
+stages:
+  - stage: Build
+    jobs:
+      - job: Build
+        pool:
+          vmImage: 'windows-latest'
+        steps:
+        - bash: |
+            echo "##vso[build.updatebuildnumber]$(Version.MajorMinor).$(Version.Revision)-$(Build.SourceBranchName)"
+          name: SetReleaseBuildName
+          condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
+          
+        - task: NuGetToolInstaller@1
+
+        - task: NuGetCommand@2
+          inputs:
+            restoreSolution: '$(solution)'
+            restoreDirectory: 'src/packages'
+
+        - task: Npm@1
+          inputs:
+            command: 'install'
+            workingDir: '$(npmPackageFolder)'
+
+        - task: VSBuild@1
+          inputs:
+            solution: '$(solution)'
+            msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
+            platform: '$(buildPlatform)'
+            configuration: '$(buildConfiguration)'
+
+        - task: VSTest@2
+          inputs:
+            platform: '$(buildPlatform)'
+            configuration: '$(buildConfiguration)'
+
+        - publish: '$(build.artifactStagingDirectory)'
+          artifact: $(project)-build
+          
+        - script: echo $(Build.Reason)
+
+  - stage: DeployDev
+    variables:
+      - group: dev
+      - group: dev-kv
+    jobs:
+      - deployment: DeployDev
+        condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+        pool:
+          vmImage: 'windows-latest'
+        displayName: Dev Deployment
+        environment:
+          name: dev
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: none
+                - script: echo $(Build.Reason)
+                - task: replacetokens@3
+                  inputs:
+                    targetFiles: '$(Pipeline.Workspace)/$(project)-build/*.xml'
+                    encoding: 'auto'
+                    writeBOM: true
+                    actionOnMissing: 'warn'
+                    keepToken: false
+                    tokenPrefix: '#{'
+                    tokenSuffix: '}#'
+                    useLegacyPattern: false
+                    enableTelemetry: true
+                - task: AzureRmWebAppDeployment@4
+                  inputs:
+                    ConnectionType: 'AzureRM'
+                    azureSubscription: '$(project)-dev'
+                    appType: 'webApp'
+                    WebAppName: 'Digital-Dev-$(project)-appservice'
+                    packageForLinux: '$(Pipeline.Workspace)/$(project)-build/*.zip'
+                    AppSettings: '-version $(Build.BuildNumber)'
+                    enableCustomDeployment: true
+                    DeploymentType: 'webDeploy'
+                    TakeAppOfflineFlag: false
+                    SetParametersFile: '$(Pipeline.Workspace)/$(project)-build/HHCoApps.CMSWeb.SetParameters.xml'
+                    ExcludeFilesFromAppDataFlag: false
+                    RenameFilesFlag: false
