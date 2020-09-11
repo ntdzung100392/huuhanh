@@ -92,7 +92,7 @@
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\VendorModel.cs" />
     <Compile Include="Models\UserModel.cs" />
-    <Compile Include="NinjectBindingServices.cs" />
+    <Compile Include="ServicesComposer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
