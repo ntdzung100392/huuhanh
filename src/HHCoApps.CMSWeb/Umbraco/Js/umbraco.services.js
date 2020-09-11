@@ -914,7 +914,7 @@
             }
         }
         var prepareEntryForStorage = function prepareEntryForStorage(entryData, firstLevelClearupMethod) {
-            var cloneData = angular.copy(entryData);
+            var cloneData = Utilities.copy(entryData);
             if (firstLevelClearupMethod != undefined) {
                 firstLevelClearupMethod(cloneData);
             }

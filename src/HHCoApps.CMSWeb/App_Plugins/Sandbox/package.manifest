@@ -1,0 +1,12 @@
+{
+  "propertyEditors": [
+    {
+      "alias": "UmbracoSandbox.Password",
+      "name": "Password",
+      "icon": "icon-code",
+      "editor": {
+        "view": "~/App_Plugins/Sandbox/views/Password.html"
+      }
+    }
+  ]
+}

@@ -63,6 +63,30 @@ namespace HHCoApps.CMSWeb.Controllers
             var stores = storesPage.Children<Store>();
             var radius = storesPage.RadiusRangeMeters == default ? 10000 : storesPage.RadiusRangeMeters;
 
+            foreach (var store in stores)
+            {
+                var location = store.Location;
+                var coordinates = location.Address.Coordinates.Split(',');
+                var storeLat = double.Parse(coordinates[0]);
+                var storeLong = double.Parse(coordinates[1]);
+
+                double distance = GetDistanceBetweenTwoLocations(latitude, longitude, storeLat, storeLong);
+
+                if (distance <= radius / 1000)
+                {
+                    var storeInformation = _mapper.Map<StoreInformation>(store);
+                    storeInformation.Properties.DistanceFromOrigin = distance;
+                    storeInformation.Geometry = new GeoMetry
+                    {
+                        Type = "Point",
+                        Coordinates = new[] { storeLong, storeLat }
+                    };
+
+                    storeInformation.Type = "Feature";
+                    result.Features.Add(storeInformation);
+                }
+            }
+
             if (result.Features.Any())
             {
                 result.Features.Sort((a, b) => a.Properties.DistanceFromOrigin.CompareTo(b.Properties.DistanceFromOrigin));

@@ -11,6 +11,7 @@ namespace HHCoApps.CMSWeb.Models
         public IEnumerable<Link> DownloadLinks { get; set; } = Enumerable.Empty<Link>();
         public bool AddToWishListEnabled { get; set; }
         public bool FindAStockistEnabled { get; set; }
+        public bool ColourAccuracyEnabled { get; set; }
         public JToken Summary { get; set; }
     }
 }

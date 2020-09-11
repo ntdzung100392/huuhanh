@@ -1242,3 +1242,13 @@ blockquote:after {
     padding-left: 15px;
   }
 }
+
+@media only screen and (max-width: 768px) {
+  .header .navbar-list .navbar-brand {
+    margin-right: 2.5px;
+    margin-left: 2.5px;
+  }
+  .header .navbar-header__logo img {
+    max-width: 170px;
+  }
+}

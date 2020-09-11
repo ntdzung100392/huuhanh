@@ -17,8 +17,12 @@ namespace HHCoApps.CMSWeb.Mappings
 
             CreateBreadcrumbMapping<Product>();
             CreateBreadcrumbMapping<Products>();
+            CreateBreadcrumbMapping<Questions>();
             CreateBreadcrumbMapping<LandingPage>();
             CreateBreadcrumbMapping<SearchPage>();
+            CreateBreadcrumbMapping<Article>();
+            CreateBreadcrumbMapping<Articles>();
+            CreateBreadcrumbMapping<ContactUs>();
             CreateBreadcrumbMapping<Store>();
             CreateBreadcrumbMapping<Stores>();
         }

@@ -1,5 +1,5 @@
-﻿using Examine;
-using HHCoApps.CMSWeb.Composers.Indexing.Creators;
+﻿using HHCoApps.CMSWeb.Composers.Indexing.Creators;
+using Examine;
 using Umbraco.Core.Composing;
 
 namespace HHCoApps.CMSWeb.Composers.Indexing

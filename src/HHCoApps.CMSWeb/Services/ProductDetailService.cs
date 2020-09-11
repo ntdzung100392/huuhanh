@@ -3,6 +3,7 @@ using System.Linq;
 using AutoMapper;
 using HHCoApps.CMSWeb.Models;
 using Umbraco.Core.Models.PublishedContent;
+using Umbraco.Web;
 using Umbraco.Web.Macros;
 using Umbraco.Web.Models;
 using Umbraco.Web.PublishedModels;
@@ -12,10 +13,12 @@ namespace HHCoApps.CMSWeb.Services
     public class ProductDetailService : IProductDetailService
     {
         private readonly IMapper _mapper;
+        private readonly UmbracoHelper _umbracoHelper;
 
-        public ProductDetailService(IMapper mapper)
+        public ProductDetailService(UmbracoHelper umbracoHelper, IMapper mapper)
         {
             _mapper = mapper;
+            _umbracoHelper = umbracoHelper;
         }
 
         public ProductSummaryViewModel GetSummaryViewModelFromComponent(ProductSummary model, IPublishedContent assignedContentItem)
@@ -31,6 +34,7 @@ namespace HHCoApps.CMSWeb.Services
                 viewModel.Images = _mapper.Map<IEnumerable<ImageModel>>(images);
                 viewModel.Title = string.IsNullOrEmpty(model.Title) ? product.PageTitle : model.Title;
                 viewModel.Summary = product.Summary;
+                viewModel.ColourAccuracyEnabled = model.ColourAccuracyEnabled;
             }
 
             viewModel.AddToWishListEnabled = model.AddToWishListEnabled;

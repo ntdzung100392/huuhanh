@@ -1,0 +1,69 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Security
+@using HHCoApps.CMSWeb.Controllers
+@{
+    Layout = "master.cshtml";
+    bool isLoggedIn = new HttpContextWrapper(HttpContext.Current).GetUmbracoAuthTicket() != null;
+}
+
+@if (isLoggedIn)
+{
+  <div class="container">
+    <div class="homepage__items-wrapper">
+      <div class="alert alert-success collapse" role="alert">
+        <h4 class="alert-heading">Connected successfully!</h4>
+        <p>Refresh Token has been saved to Integration.</p>
+      </div>
+
+      <div class="alert alert-warning collapse" role="alert">
+        <h4 class="alert-heading">Something went wrong</h4>
+        <p>Please try again later.</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" defer="defer">
+    function defer(getCodeFromQueryString) {
+      if (window.jQuery) {
+        getCodeFromQueryString();
+      } else {
+        setTimeout(function () { defer(getCodeFromQueryString) }, 50);
+      }
+    }
+    defer(getCodeFromQueryString);
+
+    function getCodeFromQueryString() {
+      const url = window.location.href;
+      if (url.toString().includes("code")) {
+        const getCodeHubSpot = url.split("code=")[1];
+        getTokenByCode(getCodeHubSpot);
+      }
+    }
+
+    function getTokenByCode(code) {
+      const setRefreshTokenUrl = '@(Url.GetUmbracoApiService<RefreshTokenHubSpotController>("SetRefreshTokenByCode"))';
+      const request = $.ajax({
+        type: "POST",
+        url: `${setRefreshTokenUrl}?code=${code}`,
+      });
+      request.done(function (data) {
+        $('.alert-success').show();
+      });
+      request.fail(function (error) {
+        $('.alert-warning').show();
+      });
+    }
+  </script>
+}
+else
+{
+  <div class="container">
+    <div class="homepage__items-wrapper">
+      <h1>Please login to continue</h1>
+    </div>
+  </div>
+}
+
+@section Scripts {
+  @Html.Partial("~/views/partials/ReactScripts.cshtml")
+}

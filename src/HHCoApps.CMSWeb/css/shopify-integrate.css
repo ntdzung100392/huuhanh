@@ -1,0 +1,113 @@
+.checkout-btn {
+  color: #cba552;
+  background-color: #ffffff;
+}
+.checkout-btn:focus, .checkout-btn:active {
+  color: #cba552;
+  background-color: #ffffff;
+}
+
+.variant-price {
+  margin-right: 0.5em;
+}
+
+.sidebar-cart .checkout-btn {
+  margin-bottom: 20px;
+}
+.sidebar-cart .size-price-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.sidebar-cart .invalid-variant {
+  margin-top: 10px;
+  color: #e80f0f;
+}
+.sidebar-cart .checkout-loading {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sidebar-cart .checkout-loading .overlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #363636;
+  opacity: 0.3;
+}
+.sidebar-cart .payment-information p, .sidebar-cart__footer p {
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+.sidebar-cart .payment-information p .subtotal-amount, .sidebar-cart .payment-information p .shipping-rate-value, .sidebar-cart__footer p .subtotal-amount, .sidebar-cart__footer p .shipping-rate-value {
+  font-weight: 300;
+  letter-spacing: 0;
+  float: right;
+}
+
+#wish-list .title[aria-hidden] {
+  display: none;
+}
+#wish-list .shopping-cart-icon-wrapper {
+  position: relative;
+  width: 1.7em;
+  height: 15px;
+  display: inline-block;
+}
+#wish-list .shopping-cart-icon-wrapper .shopping-cart-icon {
+  position: absolute;
+  width: 1.5em;
+  height: 1.5em;
+}
+#wish-list .shopping-cart-icon-wrapper[aria-hidden] {
+  display: none;
+}
+
+@keyframes spinner-border {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spinner-border {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: text-bottom;
+  border: 0.25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  -webkit-animation: spinner-border 0.75s linear infinite;
+  animation: spinner-border 0.75s linear infinite;
+}
+
+.product-detail__mobile-wrapper .add-to-cart-btn button {
+  justify-content: center;
+  width: 100%;
+  color: #ffffff;
+  background-color: #000000;
+}
+.product-detail__mobile-wrapper .add-to-cart-btn .order-information {
+  margin-top: 25px;
+  font-weight: 700;
+  position: relative;
+}
+.product-detail__mobile-wrapper .add-to-cart-btn .order-information span {
+  position: absolute;
+  display: inline-block;
+  width: 500px;
+  top: -15px;
+}
+@media (max-width: 767px) {
+  .product-detail__mobile-wrapper .add-to-cart-btn .order-information span {
+    position: relative;
+    display: inline;
+  }
+}
+
+.product-detail__shopify-product-variant {
+  display: none;
+}

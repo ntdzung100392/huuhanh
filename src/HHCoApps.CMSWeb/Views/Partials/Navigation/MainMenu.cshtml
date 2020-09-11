@@ -3,10 +3,16 @@
 @using HHCoApps.CMSWeb.Helpers.Enum
 @using HHCoApps.CMSWeb.Services
 @using Umbraco.Web.Composing
+@using HHCoApps.CMSWeb.Caching
 
 @{
     var menuItemViewModel = Current.Factory.GetInstance<IMenuItemService>().GetViewModel(Model.MainMenu);
     var logoImg = Url.GetCropImageUrl(Model.Logo?.Url, ImageCropProfile.Logo);
+
+    var umbracoHelper = Current.Factory.GetInstance<UmbracoHelper>();
+    var integration = (Integration)umbracoHelper.ContentQuery.ContentSingleFromCache(CachedContent.IntegrationContent);
+    var hasShoppingFeature = integration.ShopifyEnable;
+    var shopifyStore = integration.ShopifyStore;
 }
 
 <nav class="navbar" role="navigation">
@@ -18,6 +24,11 @@
         <a class="navbar-search visible-xs visible-sm hidden-md hidden-lg" data-toggle="collapse" data-target="#mobile-search-menu">
             <div class="text-right">
                 <span class="icon-search-alt"></span>
+            </div>
+        </a>
+        <a class="navbar-phone visible-xs visible-sm hidden-md hidden-lg" href="tel: +6193822398">
+            <div class="text-right">
+                <span class="icon-phone-outline" style="color: #fff"></span>
             </div>
         </a>
         <a href="/" class="visible-xs visible-sm hidden-md navbar-header__logo text-center">
@@ -37,7 +48,17 @@
         </div>
         <div class="visible-xs visible-sm hidden-md hidden-lg">
             <div class="navbar-list">
-                <a class="navbar-shopping-card">
+                @if (hasShoppingFeature)
+                {
+                    <a class="navbar-brand navbar-phone" href="https://@shopifyStore/account" target="_blank">
+                        <div class="text-right">
+                            <svg class="bi" fill="currentColor" width="1em" height="1em">
+                                <use xlink:href="~/assets/images/icons/bootstrap-icons.svg#person" />
+                            </svg>
+                        </div>
+                    </a>
+                }
+                <a class="navbar-brand navbar-shopping-card">
                     <div class="text-right">
                         <span class="icon-shopping-card"></span>
                     </div>
@@ -56,7 +77,29 @@
             {
                 <li><a href="@(menuItem.Link?.Url)" target="@(menuItem.Link?.Target)" class="text-uppercase">@menuItem.Title</a></li>
             }
-            <li><a class="text-uppercase" id="wish-list" aria-label="Open cart">Wish List</a></li>
+            <li>
+                <a class="text-uppercase" id="wish-list" aria-label="Open cart">
+                    <span class="shopping-cart-icon-wrapper" aria-hidden="@(!hasShoppingFeature)">
+                        <svg class="bi shopping-cart-icon" fill="currentColor" width="1em" height="1em">
+                            <use xlink:href="~/assets/images/icons/bootstrap-icons.svg#cart-fill" />
+                        </svg>
+                    </span>
+                    <span class="title" aria-hidden="@(hasShoppingFeature)">Wish List</span>
+                    <span class="amount"></span>
+                </a>
+            </li>
+            @if (hasShoppingFeature)
+            {
+                <li>
+                    <a class="navbar-phone" href="https://@shopifyStore/account" target="_blank">
+                        <div class="text-right">
+                            <svg class="bi" fill="currentColor" width="1em" height="1em">
+                                <use xlink:href="~/assets/images/icons/bootstrap-icons.svg#person" />
+                            </svg>
+                        </div>
+                    </a>
+                </li>
+            }
         </ul>
         @if (Model.Logo != null)
         {

@@ -54,11 +54,21 @@
 <div class="react-app-root" data-page="ProductDetailPage" data-content-id="@Umbraco.AssignedContentItem.Id" data-product-title="@viewModel.Title"></div>
 <div class="row product-detail__mobile-wrapper">
     <div class="product-detail__actions is-flex flex-wrap">
-        @if (viewModel.AddToWishListEnabled)
+        @if (integration.ShopifyEnable)
+        {
+            <div class="add-to-wishlist-btn add-to-cart-btn">
+                <button class="text-uppercase is-flex align-items-center" id="wishListBtn" data-product-id="@Umbraco.AssignedContentItem.Id">
+                    <span class="variant-price" id="selected-variant-price"></span>
+                    <span>Add to Cart</span>
+                </button>
+                <p class="order-information"><span>Shop before 12pm to have your order dispatched today</span></p>
+            </div>
+        }
+
+        @if (viewModel.AddToWishListEnabled && !integration.ShopifyEnable)
         {
             <div class="add-to-wishlist-btn">
-                <button class="text-uppercase is-flex align-items-center" id="wishListBtn"
-                        data-product-id="@Umbraco.AssignedContentItem.Id">
+                <button class="text-uppercase is-flex align-items-center" id="wishListBtn" data-product-id="@Umbraco.AssignedContentItem.Id">
                     <i class="icon-heart"></i>
                     <span>Add to wish list</span>
                 </button>
@@ -67,8 +77,19 @@
 
         @if (viewModel.FindAStockistEnabled && !string.IsNullOrEmpty(findYourStockistLink))
         {
-            <div class="find-a-stock-list-btn is-flex align-items-center">
-                <a href="@findYourStockistLink" class="text-uppercase">Find a stockist</a>
+            <div class="find-a-stock-list-btn">
+                <div class="is-flex align-items-center">
+                    <a href="@findYourStockistLink" class="text-uppercase">Find a stockist</a>
+                </div>
+            </div>
+        }
+
+        @if (viewModel.ColourAccuracyEnabled)
+        {
+            <div id="accuracy-color" class="color-accuracy-btn" style="display:none">
+                <div class="is-flex align-items-center">
+                    <a href="/terms-of-use/#colour-accuracy" class="text-uppercase">COLOUR ACCURACY</a>
+                </div>
             </div>
         }
     </div>

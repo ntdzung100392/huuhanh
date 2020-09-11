@@ -8,8 +8,10 @@ namespace HHCoApps.CMSWeb.Models
 {
     public class ProductDetailSelectorViewModel
     {
+        public string Title { get; set; }
         public IEnumerable<string> Sizes { get; set; } = Enumerable.Empty<string>();
         public IEnumerable<ColorModel> Colors { get; set; } = Enumerable.Empty<ColorModel>();
+        public IEnumerable<ShopifyMapping> ShopifyMappings { get; set; }
         public string TimberCaption { get; set; }
         public string ColorCaption { get; set; }
     }
@@ -33,5 +35,10 @@ namespace HHCoApps.CMSWeb.Models
     {
         public string CoatOption { get; set; }
         public string CoatImageUrl { get; set; }
+    }
+    public class ShopifyMapping
+    {
+        public string SizeColor { get; set; }
+        public string SKU { get; set; }
     }
 }

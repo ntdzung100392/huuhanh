@@ -1,11 +1,14 @@
 ﻿@using System.Configuration
 @using HHCoApps.CMSWeb.Controllers
-
+@using HHCoApps.CMSWeb.Caching
+@using Umbraco.Core.Composing
 @{
     var isDevelopment = ConfigurationManager.AppSettings["Environment"].Equals("Development");
     var reactScriptUrl = isDevelopment ? Url.Content("~/scripts/app.js") : Url.Content("~/scripts/app.min.js");
     var appVersion = ConfigurationManager.AppSettings["version"] ?? "1.0.0";
 
+    var umbracoHelper = Current.Factory.GetInstance<UmbracoHelper>();
+    var integration = (Integration)umbracoHelper.ContentQuery.ContentSingleFromCache(CachedContent.IntegrationContent);
     if (!isDevelopment)
     {
         reactScriptUrl = $"{reactScriptUrl}?v={appVersion}";
@@ -51,6 +54,13 @@
         },
         googleRecaptchaKey: {
             publicKey: '@(Umbraco.Forms.Core.Configuration.GetSetting("RecaptchaPublicKey"))'
+        },
+        shopify: {
+            enable: '@integration.ShopifyEnable' == 'True' ? true : false,
+            domain: '@integration.ShopifyStore',
+            token: '@integration.ShopifyToken',
+            shippingRateMetro: @integration.ShippingRateMetro,
+            shippingRateRegional: @integration.ShippingRateRegional,
         }
     };
 </script>

@@ -1,0 +1,20 @@
+@model Umbraco.Forms.Mvc.Models.FieldViewModel
+@{
+    var siteKey = Umbraco.Forms.Core.Configuration.GetSetting("RecaptchaPublicKey");
+    if (!string.IsNullOrEmpty(siteKey))
+    {
+        <script>
+            grecaptcha.ready(function() {
+                grecaptcha.execute('@siteKey', { action: 'submit' }).then(function (token) {
+                    $("#@(Model.Id)").val(token);
+                });
+            });
+        </script>
+
+        <input type="hidden" id="@Model.Id" name="g-recaptcha-response" class="form-control" />
+    }
+    else
+    {
+        <p class="error">ERROR: ReCaptcha v.3 is missing the Site Key - Please update the umbracoForm.config to include 'key="RecaptchaSiteKey"'</p>
+    }
+}

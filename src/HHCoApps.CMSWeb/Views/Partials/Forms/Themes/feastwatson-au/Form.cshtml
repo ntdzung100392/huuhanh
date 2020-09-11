@@ -1,0 +1,154 @@
+@inherits WebViewPage<Umbraco.Forms.Web.Models.FormViewModel>
+@using Umbraco.Forms.Core.Enums
+@using Umbraco.Forms.Mvc
+@using Umbraco.Forms.Mvc.Models
+@using Umbraco.Forms.Mvc.BusinessLogic
+@using ClientDependency.Core.Mvc
+
+@{
+    if (!Model.DisableDefaultStylesheet)
+    {
+        Html.RequiresCss("~/App_Plugins/UmbracoForms/Assets/Themes/Default/style.css");
+    }
+    var pages = Model.Pages;
+}
+
+<div class="umbraco-forms-page">
+    <div class="contactForm ">
+        @if (Model.ShowValidationSummary)
+        {
+            @Html.ValidationSummary(false)
+        }
+
+        @foreach (FieldsetViewModel fs in Model.CurrentPage.Fieldsets)
+        {
+            var currentPageIndex = Model.FormStep;
+            <div class="form--single w w--form-single-col" id="@fs.Id">
+
+                @if (pages.Count > 1)
+                {
+                    <h3 class="form__title h3">@Model.CurrentPage.Caption</h3>
+                    <div class="progress-indicator" style="display: block;">
+                        <ul>
+                            @for (var index = 0; index < pages.Count; index++)
+                            {
+                                var liClassName = "";
+                                var dataIndex = index + 1;
+                                var page = pages[index];
+                                if (index == currentPageIndex)
+                                {
+                                    liClassName = "progress-indicator__step progress-indicator__step--active";
+                                }
+                                else if (index < currentPageIndex)
+                                {
+                                    liClassName = "progress-indicator__step progress-indicator__step--complete progress-indicator__step--active";
+                                }
+                                else
+                                {
+                                    liClassName = "progress-indicator__step";
+                                }
+
+                                <li class="@liClassName">
+                                    <span data-index="@dataIndex ">@page.Caption</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+
+                @foreach (var c in fs.Containers)
+                {
+                    foreach (FieldViewModel f in c.Fields)
+                    {
+                        bool visible = f.HasCondition && f.Condition.Enabled;
+
+                        <div class="@Html.GetFormFieldWrapperClass(f.FieldTypeName) @f.CssClass"
+                             @{ if (visible) { <text> style="display: block" </text>  } }>
+                            <div class="field-wrapper">
+                                @if (Model.Pages[currentPageIndex].Caption.Equals("Interests", StringComparison.OrdinalIgnoreCase) && f.FieldType.Category.Equals("List", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    <div class="text">
+                                        <div class="cmp-text">
+                                            <h4>@f.Caption</h4>
+                                        </div>
+                                    </div>
+                                }
+                                else if (!f.HideLabel)
+                                {
+                                    <label for="@f.Id" class="umbraco-forms-label">
+                                        @f.Caption
+                                        @if (f.ShowIndicator)
+                                        {
+                                            <span class="umbraco-forms-indicator">@Model.Indicator</span>
+                                        }
+                                        @if (!string.IsNullOrEmpty(f.ToolTip))
+                                        {
+                                            <span class="umbraco-forms-tooltip help-block">@f.ToolTip</span>
+                                        }
+                                    </label>
+                                }
+
+                                <div class="umbraco-forms-field-wrapper">
+                                    @Html.Partial(FormThemeResolver.GetFieldView(Model, f), f)
+                                    <span class="form-error is-visible">@Html.ValidationMessage(f.Id)</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                <div style="display: none">
+                    <input type="text" name="@Model.FormId.ToString().Replace("-", "")" />
+                </div>
+
+                <div class="umbraco-forms-navigation">
+                    @if (Model.IsMultiPage)
+                    {
+
+                        if (!Model.IsLastPage)
+                        {
+                            <button type="submit" class="button button--action button--action-next form__submit expanded" id="">
+                                <div class="button__content-spinner">
+                                    <div class="spinner"></div>
+                                </div>
+                                <span class="button__text">@Model.NextCaption</span>
+                            </button>
+                        }
+
+                        if (Model.IsLastPage)
+                        {
+                            <button type="submit" class="button button--action button--action-submit form__submit expanded" id="btnSubmit">
+                                <div class="button__content-spinner">
+                                    <div class="spinner"></div>
+                                </div>
+                                <span class="button__text">@Model.SubmitCaption</span>
+                            </button>
+                        }
+
+                        if (!Model.IsFirstPage)
+                        {
+                            <p class="form__text">
+                                <i class="icon icon-arrow-one-left"></i>
+                                <input class="prev-contact"
+                                       type="submit"
+                                       value="@string.Format(Model.PreviousCaption, Model.Pages[currentPageIndex - 1].Caption.ToLower())" ;
+                                       name="__prev" />
+                            </p>
+                        }
+                    }
+                    else
+                    {
+                        <button type="submit" class="button button--action form__submit expanded" id="btnSubmit">
+                            <div class="button__content-spinner">
+                                <div class="spinner"></div>
+                            </div>
+                            <span class="button__text">@Model.SubmitCaption</span>
+                        </button>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@Html.Partial("Forms/Themes/default/ScrollToFormScript")

@@ -11,6 +11,9 @@ namespace HHCoApps.CMSWeb.Mappings
         {
             CreateRelatedProductModelMapping<Product>();
             CreateRelatedProductModelMapping<Products>();
+            CreateRelatedProductModelMapping<Article>();
+            CreateRelatedProductModelMapping<Articles>();
+            CreateRelatedProductModelMapping<Questions>();
             CreateRelatedProductModelMapping<LandingPage>();
             CreateRelatedProductModelMapping<SearchPage>();
         }

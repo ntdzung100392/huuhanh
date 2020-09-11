@@ -1,0 +1,19 @@
+﻿{
+    propertyEditors: [
+        {
+            alias: "HubspotRefreshToken",
+            name: "Hubspot Refresh Token",
+            icon: "icon-key",
+            editor: {
+                view: "~/App_Plugins/HubSpotIntegration/HubSpotIntegration.html"
+            }
+        }
+    ]
+    ,
+    javascript: [
+        '~/App_Plugins/HubSpotIntegration/HubSpotIntegration.controller.js'
+    ],
+    "css": [
+        "~/App_Plugins/HubSpotIntegration/css/HubSpotIntegration.css"
+    ]
+}

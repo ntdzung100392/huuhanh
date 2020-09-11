@@ -17,8 +17,12 @@ namespace HHCoApps.CMSWeb.Mappings
 
             CreateNavigationModelMapping<Product>();
             CreateNavigationModelMapping<Products>();
+            CreateNavigationModelMapping<Questions>();
             CreateNavigationModelMapping<LandingPage>();
             CreateNavigationModelMapping<SearchPage>();
+            CreateNavigationModelMapping<Article>();
+            CreateNavigationModelMapping<Articles>();
+            CreateNavigationModelMapping<ContactUs>();
             CreateNavigationModelMapping<Store>();
             CreateNavigationModelMapping<Stores>();
         }

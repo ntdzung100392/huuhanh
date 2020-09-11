@@ -8,9 +8,9 @@ using Umbraco.Web;
 using Umbraco.Web.PublishedModels;
 using Umbraco.Web.WebApi;
 using System.Web.Http;
+using HHCoApps.CMSWeb.Helpers.Enum;
 using HHCoApps.CMSWeb.Models.RequestModels;
 using Flurl;
-using HHCoApps.CMSWeb.Helpers.Enum;
 using Umbraco.Core.Models.PublishedContent;
 
 namespace HHCoApps.CMSWeb.Controllers
@@ -96,6 +96,13 @@ namespace HHCoApps.CMSWeb.Controllers
 
                 viewModel.TimberCaption = product.TimberCaption;
                 viewModel.ColorCaption = product.ColorCaption;
+                viewModel.Title = product.PageTitle;
+                viewModel.ShopifyMappings = product.ShopifyMapping.Select(
+                                                 s => new ShopifyMapping { 
+                                                     SizeColor = s.Sizes + "-" + (s.Colors == null ? string.Empty : s.Colors.Name),
+                                                     SKU = s.ShopifyValue
+                                                 }
+                                            ).ToList();
             }
             viewModel.Colors = availableCoatings;
             return viewModel;
@@ -183,6 +190,11 @@ namespace HHCoApps.CMSWeb.Controllers
 
                 viewModel.Description = !string.IsNullOrEmpty(product.SecondaryTitle) ? product.SecondaryTitle : string.Empty;
                 viewModel.IsValidProduct = true;
+                viewModel.SKU = product.ShopifyMapping.SingleOrDefault(m => m.Sizes.Equals(wishListItemRequest.Size, StringComparison.OrdinalIgnoreCase)
+                                                                     && ((m.Colors == null && string.IsNullOrEmpty(wishListItemRequest.Color))
+                                                                         || (m.Colors != null && m.Colors.Name.Equals(wishListItemRequest.Color, StringComparison.OrdinalIgnoreCase)))
+                                                                       )
+                                                     ?.ShopifyValue;                                                     
             }
 
             return viewModel;

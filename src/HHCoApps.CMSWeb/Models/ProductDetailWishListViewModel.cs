@@ -17,5 +17,6 @@ namespace HHCoApps.CMSWeb.Models
         public string ColorImageUrl { get; set; }
         public string Size { get; set; }
         public bool IsValidProduct { get; set; }
+        public string SKU { get; set; }
     }
 }

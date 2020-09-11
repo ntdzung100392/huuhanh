@@ -1,0 +1,57 @@
+﻿<div ng-controller="DuluxTools.Import.Controller as vm" class="dulux-tools">
+    <umb-editor-view footer="false" header="false">
+        <div class="umb-pane">
+            <umb-box>
+                <umb-box-content>
+                    <div class="form-horizontal">
+                        <form>
+                            <div class="umb-control-group control-group  -no-border">
+                                <div class="umb-el-wrap">
+                                    <div class="control-header">
+                                        <label class="control-label">Choose import type</label>
+                                    </div>
+                                    <div class="controls">
+                                        <select name="dropDownList"
+                                                ng-change="vm.selectImportType()"
+                                                ng-model="vm.selectedImportType"
+                                                ng-options="item.value as item.label for item in vm.imports"
+                                                ng-required="true">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="umb-control-group control-group  -no-border">
+                                <div class="umb-el-wrap">
+                                    <div class="control-header">
+                                        <label class="control-label">Choose file to import</label>
+                                    </div>
+                                    <div class="controls">
+                                        <input type="file" id="fileToImport" name="file" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="umb-control-group control-group  -no-border">
+                                <div class="umb-el-wrap">
+                                    <div class="control-header">
+                                        <label class="control-label">Import from row</label>
+                                    </div>
+                                    <div class="controls">
+                                        <input type="number" ng-model="vm.importFromRow" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="umb-control-group -no-border">
+                                <div class="umb-el-wrap">
+                                    <div class="controls">
+                                        <button class="btn btn-primary" title="Import data from file to Umbraco" ng-click="vm.importFile()"><i class="icon-download"></i> Import</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </umb-box-content>
+            </umb-box>
+        </div>
+    </umb-editor-view>
+</div>

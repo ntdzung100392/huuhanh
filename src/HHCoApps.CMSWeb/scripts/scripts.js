@@ -68,12 +68,37 @@ $(document).ready(function () {
 
   document.addEventListener("wishListUpdated", function (e) {
     if (e.detail > 0) {
-      $("#wish-list").text("Wish List (" + e.detail + ")");
+      $("#wish-list .amount").text("(" + e.detail + ")");
       $(".icon-shopping-card").addClass("in-stock");
     } else {
-      $("#wish-list").text("Wish List");
+      $("#wish-list .amount").text("");
       $(".icon-shopping-card").removeClass("in-stock");
     }
+  });
+
+  document.addEventListener("SHOPPING_CART_UPDATE", function (e) {
+    if (e.detail > 0) {
+      $(".shopify-mini-cart-phone .shopping-cart-icon").addClass("in-stock");
+    } else {
+      $(".shopify-mini-cart-phone .shopping-cart-icon").removeClass("in-stock");
+    }
+  });
+
+  document.addEventListener("SHOPPING_SELECTED_VARIANT_UPDATE", function (e) {
+    let displayPrice = '';
+
+    if (e.detail) {
+      let price = parseInt(e.detail.price);
+
+      if (price > 0) {
+        displayPrice = e.detail.displayPrice;
+      } else {
+        displayPrice = '___';
+      }
+    }
+
+    $('#selected-variant-price').text(displayPrice);
+    
   });
 
   if (localStorage.getItem('cookieAccepted') != 'true') {
@@ -191,7 +216,7 @@ function initialWishListItemsCount(c_name) {
 
   if (wishListItems && wishListItems.length > 0) {
     const countedItems = wishListItems.reduce((total, item) => total + item.quantity, 0);
-    $("#wish-list").text("Wish List (" + countedItems + ")");
+    $("#wish-list .amount").text("(" + countedItems + ")");
     $(".icon-shopping-card").addClass("in-stock");
   }
 }
@@ -287,6 +312,10 @@ function initialClickEvent() {
 
   });
 
+  $(".shopify-mini-cart-phone").click(function () {
+    document.dispatchEvent(new CustomEvent("SHOPIFY_SHOW_CART_PAGE"));
+  });
+
   $("#close-wish-list").click(function () {
     $("#sidebar-cart").attr("aria-hidden", true);
     $(".page-overlay").removeClass("is-visible");
@@ -320,13 +349,16 @@ function initialClickEvent() {
     let wishListItems = JSON.parse(localStorage.getItem("feastWatson_WishList"));
     let selectedColor = getSelectedColor();
     let windowHeight = $(window).innerHeight();
+    let productVariantId = $('.product-variant-id').first();
+    let productVariantSKU = $('.product-variant-sku').first();
+    let productVariantPrice = $('.product-variant-price').first();
 
     let newWishItemId = this.getAttribute('data-product-id') + '-' + selectedColor + '-' + $('#available-sizes').val();
+
     if (wishListItems) {
       const itemIndex = wishListItems.findIndex(item => item.id === newWishItemId);
       if (itemIndex >= 0) {
         wishListItems[itemIndex].quantity = wishListItems[itemIndex].quantity + 1;
-
         localStorage.setItem("feastWatson_WishList", JSON.stringify(wishListItems));
         document.dispatchEvent(new Event("wishListUpdated"));
 
@@ -358,7 +390,7 @@ function initialClickEvent() {
         });
 
         countedItems = wishListItems.reduce((total, item) => total + item.quantity, 0);
-        $("#wish-list").text("Wish List (" + countedItems + ")");
+        $("#wish-list .amount").text("(" + countedItems + ")");
         $(".icon-shopping-card").addClass("in-stock");
         return;
       }
@@ -369,8 +401,25 @@ function initialClickEvent() {
     $('html, body').css({
       overflow: 'hidden'
     });
-    document.dispatchEvent(new CustomEvent("newWishItemAdded", { 'detail': newWishItemId }));
+    document.dispatchEvent(new CustomEvent("newWishItemAdded", {'detail': {
+      wishItemId: newWishItemId,
+      sku: productVariantSKU.html(),
+      variantId: productVariantId.html(),
+      price: productVariantPrice.html()
+    }}));
 
+  });
+
+  $("#shoppingCartBtn").click(function () {
+    let productVariantId = $('.product-variant-id').first();
+    let productVariantSKU = $('.product-variant-sku').first();
+
+    document.dispatchEvent(new CustomEvent("SHOPIFY_ADD_TO_SHOPPING_CART", {
+      'detail': {
+        'id': productVariantId.html(),
+        'sku': productVariantSKU.html()
+      }
+    }));
   });
 
   $(".page-overlay").click(function () {

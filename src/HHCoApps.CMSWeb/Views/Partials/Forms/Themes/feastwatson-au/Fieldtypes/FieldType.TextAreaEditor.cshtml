@@ -1,0 +1,20 @@
+﻿@model Umbraco.Forms.Mvc.Models.FieldViewModel
+@using Umbraco.Forms.Core.Extensions
+
+@{
+    var settings = Model.AdditionalSettings;
+    var textAlignValue = "Left";
+    settings.TryGetValue("Caption", out var caption);
+    var isDisplayCaption = caption != null && !caption.Equals("null", StringComparison.OrdinalIgnoreCase);
+    settings.TryGetValue("BodyText", out var bodyText);
+    if (settings.TryGetValue("TextAlign", out textAlignValue))
+    {
+        textAlignValue = textAlignValue != null && textAlignValue.Equals("null", StringComparison.OrdinalIgnoreCase) ? "Left" : textAlignValue;
+    }
+}
+
+<div class="text">
+    <div class="form__row">
+        <p style="text-align: @textAlignValue"><b>@caption.ParsePlaceHolders()</b> @Html.Raw(bodyText.ParsePlaceHolders().Replace(System.Environment.NewLine, "<br />"))</p>
+    </div>
+</div>

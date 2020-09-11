@@ -1,0 +1,34 @@
+﻿@using HHCoApps.CMSWeb.Caching
+@using Umbraco.Web.Composing
+@{
+    var umbracoHelper = Current.Factory.GetInstance<UmbracoHelper>();
+    var integration = (Integration)umbracoHelper.ContentQuery.ContentSingleFromCache(CachedContent.IntegrationContent);
+    var isEnabled = false;
+
+    if (integration != null)
+    {
+        isEnabled = integration.LcEnabled &&
+            !string.IsNullOrEmpty(integration.LcLicenseNumber) &&
+            (!Request.Browser.IsMobileDevice || integration.LcEnableForMobileDevice);
+    }
+}
+
+@if (isEnabled)
+{
+    var urlChatWith = $"https://www.livechatinc.com/chat-with/{integration.LcLicenseNumber}/";
+    <!-- Start of LiveChat (www.livechatinc.com) code -->
+    <script type="text/javascript">
+        window.__lc = window.__lc || {};
+        window.__lc.license = @integration.LcLicenseNumber;
+        (function() {
+            var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+            lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+        })();
+    </script>
+    <noscript>
+        <a href="@urlChatWith" rel="nofollow">Chat with us</a>,
+        powered by <a href="https://www.livechatinc.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a>
+    </noscript>
+    <!-- End of LiveChat code -->
+}

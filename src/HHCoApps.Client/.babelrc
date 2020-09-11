@@ -1,0 +1,20 @@
+﻿{
+    "presets": [
+      ["@babel/preset-env",
+        {
+          "corejs": { "version":3 },
+          "useBuiltIns": "usage",
+          "targets": {
+              "browsers": [
+                 "last 5 edge versions",
+                 "ie >= 11"
+              ]
+          }
+        }],
+      ["@babel/preset-react"]
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-object-rest-spread",
+      "@babel/plugin-transform-spread"
+    ]
+}

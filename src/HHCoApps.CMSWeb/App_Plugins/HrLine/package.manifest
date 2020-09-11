@@ -1,0 +1,11 @@
+{
+  "gridEditors": [
+    {
+      "name": "Line",
+      "alias": "hrLine",
+      "icon": "mce-ico mce-i-hr",
+      "render": "/App_Plugins/HrLine/render.cshtml",
+      "view": "/App_Plugins/HrLine/editor.html"
+    }
+  ]
+}

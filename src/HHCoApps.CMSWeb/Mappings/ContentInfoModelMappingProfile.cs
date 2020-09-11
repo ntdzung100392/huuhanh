@@ -27,8 +27,12 @@ namespace HHCoApps.CMSWeb.Mappings
 
             CreateContentInfoMapping<Product>();
             CreateContentInfoMapping<Products>();
+            CreateContentInfoMapping<Article>();
+            CreateContentInfoMapping<Articles>();
+            CreateContentInfoMapping<Questions>();
             CreateContentInfoMapping<LandingPage>();
             CreateContentInfoMapping<SearchPage>();
+            CreateContentInfoMapping<ContactUs>();
             CreateContentInfoMapping<Store>();
             CreateContentInfoMapping<Stores>();
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using HHCoApps.CMSWeb.Services.Models;
 using HHCoApps.CMSWeb.Models.RequestModels;
+using HHCoApps.CMSWeb.Services.Models;
 
 namespace HHCoApps.CMSWeb.Models
 {

@@ -1,17 +1,35 @@
 ﻿{
   "gridEditors": [
     {
-      "name": "Doc Type",
+      "name": "Components",
       "alias": "docType",
       "view": "/App_Plugins/DocTypeGridEditor/Views/doctypegrideditor.html",
       "render": "/App_Plugins/DocTypeGridEditor/Render/DocTypeGridEditor.cshtml",
       "icon": "icon-item-arrangement",
       "config": {
-        "allowedDocTypes": [],
+        "allowedDocTypes": [
+            "productAttributeList",
+            "itemListing",
+            "commonProblem",
+            "largeTile",
+            "videoListing",
+            "pageNavigationAndBreadcumb",
+            "responsiveItemListing",
+            "articleExperience",
+            "heroBanner",
+            "carouselImage",
+            "productSummary",
+            "bannerComponent",
+            "galleryComponent",
+            "navigationAndBreadcrumbComponent",
+            "footerNavigationComponent",
+            "relatedProductComponent",
+            "buttonComponent"
+        ],
         "nameTemplate": "",
-        "enablePreview": false,
-        "viewPath": "/Views/Partials/Grid/Editors/DocTypeGridEditor/",
-        "previewViewPath": "/Views/Partials/Grid/Editors/DocTypeGridEditor/Previews/",
+        "enablePreview": true,
+        "viewPath": "/Views/Partials/Grid/DocTypeGridEditor/",
+        "previewViewPath": "/Views/Partials/Grid/DocTypeGridEditor/Previews/",
         "previewCssFilePath": "",
         "previewJsFilePath": ""
       }

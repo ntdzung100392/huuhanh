@@ -93,14 +93,6 @@
                 id: $scope.control.value.id
             };
             overlayOptions.close = function () {
-                // ensure an empty DTGE without ContentType Alias is not persisted
-                if ($scope.control.value && $scope.control.value.dtgeContentTypeAlias === "") {
-                    let indexOfThis = $scope.area.controls.map(function (control) { return control.$uniqueId }).indexOf($scope.control.$uniqueId);
-                    if (indexOfThis > -1) {
-                        $scope.removeControl($scope.area, indexOfThis);
-                    }
-                }
-
                 editorService.close();
             }
             overlayOptions.submit = function (newModel) {
@@ -151,13 +143,11 @@
 
         $scope.setPreview = function (model) {
             if ($scope.control.editor.config && "enablePreview" in $scope.control.editor.config && $scope.control.editor.config.enablePreview) {
-                var activeVariant = editorState.current.variants?.find(v => v.active);
-                var culture = activeVariant?.language?.culture;
                 dtgeResources.getEditorMarkupForDocTypePartial(editorState.current.id, model.id,
                     $scope.control.editor.alias, model.dtgeContentTypeAlias, model.value,
                     $scope.control.editor.config.viewPath,
                     $scope.control.editor.config.previewViewPath,
-                    !!editorState.current.publishDate, culture)
+                    !!editorState.current.publishDate)
                     .then(function (response) {
                         var htmlResult = response.data;
                         if (htmlResult.trim().length > 0) {
@@ -237,10 +227,8 @@ angular.module("umbraco").controller("Our.Umbraco.DocTypeGridEditor.Dialogs.DocT
         "Our.Umbraco.DocTypeGridEditor.Resources.DocTypeGridEditorResources",
         "Our.Umbraco.DocTypeGridEditor.Services.DocTypeGridEditorUtilityService",
         "blueprintConfig",
-        "contentEditingHelper",
-        "serverValidationManager",
 
-        function ($scope, $interpolate, formHelper, contentResource, dtgeResources, dtgeUtilityService, blueprintConfig, contentEditingHelper, serverValidationManager) {
+        function ($scope, $interpolate, formHelper, contentResource, dtgeResources, dtgeUtilityService, blueprintConfig) {
 
             var vm = this;
             vm.submit = submit;
@@ -248,45 +236,10 @@ angular.module("umbraco").controller("Our.Umbraco.DocTypeGridEditor.Dialogs.DocT
             vm.loading = true;
             vm.blueprintConfig = blueprintConfig;
 
-            function cleanup() {
-                if ($scope.model.node && $scope.model.node.id > 0) {
-                    // delete any temporary blueprints used for validation
-                    contentResource.deleteBlueprint($scope.model.node.id);
-
-                    // set current node id, so subsequent deletes, giving 404 errors is avoided
-                    $scope.model.node.id = 0;
-                }
-
-                //clear server validation messages when this editor is destroyed
-                serverValidationManager.clear();
-            }
-
-            $scope.$on('$destroy', cleanup);
-
             function submit() {
                 if ($scope.model.submit) {
-                    $scope.model.node.name = "Dtge Temp: " + $scope.model.node.key;
-                    $scope.model.node.variants[0].name = $scope.model.node.name
-                    $scope.model.node.variants[0].save = true;
-
-                    // save the content as a blueprint, to trigger validation
-                    var args = {
-                        saveMethod: contentResource.saveBlueprint,
-                        scope: $scope,
-                        content: $scope.model.node,
-                        create: true,
-                        action: "save",
-                        showNotifications: false,
-                        softRedirect: true
-                    }
-
-                    contentEditingHelper.contentEditorPerformSave(args).then(function (data) {
-                        $scope.model.submit($scope.model);
-                    },
-                    function (err) {
-                        // cleanup the blueprint immediately
-                        cleanup();
-                    });
+                    $scope.$broadcast('formSubmitting', { scope: $scope });
+                    $scope.model.submit($scope.model);
                 }
             }
             function close() {
@@ -322,7 +275,6 @@ angular.module("umbraco").controller("Our.Umbraco.DocTypeGridEditor.Dialogs.DocT
                         createFromBlueprint(blueprintIds[0]);
                     } else {
                         $scope.dialogMode = "selectBlueprint";
-                        vm.loading = false;
                     }
                 } else {
                     createBlank();
@@ -330,7 +282,7 @@ angular.module("umbraco").controller("Our.Umbraco.DocTypeGridEditor.Dialogs.DocT
             };
 
             function createFromBlueprint(blueprintId) {
-                contentResource.getBlueprintScaffold(-1, blueprintId).then(function (data) {
+                contentResource.getBlueprintScaffold(-20, blueprintId).then(function (data) {
                     // Assign the model to scope
                     $scope.nodeContext = $scope.model.node = data;
                     $scope.dialogMode = "edit";
@@ -345,7 +297,7 @@ angular.module("umbraco").controller("Our.Umbraco.DocTypeGridEditor.Dialogs.DocT
 
             function loadNode() {
                 vm.loading = true;
-                contentResource.getScaffold(-1, $scope.model.dialogData.docTypeAlias).then(function (data) {
+                contentResource.getScaffold(-20, $scope.model.dialogData.docTypeAlias).then(function (data) {
 
                     // Merge current value
                     if ($scope.model.dialogData.value) {
@@ -386,10 +338,6 @@ angular.module("umbraco").controller("Our.Umbraco.DocTypeGridEditor.Dialogs.DocT
                     }
                 });
             }
-
-            if (dtgeUtilityService.compareCurrentUmbracoVersion("8.7.0", {}) && !$("body").hasClass("pre870")) {
-                $("body").addClass("pre870");
-            };
 
         }
 

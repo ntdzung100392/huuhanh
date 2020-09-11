@@ -1,0 +1,39 @@
+﻿<parameters>
+  <parameter name="AzureBlobStorageRootUrl"
+             description="Azure Blob Storage Root Url"
+             defaultValue="https://#{storagename}#.blob.core.windows.net/">
+    <parameterEntry kind="XmlFile" scope="Web.config"
+                    match="/configuration/appSettings/add[@key='AzureBlobFileSystem.RootUrl:media']/@value" />
+    <parameterEntry kind="XmlFile" scope="security.config"
+                    match="/security/services/service[@name='CloudImageService']/settings/setting[@key='Host']/@value" />
+  </parameter>
+  <parameter name="AzureCDNRootUrl"
+             description="Azure CDN Root URL"
+             defaultValue="https://#{storagename}#.blob.core.windows.net/">
+    <parameterEntry kind="XmlFile" scope="Web.config"
+                    match="/configuration/appSettings/add[@key='AzureBlobFileSystem.ConnectionString:media']/@value" />
+    <parameterEntry kind="XmlFile" scope="cache.config"
+                    match="/caching/caches/cache[@name='AzureBlobCache']/settings/setting[@key='CachedCDNRoot']/@value" />
+  </parameter>
+  <parameter name="AzureBlobStorageConnectionString"
+             description="Azure Blob Storage Connection String"
+             defaultValue="DefaultEndpointsProtocol=https;AccountName=#{storagename}#;AccountKey=#{storageaccesskey}#">
+    <parameterEntry kind="XmlFile" scope="Web.config"
+                    match="/configuration/appSettings/add[@key='AzureBlobFileSystem.ConnectionString:media']/@value" />
+    <parameterEntry kind="XmlFile" scope="cache.config"
+                    match="/caching/caches/cache[@name='AzureBlobCache']/settings/setting[@key='CachedStorageAccount']/@value" />
+  </parameter>
+  <parameter name="ClientDependencyVersion" defaultValue="#{buildId}#">
+    <parameterEntry kind="XmlFile" scope="config\\ClientDependency\.config$" match="//clientDependency/@version" />
+  </parameter>
+  <parameter name="X-Robots-Tag" defaultValue="#{robotTag}#">
+    <parameterValidation kind="AllowEmpty"/>
+    <parameterEntry kind="XmlFile" scope="web\.config$" match="/configuration/system.webServer/httpProtocol/customHeaders/add[@name='X-Robots-Tag']" />
+  </parameter>
+  <parameter name="RecaptchaPublicKey" defaultValue="#{RecaptchaPublicKey}#">
+    <parameterEntry kind="XmlFile" scope="App_Plugins\\UmbracoForms\\UmbracoForms\.config$" match="//setting[@key='RecaptchaPublicKey']/@value" />
+  </parameter>
+  <parameter name="RecaptchaPrivateKey" defaultValue="#{RecaptchaPrivateKey}#">
+    <parameterEntry kind="XmlFile" scope="App_Plugins\\UmbracoForms\\UmbracoForms\.config$" match="//setting[@key='RecaptchaPrivateKey']/@value" />
+  </parameter>
+</parameters>

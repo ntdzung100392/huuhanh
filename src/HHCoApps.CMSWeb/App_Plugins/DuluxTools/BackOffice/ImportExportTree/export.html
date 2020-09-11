@@ -1,0 +1,37 @@
+﻿<div ng-controller="DuluxTools.Export.Controller as vm" class="dulux-tools">
+    <umb-editor-view footer="false" header="false">
+        <div class="umb-pane">
+            <umb-box>
+                <umb-box-content>
+                    <div class="form-horizontal">
+                        <form>
+                            <div class="umb-control-group control-group  -no-border">
+                                <div class="umb-el-wrap">
+                                    <div class="control-header">
+                                        <label class="control-label">Choose export</label>
+                                    </div>
+                                    <div class="controls">
+                                        <select name="dropDownList"
+                                                ng-change="vm.selectExportForDownload()"
+                                                ng-model="vm.selectedExport"
+                                                ng-options="item.value as item.label for item in vm.exports"
+                                                ng-required="true">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="umb-control-group -no-border">
+                                <div class="umb-el-wrap">
+                                    <div class="controls">
+                                        <button class="btn btn-primary" title="Download selected export" ng-click="vm.exportFile()"><i class="icon-download"></i> Export</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </umb-box-content>
+            </umb-box>
+        </div>
+    </umb-editor-view>
+</div>

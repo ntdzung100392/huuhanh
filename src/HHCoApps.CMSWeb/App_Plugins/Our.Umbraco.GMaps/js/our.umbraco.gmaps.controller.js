@@ -1,10 +1,9 @@
 ﻿angular.module("umbraco").controller("Our.Gmaps.Core.Controller",
     [
         "$scope",
-        "$element",
         "OurGmapsCoreFactory",
 
-        function ($scope, $element, OurGmapsCoreFactory) {
+        function ($scope, OurGmapsCoreFactory) {
             'use strict';
 
             $scope.apiKey = '';
@@ -24,8 +23,8 @@
             $scope.showLoader = true;
             $scope.searchedValue = '';
 
-            var mapElement = $element.find('.our-coremaps__canvas').get(0);
-            var autoCompleteElement = $element.find('.our-coremaps__autocomplete').get(0);
+            var mapElement = document.getElementById('map-canvas');
+            var autoCompleteElement = document.getElementById('map-autocomplete');
 
             if ($scope.model.config !== null) {
                 // default location when set on data type config

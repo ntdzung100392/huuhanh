@@ -13,6 +13,7 @@
     Html.RequiresCss("~/css/icons.css");
     Html.RequiresCss("~/css/main.css");
     Html.RequiresCss("~/css/custom.css");
+    Html.RequiresCss("~/css/shopify-integrate.css");
     Html.RequiresJs("~/scripts/scripts.js");
 
     if (Model is INavigationBase navigationBase)
@@ -53,6 +54,10 @@
         <div class="page-wrapper">
             @RenderBody()
             @Html.Partial("~/views/partials/wishlist/MiniWishList.cshtml")
+            @if (false)
+            {
+                @Html.Partial("~/views/partials/CartPage.cshtml")
+            }
         </div>
         @Html.CachedPartial("~/views/partials/FooterBanner.cshtml", Model, CacheTimes.FiveMinutesCacheSeconds, true)
         @Html.CachedPartial("~/views/partials/PageFooter.cshtml", CacheTimes.FiveMinutesCacheSeconds)

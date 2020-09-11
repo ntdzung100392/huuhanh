@@ -1,0 +1,20 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@{
+    Layout = "master.cshtml";
+}
+
+@Html.GetGridHtml(Model, "bodyText", "bootstrap3-fluid")
+
+@section Scripts{
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.0.0.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+
+    @if (TempData["UmbracoForms"] != null)
+    {
+        foreach (var form in (List<Guid>)TempData["UmbracoForms"])
+        {
+            Html.RenderAction("RenderFormScripts", "UmbracoForms", new { formid = form, theme = "subscribe" });
+        }
+    }
+}

@@ -13,7 +13,6 @@ using Umbraco.Core;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.Services;
 using Umbraco.Web;
-using Umbraco.Web.Composing;
 using Umbraco.Web.Macros;
 using Umbraco.Web.Models;
 using Umbraco.Web.PublishedModels;
@@ -34,7 +33,7 @@ namespace HHCoApps.CMSWeb.Services
             _mapper = mapper;
             _umbracoHelper = umbracoHelper;
             _contentIndexQueryService = contentIndexQueryService;
-            _isBackOfficeRequest = Current.UmbracoContext.HttpContext.Request.Path.StartsWith("/umbraco/backoffice");
+            _isBackOfficeRequest = Umbraco.Web.Composing.Current.UmbracoContext.HttpContext.Request.Path.StartsWith("/umbraco/backoffice");
         }
 
         public ItemListingViewModel GetViewModel(ItemListing itemListing)

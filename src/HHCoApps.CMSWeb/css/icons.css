@@ -147,3 +147,7 @@
 .icon-can:before {
   content: "\e91f";
 }
+
+.icon-phone-outline:before {
+    content: "\e918";
+}
