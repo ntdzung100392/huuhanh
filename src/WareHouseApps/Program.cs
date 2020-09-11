@@ -38,7 +38,7 @@ namespace WareHouseApps
                     standardKernel.Get<IMapper>()
                     ));
 #else
-            Application.Run(new Login(standardKernel.Get<IUserServices>()));
+            Application.Run(new Login(standardKernel.Get<IUserServices>(), standardKernel.Get<IMapper>()));
 #endif
         }
     }
