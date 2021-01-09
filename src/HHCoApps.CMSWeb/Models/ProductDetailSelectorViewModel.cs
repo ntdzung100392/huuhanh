@@ -22,6 +22,8 @@ namespace HHCoApps.CMSWeb.Models
         public string ColorImageUrl { get; set; }
         public string ColorUid { get; set; }
         public IEnumerable<TimberModel> Timbers { get; set; } = Enumerable.Empty<TimberModel>();
+        public bool IsSizeOverride { get; set; }
+        public IEnumerable<string> AvailableSizes { get; set; } = Enumerable.Empty<string>();
     }
 
     public class TimberModel

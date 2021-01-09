@@ -30,10 +30,4 @@
     <parameterValidation kind="AllowEmpty"/>
     <parameterEntry kind="XmlFile" scope="web\.config$" match="/configuration/system.webServer/httpProtocol/customHeaders/add[@name='X-Robots-Tag']" />
   </parameter>
-  <parameter name="RecaptchaPublicKey" defaultValue="#{RecaptchaPublicKey}#">
-    <parameterEntry kind="XmlFile" scope="App_Plugins\\UmbracoForms\\UmbracoForms\.config$" match="//setting[@key='RecaptchaPublicKey']/@value" />
-  </parameter>
-  <parameter name="RecaptchaPrivateKey" defaultValue="#{RecaptchaPrivateKey}#">
-    <parameterEntry kind="XmlFile" scope="App_Plugins\\UmbracoForms\\UmbracoForms\.config$" match="//setting[@key='RecaptchaPrivateKey']/@value" />
-  </parameter>
 </parameters>

@@ -22,7 +22,11 @@
         {
             foreach (FieldViewModel f in c.Fields)
             {
-                f.PlaceholderText = navigationManagement.SubscribePlaceholderText;
+                if (f.Alias.Equals("emailAddress", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    f.PlaceholderText = navigationManagement.SubscribePlaceholderText;
+                    f.Values = Enumerable.Empty<object>();
+                }
                 @Html.Partial(FormThemeResolver.GetFieldView(Model, f), f)
             }
         }

@@ -100,7 +100,7 @@ class WishListContent extends React.Component {
                       </span>
                     </p>
                     <Button className="btn checkout-btn" onClick={this.props.onCheckout}>
-                      <span>Process to Checkout</span>
+                      <span>PROCEED TO CHECK OUT</span>
                     </Button>
                   </React.Fragment>
                 }

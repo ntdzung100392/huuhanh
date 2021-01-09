@@ -153,5 +153,10 @@ namespace HHCoApps.CMSWeb.Helpers
             return (HttpContext.Current.Request.AcceptTypes ?? Array.Empty<string>())
                 .Any(x => x.Equals(AcceptTypeImageWebP, StringComparison.OrdinalIgnoreCase));
         }
+
+        public static string GetLastPartUrl(this string url)
+        {
+            return url.Trim('/').Split('/').Last();
+        }
     }
 }

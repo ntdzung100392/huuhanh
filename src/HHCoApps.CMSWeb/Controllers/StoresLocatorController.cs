@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using HHCoApps.CMSWeb.Helpers;
-using HHCoApps.CMSWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using HHCoApps.CMSWeb.Caching;
+using HHCoApps.CMSWeb.Models;
 using Umbraco.Web;
 using Umbraco.Web.PublishedModels;
 using Umbraco.Web.WebApi;

@@ -286,3 +286,7 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+/src/HHCoApps.CMSWeb/App_Data/cache
+/src/HHCoApps.CMSWeb/App_Data/Logs
+/src/HHCoApps.CMSWeb/App_Data/TEMP
+/src/HHCoApps.CMSWeb/Media

@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
+using Examine;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using HHCoApps.CMSWeb.Composers.Indexing;
 using HHCoApps.CMSWeb.Models;
 using HHCoApps.CMSWeb.Models.Enums;
 using HHCoApps.CMSWeb.Models.RequestModels;
 using HHCoApps.CMSWeb.Services.Models;
-using Examine;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Web;
 using Umbraco.Web.PublishedModels;

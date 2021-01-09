@@ -1,0 +1,58 @@
+﻿@using System.Configuration
+@using HHCoApps.CMSWeb.Caching
+@using Umbraco.Web.Composing
+@{
+    var umbracoHelper = Current.Factory.GetInstance<UmbracoHelper>();
+    var integration = (Integration)umbracoHelper.ContentQuery.ContentSingleFromCache(CachedContent.IntegrationContent);
+    var isEnabled = integration?.EnableSegment ?? false;
+    var isEnabledAnalytic = (integration?.YtVideoTrackingEnabled ?? false) && isEnabled;
+    var ytApiKey = integration?.YtApiKey ?? "XXXXXXXXXXXXXXXXXXXXXXXXXXXX0365";
+}
+
+@if (isEnabled)
+{
+    <script src="~/scripts/segment-scroll-depth/segment-scroll-depth.min.js?v=@ConfigurationManager.AppSettings["version"]"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.scrollDepth();
+        });
+    </script>
+}
+
+@if (isEnabledAnalytic)
+{
+    <script type="text/javascript">
+        var player;
+        var players = [];
+        $(document).ready(function () {
+            var tag = document.createElement('script');
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            var iframes = document.getElementsByTagName('iframe');
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            tag.src = "https://www.youtube.com/iframe_api";
+            if (iframes.length > 0) {
+                for (var i = 0; i < iframes.length; i++) {
+                    let iframe = iframes[i];
+                    if (iframe.src.includes('youtube.com/embed')) {
+                        iframe.src += iframe.src.includes('?') ? "&enablejsapi=1" : "?enablejsapi=1";
+                        iframe.id = "player-"+ i;
+                        players.push(iframe.id);
+                    }
+                }
+            }
+        });
+        function onYouTubeIframeAPIReady() {
+            analytics.ready(function () {
+                players.forEach(function (player) {
+                    player = new YT.Player(player);
+                    var ytAnalytics = new analytics.plugins.YouTubeAnalytics(player, '@ytApiKey');
+
+                    // This is fix for ytAnalytics.initialize(); when page have multiple videos and avoid calling video api unnecessary
+                    var segmentYoutubeOnStateChange = 'segmentYoutubeOnStateChange_' + player.f.id;
+                    window[segmentYoutubeOnStateChange] = ytAnalytics.onPlayerStateChange.bind(ytAnalytics);
+                    player.addEventListener("onStateChange", segmentYoutubeOnStateChange);
+                });
+            });
+        }
+    </script>
+}

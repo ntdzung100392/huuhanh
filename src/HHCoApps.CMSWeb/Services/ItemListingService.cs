@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using HHCoApps.CMSWeb.Composers.Indexing;
 using HHCoApps.CMSWeb.Helpers;
-using HHCoApps.CMSWeb.Models;
-using HHCoApps.CMSWeb.Models.Enums;
-using HHCoApps.CMSWeb.Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using HHCoApps.CMSWeb.Caching;
 using Examine;
+using HHCoApps.CMSWeb.Caching;
+using HHCoApps.CMSWeb.Composers.Indexing;
+using HHCoApps.CMSWeb.Models;
+using HHCoApps.CMSWeb.Models.Enums;
+using HHCoApps.CMSWeb.Services.Models;
 using Umbraco.Core;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.Services;
@@ -46,22 +46,25 @@ namespace HHCoApps.CMSWeb.Services
 
             var contentInfos = GetSortedAndOrderedContentInfos(itemListingSource, numberOfDisplayItems);
 
-            var cmsContents = contentInfos.Where(x => !string.IsNullOrEmpty(x.Udi)).ToList();
-
-            var nodesContents = _umbracoHelper.Content(cmsContents.Select(x => Udi.Parse(x.Udi)).ToArray());
-
-            foreach (var content in contentInfos)
+            if (!itemListingSource.ContentSourceOption.Equals(ContentSource.FromImagesOnly.DisplayName, StringComparison.OrdinalIgnoreCase))
             {
-                if (!string.IsNullOrEmpty(content.Udi))
+                var cmsContents = contentInfos.Where(x => !string.IsNullOrEmpty(x.Udi)).ToList();
+
+                var nodesContents = _umbracoHelper.Content(cmsContents.Select(x => Udi.Parse(x.Udi)).ToArray());
+
+                foreach (var content in contentInfos)
                 {
-                    var node = nodesContents.Where(x => x.GetUDI() == content.Udi);
-                    if (node.Any())
+                    if (!string.IsNullOrEmpty(content.Udi))
                     {
-                        var nodeContentInfoModel = GetNodeContentInfo(node.First());
-                        content.Title = string.IsNullOrEmpty(content.Title) ? nodeContentInfoModel.Title : content.Title;
-                        content.ImageUrl = content.ImageUrl ?? nodeContentInfoModel.ImageUrl;
-                        content.ImageAlt ??= nodeContentInfoModel.Title;
-                        content.Caption = string.IsNullOrEmpty(content.Caption) ? nodeContentInfoModel.Caption : content.Caption;
+                        var node = nodesContents.Where(x => x.GetUDI() == content.Udi);
+                        if (node.Any())
+                        {
+                            var nodeContentInfoModel = GetNodeContentInfo(node.First());
+                            content.Title = string.IsNullOrEmpty(content.Title) ? nodeContentInfoModel.Title : content.Title;
+                            content.ImageUrl = content.ImageUrl ?? nodeContentInfoModel.ImageUrl;
+                            content.ImageAlt ??= nodeContentInfoModel.Title;
+                            content.Caption = string.IsNullOrEmpty(content.Caption) ? nodeContentInfoModel.Caption : content.Caption;
+                        }
                     }
                 }
             }
@@ -110,7 +113,10 @@ namespace HHCoApps.CMSWeb.Services
             if (itemListingSource == null)
                 return Enumerable.Empty<ContentInfoModel>();
 
-            if (!string.IsNullOrEmpty(itemListingSource.ContentSourceOption) && itemListingSource.ContentSourceOption.Equals(ContentSource.FromChildPages.DisplayName))
+            if (itemListingSource.ContentSourceOption.Equals(ContentSource.FromImagesOnly.DisplayName, StringComparison.OrdinalIgnoreCase))
+                return _mapper.Map<IEnumerable<ContentInfoModel>>(itemListingSource.ImagesSource);
+
+            if (!string.IsNullOrEmpty(itemListingSource.ContentSourceOption) && itemListingSource.ContentSourceOption.Equals(ContentSource.FromChildPages.DisplayName, StringComparison.OrdinalIgnoreCase))
                 return GetContentInfoModelsFromChildNode(itemListingSource, numberOfDisplayItems);
 
             return GetContentInfoModelsFromItemsGroup(itemListingSource, numberOfDisplayItems);
@@ -118,7 +124,7 @@ namespace HHCoApps.CMSWeb.Services
 
         public ItemListingSource GetItemListingSource(ItemListing itemListing)
         {
-            if (!string.IsNullOrEmpty(itemListing.ContentSourceOption) && itemListing.ContentSourceOption.Equals(ContentSource.FromDefaultList.DisplayName))
+            if (!string.IsNullOrEmpty(itemListing.ContentSourceOption) && itemListing.ContentSourceOption.Equals(ContentSource.FromDefaultList.DisplayName, StringComparison.OrdinalIgnoreCase))
                 return _mapper.Map<ItemListingSource>((ListingConfiguration)itemListing.DefaultList);
 
             return _mapper.Map<ItemListingSource>(itemListing);
@@ -214,7 +220,7 @@ namespace HHCoApps.CMSWeb.Services
             foreach (var filterTypeValueOptions in itemListingSource.DefaultFilters)
             {
                 var filterCategory = FilterCategory.FromDisplayName(filterTypeValueOptions.FilterType);
-                if( filterCategory == null)
+                if (filterCategory == null)
                     continue;
 
                 var filterValues = filterTypeValueOptions.FilterValues.Split(',');

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using HHCoApps.CMSWeb.Models;
 using Flurl;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using HHCoApps.CMSWeb.Models;
 using Umbraco.Core;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Web;

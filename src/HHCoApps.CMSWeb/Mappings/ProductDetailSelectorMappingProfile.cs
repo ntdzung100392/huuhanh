@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using HHCoApps.CMSWeb.Models;
 using System;
 using System.Linq;
 using System.Web;
+using HHCoApps.CMSWeb.Models;
 using Umbraco.Web.PublishedModels;
 
 namespace HHCoApps.CMSWeb.Mappings

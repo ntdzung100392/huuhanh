@@ -6,10 +6,3 @@
 }
 
 @Html.GetGridHtml(Model, "bodyText", "bootstrap3-fluid")
-
-@section Scripts {
-    @Html.CachedPartial("~/views/partials/ReactScripts.cshtml", CacheTimes.OneHourCacheSeconds)
-    <script type="text/javascript">
-        AppConfig.isBrowserSupportWebP = @(Request.AcceptTypes != null && Request.AcceptTypes.Contains(UrlExtensions.AcceptTypeImageWebP, StringComparer.OrdinalIgnoreCase) ? "true" : "false")
-    </script>
-}

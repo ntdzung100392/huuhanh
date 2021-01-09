@@ -1,0 +1,51 @@
+﻿@using HHCoApps.CMSWeb.Helpers
+@using HHCoApps.CMSWeb.Helpers.Enum
+@model HHCoApps.CMSWeb.Models.ItemListingViewModel
+@{
+    var backgroundColor = string.IsNullOrEmpty(Model.BackgroundColour) ? "#fffff" : $"#{Model.BackgroundColour}";
+    var position = string.Empty;
+    switch (Model.ViewButtonAlign)
+    {
+        case "Left Aligned":
+            position = "Left";
+            break;
+        case "Center Aligned":
+            position = "Center";
+            break;
+        case "Right Aligned":
+            position = "Right";
+            break;
+        default:
+            position = "Left";
+            break;
+    }
+}
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 get-the-look__box page-section img-section" style="background-color:@backgroundColor">
+    <div class="get-the-look__intro text-center">
+        @if (Model.DisplayLabel)
+        {
+            @Html.Raw(Model.Label)
+        }
+        @{
+            if (!string.IsNullOrEmpty(Model.Caption))
+            {
+                @Html.Raw(Model.Caption)
+            }
+        }
+
+    </div>
+    <div class="carousel get-the-look__slider">
+        @foreach (var contentInfo in Model.ContentInfos)
+        {
+            var imgUrl = contentInfo.ImageUrl.GetCropImageUrl(contentInfo.ImageWidth, contentInfo.ImageHeight, ImageCropProfile.OneColumnSliderImageOnly);
+            <div class="slider-box text-center">
+                <img class="mx-auto lozad" data-src="@imgUrl" alt="@contentInfo.ImageAlt" />
+                <i class="icon-arrow-right-circle"></i>
+            </div>
+        }
+    </div>
+    <div class="cmp-btn" style="text-align: @position">
+        <a target="@(Model.ViewMoreTarget)" class="btn" href="@(Model.ViewMoreUrl)">@Model.ViewMoreLabel</a>
+    </div>
+</div>

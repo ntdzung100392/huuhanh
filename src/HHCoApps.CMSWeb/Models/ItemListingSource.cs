@@ -9,6 +9,7 @@ namespace HHCoApps.CMSWeb.Models
     public class ItemListingSource
     {
         public IEnumerable<ContentInfoModel> ContentInfos { get; set; } = Enumerable.Empty<ContentInfoModel>();
+        public IEnumerable<ImageModel> ImagesSource { get; set; } = Enumerable.Empty<ImageModel>();
         public IEnumerable<FilterTypeValueOptions> DefaultFilters { get; set; } = Enumerable.Empty<FilterTypeValueOptions>();
         public IPublishedContent StarterNode { get; set; }
         public string ContentSourceOption { get; set; }

@@ -13,6 +13,8 @@ namespace HHCoApps.CMSWeb.Models
         public int NumberOfDisplayItems { get; set; }
         public string ViewMoreUrl { get; set; }
         public string ViewMoreLabel { get; set; }
+        public string ViewButtonAlign { get; set; }
+        public string ViewMoreTarget { get; set; }
         public bool DisplayViewMoreLink => !string.IsNullOrEmpty(ViewMoreUrl) && ContentInfos.Any();
         public bool DisplaySubLabel => !string.IsNullOrEmpty(SubLabel);
         public bool DisplayViewMoreAsButton { get; set; }

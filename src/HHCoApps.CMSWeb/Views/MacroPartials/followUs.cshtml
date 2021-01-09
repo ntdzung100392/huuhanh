@@ -3,7 +3,11 @@
 @if (Model.MacroParameters["FormGuid"] != null)
 {
     var s = Model.MacroParameters["FormGuid"].ToString();
-
     var form = new Guid(s);
+
+    // Reading TempData["UmbracoForms"] should have set it to null but this doesn't
+    // happen if this request didn't return a 200 OK status. https://stackoverflow.com/a/7630709/5018
+    // Explictly clear it so that on the next request the scripts don't get rendered.
+    TempData.Remove("umbracoformsform");
     Html.RenderAction("RenderForm", "UmbracoForms", new { formId = form, theme = "follow-us" });
 }

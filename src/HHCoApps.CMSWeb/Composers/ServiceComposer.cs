@@ -22,7 +22,7 @@ namespace HHCoApps.CMSWeb.Composers
             composition.Register<INavigationService, NavigationService>();
             composition.Register<IFooterNavigationService, FooterNavigationService>();
             composition.Register<IRelatedProductService, RelatedProductService>();
-            composition.Register<IEmailTemplateService, EmailTemplateService>(); 
+            composition.Register<IEmailTemplateService, EmailTemplateService>();
         }
     }
 }

@@ -11,7 +11,9 @@ export const STRING_RESOURCES = {
   errorFirstNameMessage: "Please enter first name",
   errorLastNameMessage: "Please enter last name",
   errorEmailMessage: "Please enter a valid email address",
-  unknownErrorMessage: "Sorry, an error has occurred. Please try again"
+  unknownErrorMessage: "Sorry, an error has occurred. Please try again",
+  addToCartEventName: "Add to cart",
+  addToCartCategoryName: "Checkout"
 };
 
 export const VIEW_MODE = {

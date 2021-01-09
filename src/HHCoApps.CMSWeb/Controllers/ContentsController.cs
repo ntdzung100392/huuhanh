@@ -1,17 +1,17 @@
 ﻿using System;
 using AutoMapper;
-using HHCoApps.CMSWeb.Composers.Indexing;
-using HHCoApps.CMSWeb.Models;
-using HHCoApps.CMSWeb.Models.RequestModels;
-using HHCoApps.CMSWeb.Services;
-using HHCoApps.CMSWeb.Services.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using HHCoApps.CMSWeb.Caching;
 using HHCoApps.CMSWeb.Helpers;
+using HHCoApps.CMSWeb.Caching;
+using HHCoApps.CMSWeb.Composers.Indexing;
 using HHCoApps.CMSWeb.Helpers.Enum;
+using HHCoApps.CMSWeb.Models;
 using HHCoApps.CMSWeb.Models.Enums;
+using HHCoApps.CMSWeb.Models.RequestModels;
+using HHCoApps.CMSWeb.Services;
+using HHCoApps.CMSWeb.Services.Models;
 using Umbraco.Web.WebApi;
 using WebApi.OutputCache.V2;
 

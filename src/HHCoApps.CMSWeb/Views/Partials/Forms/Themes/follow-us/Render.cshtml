@@ -25,13 +25,8 @@
 @* In case the form has been marked as submitted - the FormThemeResolver will return the submitted.cshtml file and look for a custom
     view. In case there is no view found - it will default to /themes/default/submitted which will just display the standard message
 *@
-@if (Model.SubmitHandled)
+@if (!Model.SubmitHandled)
 {
-    @Html.Partial(formThemedView);
-}
-else
-{
-
     @*Standard form and wrapper *@
     <div id="umbraco_form_@Model.FormClientId" class="@Model.CssClass umbraco-forms-@Model.Theme form-inline follow-us-form">
 
@@ -54,7 +49,6 @@ else
             @* Render the form html *@
             @Html.Partial(formThemedView)
         }
-
 
         @* Form Scripts *@
         @if (Model.RenderScriptFiles)

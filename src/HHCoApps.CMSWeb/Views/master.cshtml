@@ -11,6 +11,7 @@
     Html.RequiresCss("~/css/slick-theme.css");
     Html.RequiresCss("~/css/fonts.css");
     Html.RequiresCss("~/css/icons.css");
+    Html.RequiresCss("~/css/iconic/font/css/open-iconic-bootstrap.css");
     Html.RequiresCss("~/css/main.css");
     Html.RequiresCss("~/css/custom.css");
     Html.RequiresCss("~/css/shopify-integrate.css");
@@ -33,14 +34,11 @@
 <html lang="en">
 <head>
     <title>@metadataViewModel.Title</title>
-    <link rel="icon" type="image/ico" href="~/images/FeastWatson_Favicon_64px.jpg">
+    <link rel="icon" type="image/ico" href="~/images/Levene_Logo_Colours-LightBlueBackground.jpg">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css" crossorigin="anonymous" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <script type="text/javascript" src="https://www.google.com/recaptcha/api.js?render=@reCaptchaPublicKey"></script>
-    @Html.CachedPartial("~/views/partials/integrations/GoogleTagManagerHead.cshtml", CacheTimes.FiveMinutesCacheSeconds)
     @Html.CachedPartial("~/views/partials/Metadata.cshtml", metadataViewModel, CacheTimes.FiveMinutesCacheSeconds, true)
     @Html.CachedPartial("~/views/partials/OpenGraph.cshtml", Model, CacheTimes.FiveMinutesCacheSeconds, true)
-    @Html.CachedPartial("~/views/partials/integrations/GoogleAnalytic.cshtml", CacheTimes.FiveMinutesCacheSeconds)
     @RenderSection("Header", required: false)
     @RenderSection("StyleSheets", required: false)
     @Html.RenderCssHere()
@@ -53,11 +51,6 @@
         @Html.CachedPartial("~/views/partials/HeaderBanner.cshtml", Model, CacheTimes.FiveMinutesCacheSeconds, true)
         <div class="page-wrapper">
             @RenderBody()
-            @Html.Partial("~/views/partials/wishlist/MiniWishList.cshtml")
-            @if (false)
-            {
-                @Html.Partial("~/views/partials/CartPage.cshtml")
-            }
         </div>
         @Html.CachedPartial("~/views/partials/FooterBanner.cshtml", Model, CacheTimes.FiveMinutesCacheSeconds, true)
         @Html.CachedPartial("~/views/partials/PageFooter.cshtml", CacheTimes.FiveMinutesCacheSeconds)
@@ -68,8 +61,6 @@
     <script type="text/javascript" src="https://unpkg.com/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/lozad@1.15.0/dist/lozad.min.js"></script>
     @Html.RenderJsHere()
-    @Html.Partial("~/views/partials/CookieConfirmation.cshtml")
-    @Html.CachedPartial("~/views/partials/integrations/ShareContent.cshtml", Model, CacheTimes.FiveMinutesCacheSeconds, true)
 </body>
 </html>
 <!--Build Version @ConfigurationManager.AppSettings["version"]-->

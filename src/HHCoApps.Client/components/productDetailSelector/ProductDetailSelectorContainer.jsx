@@ -16,8 +16,10 @@ class ProductDetailSelectorContainer extends Component {
     super(props);
     this.state = {
       isLoaded: false,
+      allSizes: [],
       availableSizes: [],
-      colors: [],
+      availableColors: [],
+      allColors: [],
       activeColor: {},
       activeTimbers: [],
       selectedTimber: {},
@@ -41,8 +43,8 @@ class ProductDetailSelectorContainer extends Component {
     ProductDetailSelectorApi.getProductDetailSelector(this.props.contentId).then(
       ({ data }) => {
         this.setState({
-          availableSizes: data.sizes,
-          colors: data.colors,
+          allSizes: data.sizes,
+          allColors: data.colors,
           timberCaption: data.timberCaption,
           colorCaption: data.colorCaption,
           shopifyMappings: data.shopifyMappings
@@ -53,7 +55,7 @@ class ProductDetailSelectorContainer extends Component {
   }
 
   findMatchingTimbers(colorUid) {
-    const activeColor = Object.values(this.state.colors).find(
+    const activeColor = Object.values(this.state.availableColors).find(
       (x) => x.colorUid === colorUid
     );
 
@@ -61,37 +63,36 @@ class ProductDetailSelectorContainer extends Component {
       this.setState({
         activeColor: activeColor,
         activeTimbers: activeColor.timbers,
-        selectedTimber: activeColor.timbers ? activeColor.timbers[0] : {}
+        selectedTimber: activeColor.timbers ? activeColor.timbers[0] : {},
+        ...this.getSizesAndSelectedSizeByColor(activeColor, this.state.allSizes, this.state.selectedSize),
       });
     }
   }
 
   parseQueryString() {
+    let activeColor, selectedSize;
     const parsedQuery = queryString.parse(window.location.search);
-    const initialColor = Object.keys(this.state.colors).length > 0 ? Object.values(this.state.colors)[0] : {};
-    const initialSize = Object.keys(this.state.availableSizes).length > 0 ? Object.values(this.state.availableSizes)[0] : {};
+    let newState = { ... this.state, availableSizes: this.state.allSizes, availableColors: this.state.allColors };
+
     if (Object.keys(parsedQuery).length > 0) {
-      const activeColor = Object.values(this.state.colors).find(x => UrlHelper.slugify(x.colorName) === UrlHelper.slugify(parsedQuery.selectedColor));
-      let activeSize = initialSize;
-      if (parsedQuery.selectedSize) {
-        activeSize = this.state.availableSizes.find(availableSize => UrlHelper.slugify(availableSize) === UrlHelper.slugify(parsedQuery.selectedSize));
-      }      
-      this.setState({
-        activeColor: activeColor ? activeColor : {},
-        activeTimbers: activeColor ? activeColor.timbers : [],
-        selectedTimber: activeColor && activeColor.timbers ? activeColor.timbers[0] : {},
-        selectedSize: activeSize,
-        isLoaded: true
-      });      
-    } else {
-      this.setState({
-        activeColor: initialColor || {},
-        activeTimbers: initialColor ? initialColor.timbers : [],
-        selectedTimber: initialColor && initialColor.timbers ? initialColor.timbers[0] : {},
-        isLoaded: true,
-        selectedSize: initialSize
-      });      
+      activeColor = Object.values(this.state.allColors).find(x => UrlHelper.slugify(x.colorName) === UrlHelper.slugify(parsedQuery.selectedColor));
+      selectedSize = Object.values(this.state.allSizes).find(x => UrlHelper.slugify(x) === UrlHelper.slugify(parsedQuery.selectedSize));
     }
+
+    if (activeColor) {
+      newState = { ...newState, ... this.getSizesAndSelectedSizeByColor(activeColor, this.state.allSizes, selectedSize), activeColor };
+    }
+    else {
+      selectedSize = selectedSize ? selectedSize : (Object.keys(this.state.allSizes).length > 0 ? Object.values(this.state.allSizes)[0] : {});
+      newState = { ...newState, ... this.getColorsAndActiveColorBySize(selectedSize, this.state.allColors), selectedSize };
+    }
+
+    this.setState({
+      ...newState,
+      activeTimbers: newState.activeColor ? newState.activeColor.timbers : [],
+      selectedTimber: newState.activeColor && newState.activeColor.timbers ? newState.activeColor.timbers[0] : {},
+      isLoaded: true
+    });
   }
 
   stringifyQuery(color) {
@@ -108,6 +109,7 @@ class ProductDetailSelectorContainer extends Component {
     this.stringifyQuery(color.colorName);
   }
 
+
   setActiveTimber(timber) {
     const timberIndex = this.state.activeTimbers.findIndex(x => x.timberUid === timber.timberUid);
     if (timberIndex > -1) {
@@ -120,7 +122,8 @@ class ProductDetailSelectorContainer extends Component {
   setActiveSize(value) {
     if (value) {
       this.setState({
-        selectedSize: value
+        selectedSize: value,
+        ...this.getColorsAndActiveColorBySize(value, this.state.allColors, this.state.activeColor)
       });
     } else {
       this.setState({
@@ -129,13 +132,78 @@ class ProductDetailSelectorContainer extends Component {
     }
   }
 
+  getSizesAndSelectedSizeByColor(color, allSizes, defaultSize) {
+    let sizes = [...allSizes];
+
+    if (color.isSizeOverride) {
+      let removeItems = [];
+
+      sizes.map((item, index) => {
+        if (color.availableSizes.findIndex(it => it == item) == -1) {
+          removeItems.push(index);
+        }
+      });
+
+      if (removeItems.length > 0) {
+        const indexSet = new Set(removeItems);
+        sizes = sizes.filter((value, i) => !indexSet.has(i));
+      }
+    }
+
+    if (sizes.length > 0) {
+      let selectedSize = sizes[0];
+      if (defaultSize) {
+        let index = sizes.findIndex(it => it == defaultSize);
+        if (index > -1) {
+          selectedSize = sizes[index];
+        }
+      }
+
+      return { selectedSize: selectedSize, availableSizes: sizes };
+    }
+
+    return { selectedSize: {}, availableSizes: [] };
+  }
+
+  getColorsAndActiveColorBySize(size, allColors, defaultColor) {
+    if (allColors.length == 0)
+      return { activeColor: {}, availableColors: [] };
+
+    let availableColors = [];
+    let activeColor = {};
+
+    for (let i = 0; i < allColors.length; i++) {
+      let color = allColors[i];
+      if (color.isSizeOverride) {
+        if (color.availableSizes.findIndex(it => it == size) > -1) {
+          availableColors.push(color);
+        }
+      }
+      else {
+        availableColors.push(color);
+      }
+    }
+
+    if (availableColors.length > 0) {
+      activeColor = availableColors[0];
+      if (defaultColor) {
+        let index = availableColors.findIndex(it => it.colorName == defaultColor.colorName);
+        if (index > -1) {
+          activeColor = availableColors[index];
+        }
+      }
+    }
+
+    return { activeColor: activeColor, availableColors: availableColors };
+  }
+
   renderVariant(color, size) {
-    const {shopify, shopifyMappings} = this.state;
-    const sizeColor = `${size}-${color.colorName || ''}`;    
+    const { shopify, shopifyMappings } = this.state;
+    const sizeColor = `${size}-${color.colorName || ''}`;
     let template = null;
     let selectedVariant = {};
 
-    if(shopify.variants && shopify.variants.length > 0 && shopifyMappings.length > 0) {
+    if (shopify.variants && shopify.variants.length > 0 && shopifyMappings.length > 0) {
       const validItem = shopifyMappings.find(mappingItem => mappingItem.sizeColor === sizeColor);
 
       if (validItem) {
@@ -195,16 +263,21 @@ class ProductDetailSelectorContainer extends Component {
 
     return (
       <React.Fragment>
+        {this.state.availableSizes.length > 0 && (
+          <div className="row product-detail__mobile-wrapper">
+            <ProductSizes sizes={this.state.availableSizes} selectedSize={this.state.selectedSize} setActiveSize={this.setActiveSize} />
+          </div>
+        )
+        }
         {(Object.keys(this.state.activeColor).length > 0 || Object.keys(parsedQuery).length > 0) && (
           <div className="row product-detail__selections product-detail__mobile-wrapper">
             <ProductColorSelector
-              colors={this.state.colors}
+              colors={this.state.availableColors}
               activeColor={this.state.activeColor}
               setActiveColor={this.setActiveColor}
               productTitle={this.props.productTitle}
               colorCaption={this.state.colorCaption}
             />
-
             <ProductTimberSelector
               timberCaption={this.state.timberCaption ? this.state.timberCaption : STRING_RESOURCES.timberCaption}
               activeTimbers={this.state.activeTimbers}
@@ -214,17 +287,11 @@ class ProductDetailSelectorContainer extends Component {
           </div>
         )}
         {
-          this.state.availableSizes.length > 0 && (
-            <div className="row product-detail__mobile-wrapper">
-              <ProductSizes sizes={this.state.availableSizes} selectedSize={this.state.selectedSize} setActiveSize={this.setActiveSize} />              
-            </div>             
-          )
-        }
-        {
-          this.state.shopify.variants && (
+          (this.state.shopify.variants) && (
             this.renderVariant(this.state.activeColor, this.state.selectedSize)
           )
-        }        
+        }
+
       </React.Fragment>
     );
   }

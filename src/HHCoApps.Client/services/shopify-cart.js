@@ -15,7 +15,7 @@ export class ShopifyCart {
         let quantity = 1;
 
         if (itemIndex >= 0) {
-          quantity = cartStorage[itemIndex].quantity + 1;
+          quantity = cartStorage.variants[itemIndex].quantity + 1;
           return;
         }
 
@@ -145,6 +145,8 @@ export class ShopifyCart {
             resolve(checkout);
           });
         }
+      }, function (error) {
+        reject(error);
       });
     });
   }
