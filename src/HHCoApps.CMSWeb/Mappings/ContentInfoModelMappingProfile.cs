@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using AutoMapper;
+using HHCoApps.CMSWeb.Helpers;
 using HHCoApps.CMSWeb.Models;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Web.PublishedModels;
@@ -35,6 +36,10 @@ namespace HHCoApps.CMSWeb.Mappings
             CreateContentInfoMapping<ContactUs>();
             CreateContentInfoMapping<Store>();
             CreateContentInfoMapping<Stores>();
+
+            CreateMap<ImageModel, ContentInfoModel>()
+                .ForMember(dst => dst.ImageAlt, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dst => dst.ImageUrl, opt => opt.MapFrom(src => src.Url));
 
             CreateMap<ContentInfoModel, ContentInfoGroupModel>();
             CreateMap<Home, ContentInfoModel>();

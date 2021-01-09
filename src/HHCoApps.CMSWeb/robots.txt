@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /umbraco/
+
+Sitemap: https://www.feastwatson.com.au/sitemap

@@ -11,6 +11,7 @@ namespace HHCoApps.CMSWeb.Models.Constants
         public static readonly Guid GlobalColourListId = new Guid("AFAF9212-125E-4E82-8DC7-0D25F676EB38");
         public const string TimberPrimerHandle = "timber-primer";
         public const string OutdoorTimberPrimerHandle = "timber-primer-outdoor";
+        public const string IndoorTimberPrimerHandle = "timber-primer-indoor";
         public const string OutdoorProductType = "Outdoor Products";        
         public const string IndoorProductType = "Indoor Products";
         public const int OutdoorTimberPrimerId = 1638;

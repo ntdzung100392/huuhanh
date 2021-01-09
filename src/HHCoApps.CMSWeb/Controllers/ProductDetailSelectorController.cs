@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using HHCoApps.CMSWeb.Models;
 using HHCoApps.CMSWeb.Helpers;
 using System;
 using System.Collections.Generic;
@@ -8,9 +7,10 @@ using Umbraco.Web;
 using Umbraco.Web.PublishedModels;
 using Umbraco.Web.WebApi;
 using System.Web.Http;
-using HHCoApps.CMSWeb.Helpers.Enum;
-using HHCoApps.CMSWeb.Models.RequestModels;
 using Flurl;
+using HHCoApps.CMSWeb.Helpers.Enum;
+using HHCoApps.CMSWeb.Models;
+using HHCoApps.CMSWeb.Models.RequestModels;
 using Umbraco.Core.Models.PublishedContent;
 
 namespace HHCoApps.CMSWeb.Controllers
@@ -52,7 +52,9 @@ namespace HHCoApps.CMSWeb.Controllers
                     {
                         ColorName = colorInfo.ColourName,
                         ColorImageUrl = colorInfo.GetCropImageUrl(ImageCropProfile.ColorImage),
-                        ColorUid = Guid.NewGuid().ToString()
+                        ColorUid = Guid.NewGuid().ToString(),
+                        IsSizeOverride = coating.IsSizeOverride,
+                        AvailableSizes = coating.AvailableSizes
                     };
 
                     var availableTimbers = new List<TimberModel>();

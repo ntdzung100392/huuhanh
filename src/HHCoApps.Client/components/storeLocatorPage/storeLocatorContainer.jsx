@@ -35,6 +35,7 @@ export default class StoreLocatorContainer extends React.Component {
     this.getPlaceDetails = this.getPlaceDetails.bind(this);
     this.setLocationMarker = this.setLocationMarker.bind(this);
     this.onSubmitValue = this.onSubmitValue.bind(this);
+    this.trackingSearchStore = this.trackingSearchStore.bind(this);
   }
 
   componentDidMount() {
@@ -88,12 +89,14 @@ export default class StoreLocatorContainer extends React.Component {
         this.setLocationMarker(originLocation);
         this.searchStores(originLocation.lat(), originLocation.lng(), this.state.maxStore);
         this.zoomIntoCertainArea(originLocation);
+        this.trackingSearchStore();
       }
     });
   }
 
   onSubmitValue() {
     const input = document.getElementById('search-box');
+    this.trackingSearchStore();
     const postalCode = parseInt(input.value);
 
     if (postalCode && this.state.postalCode !== postalCode) {
@@ -429,6 +432,17 @@ export default class StoreLocatorContainer extends React.Component {
     const originMarker = new window.google.maps.Marker(this.state.map);
     originMarker.setPosition(location);
     originMarker.setVisible(true);
+  }
+
+  trackingSearchStore() {
+    if (AppConfig.integrations.segmentEnabled) {
+      const addressValue = document.getElementById("search-box").value;
+      analytics.track("Search Store", {
+        address: addressValue,
+        label: addressValue,
+        category: 'Search'
+      });
+    }
   }
 
   render() {

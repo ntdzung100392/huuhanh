@@ -10,6 +10,8 @@ namespace HHCoApps.CMSWeb.Mappings
         {
             CreateMap<ItemListing, ItemListingViewModel>()
                 .ForMember(dst => dst.ViewMoreUrl, opt => opt.MapFrom(src => src.ViewMoreLink.Url))
+                .ForMember(dst => dst.ViewButtonAlign, opt => opt.MapFrom(src => src.ViewButtonAlign))
+                .ForMember(dst => dst.ViewMoreTarget, opt => opt.MapFrom(src => src.ViewMoreLink.Target ?? string.Empty))
                 .ForMember(dst => dst.ViewMoreLabel, opt => opt.MapFrom(src => src.ViewMoreLabel ?? src.ViewMoreLink.Name));
 
             CreateMap<ItemListing, ItemListingSource>();

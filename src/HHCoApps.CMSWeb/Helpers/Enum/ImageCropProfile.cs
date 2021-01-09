@@ -20,6 +20,7 @@ namespace HHCoApps.CMSWeb.Helpers.Enum
         public static ImageCropProfile ThreeColumnBlog = new ImageCropProfile(nameof(ThreeColumnBlog), nameof(ThreeColumnBlog)) { Width = 480, Height = 356, ImageCropMode = Umbraco.Web.Models.ImageCropMode.Crop };
         public static ImageCropProfile ThreeColumnsWithFlexibleHeightItems = new ImageCropProfile(nameof(ThreeColumnsWithFlexibleHeightItems), nameof(ThreeColumnsWithFlexibleHeightItems)) { Width = 328, ImageCropMode = Umbraco.Web.Models.ImageCropMode.Crop };
         public static ImageCropProfile OneColumnSlider = new ImageCropProfile(nameof(OneColumnSlider), nameof(OneColumnSlider)) { MaxWidth = 470, Height = 303, UseBackgroundColor = false, ImageCropMode = Umbraco.Web.Models.ImageCropMode.Crop };
+        public static ImageCropProfile OneColumnSliderImageOnly = new ImageCropProfile(nameof(OneColumnSliderImageOnly), nameof(OneColumnSliderImageOnly)) { Width = 500, Height = 500, UseBackgroundColor = false, ImageCropMode = Umbraco.Web.Models.ImageCropMode.Crop };
         public static ImageCropProfile TwoColumn = new ImageCropProfile(nameof(TwoColumn), nameof(TwoColumn)) { Width = 538, Height = 380, ImageCropMode = Umbraco.Web.Models.ImageCropMode.Crop };
         public static ImageCropProfile FourColumn = new ImageCropProfile(nameof(FourColumn), nameof(FourColumn)) { Width = 215, Height = 241 };
 
@@ -29,8 +30,8 @@ namespace HHCoApps.CMSWeb.Helpers.Enum
         public static ImageCropProfile CommonProblemImageThumbnail = new ImageCropProfile(nameof(CommonProblemImageThumbnail), nameof(CommonProblemImageThumbnail)) { Width = 380, Height = 220 };
 
         public static ImageCropProfile IconLink = new ImageCropProfile(nameof(IconLink), nameof(IconLink)) { Width = 36, Height = 36 };
-        public static ImageCropProfile Logo = new ImageCropProfile(nameof(Logo), nameof(Logo)) { Width = 225, Height = 31, ImageCropMode = Umbraco.Web.Models.ImageCropMode.BoxPad, UseBackgroundColor = false, IsRenderWebp = false };
-        public static ImageCropProfile FooterLogo = new ImageCropProfile(nameof(FooterLogo), nameof(FooterLogo)) { Width = 325, Height = 131, ImageCropMode = Umbraco.Web.Models.ImageCropMode.BoxPad, UseBackgroundColor = false, IsRenderWebp = false };
+        public static ImageCropProfile Logo = new ImageCropProfile(nameof(Logo), nameof(Logo)) { Width = 190, Height = 190, ImageCropMode = Umbraco.Web.Models.ImageCropMode.Crop, UseBackgroundColor = true, IsRenderWebp = false };
+        public static ImageCropProfile FooterLogo = new ImageCropProfile(nameof(FooterLogo), nameof(FooterLogo)) { MaxWidth = 213, Height = 104, ImageCropMode = Umbraco.Web.Models.ImageCropMode.Crop, UseBackgroundColor = true, IsRenderWebp = false };
         public static ImageCropProfile Gallery = new ImageCropProfile(nameof(Gallery), nameof(Gallery)) { Height = 246, ImageCropMode = Umbraco.Web.Models.ImageCropMode.Pad };
 
         public static ImageCropProfile ThreeColumnsWithCaption = new ImageCropProfile(nameof(ThreeColumnsWithCaption), nameof(ThreeColumnsWithCaption)) { Width = 356, Height = 284, ImageCropMode = Umbraco.Web.Models.ImageCropMode.Crop };

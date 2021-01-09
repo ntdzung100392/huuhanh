@@ -4,7 +4,7 @@
     var footerMenu = Model?.FooterMenu ?? Enumerable.Empty<MenuItem>();
 }
 
-<div class="footer-nav">
+<div class="footer__item footer-nav">
     @if (footerMenu.Any())
     {
         foreach (var menuItem in footerMenu)

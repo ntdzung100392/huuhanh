@@ -24,7 +24,8 @@
             "navigationAndBreadcrumbComponent",
             "footerNavigationComponent",
             "relatedProductComponent",
-            "buttonComponent"
+            "buttonComponent",
+            "richTextWithQuoteComponent"
         ],
         "nameTemplate": "",
         "enablePreview": true,

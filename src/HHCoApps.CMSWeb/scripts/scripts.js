@@ -51,12 +51,40 @@ $(document).ready(function () {
     var header = $('.header'),
       scroll = $(window).scrollTop();
 
-    if ($(window).width() > 992) {
-      if (scroll > 100) header.addClass('sticky-header');
+    if ($(window).width() > 768) {
+      if (scroll > 1) header.addClass('sticky-header');
       else header.removeClass('sticky-header');
     } else {
       if (scroll > 0) header.addClass('sticky-header');
       else header.removeClass('sticky-header');
+    }
+  });
+
+    function setHeightBanner() {
+        if (window.matchMedia("(min-width: 992px)").matches) {
+            if ($(window).height() >= 768) {
+                var windowH = $(window).height();
+                $('.home-section').css('height', windowH - 100);
+            }
+        } else {
+            $('.home-section').css('height', 'auto');
+        }
+    }
+
+    setHeightBanner();
+    $(window).resize(function () {
+        setHeightBanner();
+    });
+
+  $('a[href="#about-us"]').click(function () {
+    if ($(".about-section").length > 0) {
+      $("html, body").animate({
+        scrollTop: $(".about-section").offset().top - 120
+      }, 300);
+      if ($(window).width() <= 767) {
+        $('.navbar-collapse').removeClass('in');
+        $('.mobile-navbar .hamburger').attr('aria-expanded', 'false');
+      }
     }
   });
 
@@ -98,7 +126,7 @@ $(document).ready(function () {
     }
 
     $('#selected-variant-price').text(displayPrice);
-    
+
   });
 
   if (localStorage.getItem('cookieAccepted') != 'true') {
@@ -158,7 +186,7 @@ function handleSubmitFollowUsForm() {
   var $validationMsg = $form.find('.subscribe___footer--error');
   var dataRegexPattern = $emailField.attr('data-val-regex-pattern');
   var emailErrorMsg = $emailField.attr('data-val-regex');
-  var successMsg = "<span class='umbraco-forms-submitmessage'>" + $('#idSubscribeSuccessfulMessage').val() + "</span>";
+  var successMsg = "<span class='umbraco-forms-submitmessage follow-us'>" + $('#idSubscribeSuccessfulMessage').val() + "</span>";
   var alreadySubscribed = $('#idAlreadySubscribeMessage').val();
 
   $form.on('submit', function (e) {
@@ -189,7 +217,7 @@ function handleSubmitFollowUsForm() {
               $validationMsg.text(alreadySubscribed);
             } else {
               $.ajax({
-                url: $form.attr('action'),
+                url: '/',
                 type: 'POST',
                 cache: false,
                 data: $form.serialize(),
@@ -360,7 +388,11 @@ function initialClickEvent() {
       if (itemIndex >= 0) {
         wishListItems[itemIndex].quantity = wishListItems[itemIndex].quantity + 1;
         localStorage.setItem("feastWatson_WishList", JSON.stringify(wishListItems));
-        document.dispatchEvent(new Event("wishListUpdated"));
+        document.dispatchEvent(new CustomEvent("wishListUpdated", {
+          'detail': {
+            item: wishListItems[itemIndex]
+          }
+        }));
 
         $("#sidebar-cart").css({
           maxHeight: windowHeight
@@ -379,7 +411,7 @@ function initialClickEvent() {
             maxHeight: windowHeight
           });
         });
-  
+
         $(window).on('orientationchange', function () {
           $(window).one('resize', function () {
             let windowHeight = $(window).innerHeight();
@@ -401,12 +433,14 @@ function initialClickEvent() {
     $('html, body').css({
       overflow: 'hidden'
     });
-    document.dispatchEvent(new CustomEvent("newWishItemAdded", {'detail': {
-      wishItemId: newWishItemId,
-      sku: productVariantSKU.html(),
-      variantId: productVariantId.html(),
-      price: productVariantPrice.html()
-    }}));
+    document.dispatchEvent(new CustomEvent("newWishItemAdded", {
+      'detail': {
+        wishItemId: newWishItemId,
+        sku: productVariantSKU.html(),
+        variantId: productVariantId.html(),
+        price: productVariantPrice.html()
+      }
+    }));
 
   });
 

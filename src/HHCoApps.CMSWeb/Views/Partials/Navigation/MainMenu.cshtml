@@ -7,137 +7,20 @@
 
 @{
     var menuItemViewModel = Current.Factory.GetInstance<IMenuItemService>().GetViewModel(Model.MainMenu);
-    var logoImg = Url.GetCropImageUrl(Model.Logo?.Url, ImageCropProfile.Logo);
+    var logoImg = Url.GetCropImageUrl(Model.Logo?.Url(), ImageCropProfile.Logo);
 
     var umbracoHelper = Current.Factory.GetInstance<UmbracoHelper>();
     var integration = (Integration)umbracoHelper.ContentQuery.ContentSingleFromCache(CachedContent.IntegrationContent);
-    var hasShoppingFeature = integration.ShopifyEnable;
-    var shopifyStore = integration.ShopifyStore;
 }
 
-<nav class="navbar" role="navigation">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" id="navbar-toggle" data-toggle="collapse" data-target="#mobile-main-menu" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-menu"></span>
-        </button>
-        <a class="navbar-search visible-xs visible-sm hidden-md hidden-lg" data-toggle="collapse" data-target="#mobile-search-menu">
-            <div class="text-right">
-                <span class="icon-search-alt"></span>
-            </div>
-        </a>
-        <a class="navbar-phone visible-xs visible-sm hidden-md hidden-lg" href="tel: +6193822398">
-            <div class="text-right">
-                <span class="icon-phone-outline" style="color: #fff"></span>
-            </div>
-        </a>
-        <a href="/" class="visible-xs visible-sm hidden-md navbar-header__logo text-center">
-            <img class="lozad" data-src="@logoImg" alt="@Model.SiteName" />
-        </a>
-        <div class="hidden-xs hidden-sm visible-md visible-lg text-right">
-            <a class="navbar-brand" data-toggle="collapse" data-target="#filter-menu" id="nav-laptop" aria-expanded="false">
-                <div class="text-right">
-                    <i class="icon-filter text-yellow"></i>
-                </div>
-            </a>
-            <a class="navbar-search" data-toggle="collapse" data-target="#search-menu" id="nav-search-laptop" aria-expanded="false">
-                <div class="text-right">
-                    <span class="icon-search-alt"></span>
-                </div>
-            </a>
-        </div>
-        <div class="visible-xs visible-sm hidden-md hidden-lg">
-            <div class="navbar-list">
-                @if (hasShoppingFeature)
-                {
-                    <a class="navbar-brand navbar-phone" href="https://@shopifyStore/account" target="_blank">
-                        <div class="text-right">
-                            <svg class="bi" fill="currentColor" width="1em" height="1em">
-                                <use xlink:href="~/assets/images/icons/bootstrap-icons.svg#person" />
-                            </svg>
-                        </div>
-                    </a>
-                }
-                <a class="navbar-brand navbar-shopping-card">
-                    <div class="text-right">
-                        <span class="icon-shopping-card"></span>
-                    </div>
-                </a>
-                <a class="navbar-brand" data-toggle="collapse" data-target="#filter-menu">
-                    <div class="text-right">
-                        <span class="icon-filter text-yellow"></span>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="visible-md visible-lg hidden-xs hidden-sm">
-        <ul class="nav navbar-nav">
-            @foreach (var menuItem in menuItemViewModel.MenuItems)
-            {
-                <li><a href="@(menuItem.Link?.Url)" target="@(menuItem.Link?.Target)" class="text-uppercase">@menuItem.Title</a></li>
-            }
-            <li>
-                <a class="text-uppercase" id="wish-list" aria-label="Open cart">
-                    <span class="shopping-cart-icon-wrapper" aria-hidden="@(!hasShoppingFeature)">
-                        <svg class="bi shopping-cart-icon" fill="currentColor" width="1em" height="1em">
-                            <use xlink:href="~/assets/images/icons/bootstrap-icons.svg#cart-fill" />
-                        </svg>
-                    </span>
-                    <span class="title" aria-hidden="@(hasShoppingFeature)">Wish List</span>
-                    <span class="amount"></span>
-                </a>
-            </li>
-            @if (hasShoppingFeature)
-            {
-                <li>
-                    <a class="navbar-phone" href="https://@shopifyStore/account" target="_blank">
-                        <div class="text-right">
-                            <svg class="bi" fill="currentColor" width="1em" height="1em">
-                                <use xlink:href="~/assets/images/icons/bootstrap-icons.svg#person" />
-                            </svg>
-                        </div>
-                    </a>
-                </li>
-            }
-        </ul>
-        @if (Model.Logo != null)
-        {
-            <div class="hidden-xs visible-lg visible-md">
-                <ul class="nav navbar-nav navbar-right header__logo-wrapper ">
-                    <li>
-                        <a href="/"><img class="lozad" data-src="@logoImg" alt="@Model.SiteName" /></a>
-                    </li>
-                </ul>
-            </div>
-        }
-    </div>
-</nav>
-
-<div class="react-app-root" data-page="ProductNavigationPage" data-content-id="@Umbraco.AssignedContentItem.Id"></div>
-
-<div id="search-bar" class="header__search" data-toggler="isActive" aria-expanded="true">
-    <div class="header__search-wrap">
-        <form action="~/search-result">
-            <div class="search-bar">
-                <div class="search-bar__inner">
-                    <span class="icon-search-alt"></span>
-                    <input class="search-bar__input" ref="input" placeholder="Search for products and blogs" type="text" name="search" required="">
-                    <a id="btn-close-search"><span class="icon-close"></span> </a>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-<div class="hidden-md hidden-lg">
-    <div id="mobile-main-menu" class="navbar-toggle-menu navbar-collapse">
-        <nav class="navbar ">
-            <ul class="nav navbar-nav">
-                @foreach (var menuItem in menuItemViewModel.MenuItems)
-                {
-                    <li><a href="@(menuItem.Link?.Url)" target="@(menuItem.Link?.Target)" class="text-uppercase">@menuItem.Title</a></li>
-                }
-            </ul>
-        </nav>
-    </div>
-</div>
+<a href="/" class="logo-header">
+    <img src="@(logoImg)">
+</a>
+<ul class="navbar-nav">
+    @foreach (var menuItem in menuItemViewModel.MenuItems)
+    {
+        <li class="nav-item inline">
+            <a class="nav-link-custom" target="@(menuItem.Link?.Target)" href="@(menuItem.Link?.Url)">@(menuItem.Title)</a>
+        </li>
+    }
+</ul>

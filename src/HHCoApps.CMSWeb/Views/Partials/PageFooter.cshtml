@@ -8,58 +8,53 @@
     var umbracoHelper = Current.Factory.GetInstance<UmbracoHelper>();
     var navigationManagement = (NavigationManagement)umbracoHelper.ContentQuery.ContentSingleFromCache(CachedContent.NavigationManagementContent);
     var socialNetworks = navigationManagement?.SocialNetworks ?? Enumerable.Empty<IconLink>();
-    var rightFooterMenu = navigationManagement?.RightFooter ?? Enumerable.Empty<LinkItem>();
+    var logoFooter = Url.GetCropImageUrl(navigationManagement.FooterLogo?.Url(), ImageCropProfile.FooterLogo);
+
+    var registeredSplit = !string.IsNullOrEmpty(navigationManagement?.CopyrightLabel) ? navigationManagement?.CopyrightLabel?.Split('®') : new string[0];
+    var registeredTitle = registeredSplit.Any() ? registeredSplit[0] + "<sup style='font-size: 11px;'>&reg;</sup>" + registeredSplit[1] : (navigationManagement?.CopyrightLabel ?? string.Empty);
 }
 
-<footer id="footer" class="container-fluid">
-    <div class="footer-social">
-        <div class="footer-social__following">
-            @if (socialNetworks.Any())
-            {
-                <p>FOLLOW US</p>
-                <ul>
-                    @foreach (var socialNetwork in socialNetworks)
-                    {
-                        var iconClassName = !string.IsNullOrEmpty(socialNetwork?.Icon) ? $"icon-{ Icon.FromDisplayName(socialNetwork.Icon).Value}" : string.Empty;
-                        var iconAlt = !string.IsNullOrEmpty(socialNetwork?.Icon) ? $"icon-{ Icon.FromDisplayName(socialNetwork.Icon).Value}" : string.Empty;
-                        var linkUrl = socialNetwork?.Link?.Url ?? string.Empty;
-
-                        <li><a target="@(socialNetwork?.Link?.Target)" href="@linkUrl"><i class="@iconClassName" alt="@iconAlt"></i></a></li>
-                    }
-                </ul>
-            }
-        </div>
-        <div class="footer-social__updating">
-            @if (navigationManagement.EnabledSubscription && navigationManagement.FollowUsForm != null)
-            {
-                <p>@navigationManagement.SubscribeLabel</p>
-                @Umbraco.RenderMacro("followUs", new { FormGuid = navigationManagement.FollowUsForm })
-                <input type="hidden" id="idSubscribeSuccessfulMessage" value="@navigationManagement.SubscribeSuccessfulMessage" />
-                <input type="hidden" id="idAlreadySubscribeMessage" value="@navigationManagement.AlreadySubscribeMessage" />
-            }
-        </div>
-    </div>
-    <div class="border-footer"></div>
-    @Html.Partial("Navigation/FooterNavigation", navigationManagement)
-    <div class="footer-bottom">
-
-        @if (navigationManagement.FooterLogo != null)
-        {
-            <div class="footer-logo">
-                <a href="/"><img class="lozad" data-src="@navigationManagement.FooterLogo.GetCropImageUrl(ImageCropProfile.FooterLogo)" alt="footerLogo" /></a>
-            </div>
-        }
-
-        @if (rightFooterMenu.Any())
-        {
-            <div class="footer-copyright">
-                @foreach (var childItem in rightFooterMenu)
-                {
-                    <a href="@(childItem.Link?.Url ?? string.Empty)">
-                        <p>@childItem.Title</p>
+<footer id="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="footer__item footer__logo">
+                    <a href="/" title="">
+                        <img src="@(logoFooter)">
                     </a>
-                }
+                </div>
             </div>
-        }
+            <div class="col-sm-3">
+                <div class="footer__item footer_address">
+                    <h4 class="footer-nav__heading">@Html.Raw(registeredTitle)</h4>
+                    <address>@Html.Raw(navigationManagement?.AddressInfo)</address>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                @Html.Partial("Navigation/FooterNavigation", navigationManagement)
+            </div>
+            <div class="col-sm-3">
+                <div class="footer__item footer-social">
+                    <div class="footer-social__following">
+                        @if (socialNetworks.Any())
+                        {
+                            <ul>
+                                @foreach (var socialNetwork in socialNetworks)
+                                {
+                                    var iconClassName = !string.IsNullOrEmpty(socialNetwork?.Icon) ? $"icon-{ Icon.FromDisplayName(socialNetwork.Icon).Value}" : string.Empty;
+                                    var iconAlt = !string.IsNullOrEmpty(socialNetwork?.Icon) ? $"icon-{ Icon.FromDisplayName(socialNetwork.Icon).Value}" : string.Empty;
+                                    var linkUrl = socialNetwork?.Link?.Url ?? string.Empty;
+
+                                    <li><a target="@(socialNetwork?.Link?.Target)" href="@linkUrl"><i class="@iconClassName" alt="@iconAlt"></i></a></li>
+                                }
+                            </ul>
+                        }
+                    </div>
+                </div>
+                <div class="license">
+                    @Html.Raw(registeredTitle)
+                </div>
+            </div>
+        </div>
     </div>
 </footer>

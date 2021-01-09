@@ -1,12 +1,12 @@
 ﻿using HHCoApps.CMSWeb.Helpers;
-using HHCoApps.CMSWeb.Helpers.Enum;
-using HHCoApps.CMSWeb.Models;
 using HHCoApps.CMSWeb.Models.Enums;
-using HHCoApps.CMSWeb.Models.RequestModels;
 using RazorEngine;
 using RazorEngine.Configuration;
 using RazorEngine.Templating;
 using System.Linq;
+using HHCoApps.CMSWeb.Helpers.Enum;
+using HHCoApps.CMSWeb.Models;
+using HHCoApps.CMSWeb.Models.RequestModels;
 using Umbraco.Web.PublishedModels;
 
 namespace HHCoApps.CMSWeb.Services

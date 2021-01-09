@@ -1,71 +1,75 @@
 @font-face {
-    font-family: 'AvantGardeitcbybt Book';
-    src: url('../fonts/AvantGardeitcbybtBook.eot');
-    src: url('../fonts/AvantGardeitcbybtBook.eot') format('embedded-opentype'),
-         url('../fonts/AvantGardeitcbybtBook.woff2') format('woff2'),
-         url('../fonts/AvantGardeitcbybtBook.woff') format('woff'),
-         url('../fonts/AvantGardeitcbybtBook.ttf') format('truetype'),
-         url('../fonts/AvantGardeitcbybtBook.svg#AvantGardeitcbybtBook') format('svg');
-}
-
-@font-face {
-    font-family: 'AvantGardeitcbybt Demi';
-    src: url('../fonts/AvantGardeitcbybtDemi.eot');
-    src: url('../fonts/AvantGardeitcbybtDemi.eot') format('embedded-opentype'),
-         url('../fonts/AvantGardeitcbybtDemi.woff2') format('woff2'),
-         url('../fonts/AvantGardeitcbybtDemi.woff') format('woff'),
-         url('../fonts/AvantGardeitcbybtDemi.ttf') format('truetype'),
-         url('../fonts/AvantGardeitcbybtDemi.svg#AvantGardeitcbybtDemi') format('svg');
-}
-
-@font-face {
-    font-family: 'AvantGardeitcbybt Medium';
-    src: url('../fonts/AvantGardeitcbybtMedium.eot');
-    src: url('../fonts/AvantGardeitcbybtMedium.eot') format('embedded-opentype'),
-         url('../fonts/AvantGardeitcbybtMedium.woff2') format('woff2'),
-         url('../fonts/AvantGardeitcbybtMedium.woff') format('woff'),
-         url('../fonts/AvantGardeitcbybtMedium.ttf') format('truetype'),
-         url('../fonts/AvantGardeitcbybtMedium.svg#AvantGardeitcbybtMedium') format('svg');
-}
-
-@font-face {
-    font-family: 'Times New Roman';
-    src: url('../fonts/timesnewroman.eot');
-    src: url('../fonts/timesnewroman.eot') format('embedded-opentype'),
-         url('../fonts/timesnewroman.woff2') format('woff2'),
-         url('../fonts/timesnewroman.woff') format('woff'),
-         url('../fonts/timesnewroman.ttf') format('truetype'),
-         url('../fonts/timesnewroman.svg#timesnewroman') format('svg');
-}
-
-@font-face {
-    font-family: 'AvantGarde Gothic Medium';
-    src: url('../fonts/ITCAvantGardeGothicMedium.eot');
-    src: url('../fonts/ITCAvantGardeGothicMedium.eot') format('embedded-opentype'),
-         url('../fonts/ITCAvantGardeGothicMedium.woff2') format('woff2'),
-         url('../fonts/ITCAvantGardeGothicMedium.woff') format('woff'),
-         url('../fonts/ITCAvantGardeGothicMedium.ttf') format('truetype'),
-         url('../fonts/ITCAvantGardeGothicMedium.svg#ITCAvantGardeGothicMedium') format('svg');
-}
-
-@font-face {
-    font-family: 'AvantGardeitcbybt Bold';
-    src: url('../fonts/AvantGardeitcbybtBold.eot');
-    src: url('../fonts/AvantGardeitcbybtBold.eot') format('embedded-opentype'),
-         url('../fonts/AvantGardeitcbybtBold.woff2') format('woff2'),
-         url('../fonts/AvantGardeitcbybtBold.woff') format('woff'),
-         url('../fonts/AvantGardeitcbybtBold.ttf') format('truetype'),
-         url('../fonts/AvantGardeitcbybtBold.svg#AvantGardeitcbybtBold') format('svg');
-}
-
-@font-face {
-    font-family: 'FeastWatson-Icons';
-    src:  url('../fonts/FeastWatson-Icons.eot?ahove6');
-    src:  url('../fonts/FeastWatson-Icons.eot?ahove6#iefix') format('embedded-opentype'),
-      url('../fonts/FeastWatson-Icons.ttf?ahove6') format('truetype'),
-      url('../fonts/FeastWatson-Icons.woff?ahove6') format('woff'),
-      url('../fonts/FeastWatson-Icons.svg?ahove6#FeastWatson-Icons') format('svg');
+    font-family: "Gotham";
+    src: url("/fonts/Gotham-Light.eot");
+    src: url("/fonts/Gotham-Light.woff2") format("woff2"), url("/fonts/Gotham-Light.woff") format("woff"), url("/fonts/Gotham-Light.ttf") format("truetype"), url("/fonts/Gotham-Light.svg") format("svg");
     font-weight: normal;
     font-style: normal;
-    font-display: block;
-  }
+}
+
+@font-face {
+    font-family: "Gotham";
+    src: url("/fonts/Gotham-Bold.eot");
+    src: url("/fonts/Gotham-Bold.woff2") format("woff2"), url("/fonts/Gotham-Bold.woff") format("woff"), url("/fonts/Gotham-Bold.ttf") format("truetype"), url("/fonts/Gotham-Bold.svg") format("svg");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "GothamCondensed";
+    src: url("/fonts/GothamCondensed-Bold.eot");
+    src: url("/fonts/GothamCondensed-Bold.woff2") format("woff2"), url("/fonts/GothamCondensed-Bold.woff") format("woff"), url("/fonts/GothamCondensed-Bold.ttf") format("truetype"), url("/fonts/GothamCondensed-Bold.svg") format("svg");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "GothamCondensed";
+    src: url("/fonts/GothamCondensed-Light.eot");
+    src: url("/fonts/GothamCondensed-Light.woff2") format("woff2"), url("/fonts/GothamCondensed-Light.woff") format("woff"), url("/fonts/GothamCondensed-Light.ttf") format("truetype"), url("/fonts/GothamCondensed-Light.svg") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "FontAwesome";
+    src: url("/fonts/fontawesome-webfont.ttf");
+    src: url("/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0") format("embedded-opentype"), url("/fonts/fontawesome-webfont.woff2?v=4.7.0") format("woff2"), url("/fonts/fontawesome-webfont.woff?v=4.7.0") format("woff"), url("/fonts/fontawesome-webfont.ttf?v=4.7.0") format("truetype"), url("/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Futura";
+    src: url("/fonts/Futura Book font.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Futura-Bold";
+    src: url("/fonts/unicode.futurab.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Futura-Bold-It";
+    src: url("/fonts/Futura Bold Italic font.ttf") format("truetype");
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Futura-Cond";
+    src: url("/fonts/futura medium condensed bt.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Futura-Med-It";
+    src: url("/fonts/Futura Medium Italic font.ttf") format("truetype");
+    font-weight: normal;
+    font-style: italic;
+}
+

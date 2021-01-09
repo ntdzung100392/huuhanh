@@ -9,6 +9,8 @@
 
     var umbracoHelper = Current.Factory.GetInstance<UmbracoHelper>();
     var integration = (Integration)umbracoHelper.ContentQuery.ContentSingleFromCache(CachedContent.IntegrationContent);
+    var enableSegment = integration?.EnableSegment ?? false;
+
     if (!isDevelopment)
     {
         reactScriptUrl = $"{reactScriptUrl}?v={appVersion}";
@@ -61,6 +63,9 @@
             token: '@integration.ShopifyToken',
             shippingRateMetro: @integration.ShippingRateMetro,
             shippingRateRegional: @integration.ShippingRateRegional,
+        },
+        integrations: {
+            segmentEnabled: ('@enableSegment' === 'True')
         }
     };
 </script>

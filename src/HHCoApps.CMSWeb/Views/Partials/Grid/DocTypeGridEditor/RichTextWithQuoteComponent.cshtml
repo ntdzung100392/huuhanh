@@ -1,0 +1,13 @@
+﻿@model RichTextWithQuoteComponent
+<div>
+    @if (Model.IsRenderRichTextFirst)
+    {
+        @Html.Raw(Model.RichTextContent)
+        <blockquote style="font-size: 32px"><span>@(Model.QuoteTitle)</span><br><span style="font-size: 24px">@(Model.QuoteText)</span></blockquote>
+    }
+    else
+    {
+        <blockquote><span style="font-size: 32px">@(Model.QuoteTitle)</span><br><span style="font-size: 24px">@(Model.QuoteText)</span></blockquote>
+        @Html.Raw(Model.RichTextContent)
+    }
+</div>

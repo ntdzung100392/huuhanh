@@ -5,12 +5,12 @@ using System.Web.Http;
 using Umbraco.Core;
 using Umbraco.Web.Composing;
 using Umbraco.Web;
-using HHCoApps.CMSWeb.Caching;
 using System.Security.Cryptography;
 using System.Text;
 using System.IO;
 using Umbraco.Core.Logging;
 using System.Web.Http.Controllers;
+using HHCoApps.CMSWeb.Caching;
 
 namespace HHCoApps.CMSWeb.Attributes
 {

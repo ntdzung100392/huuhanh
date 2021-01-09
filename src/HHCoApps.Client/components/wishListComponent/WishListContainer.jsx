@@ -41,6 +41,7 @@ class WishListContainer extends React.Component {
     this.countErrors = this.countErrors.bind(this);
     this.validateError = this.validateError.bind(this);
     this.onCheckout = this.onCheckout.bind(this);
+    this.trackingSendWishlist = this.trackingSendWishlist.bind(this);
   }
 
   componentDidMount() {
@@ -155,8 +156,7 @@ class WishListContainer extends React.Component {
               ...this.state,
               checkout: checkoutData
             })
-          }, (error) => {
-            console.log(error);
+          }, () => {
             this.setState({
               ...this.state,
               miniCartItems: [],
@@ -178,6 +178,10 @@ class WishListContainer extends React.Component {
   }
 
   handleNewValidWishItem(item) {
+    if (this.isSegmentEnabled()) {
+      this.sendCartDataToSegment(item);
+    }
+
     let miniCartItems = JSON.parse(localStorage.getItem(STRING_RESOURCES.feastWatsonWishList));
     if (!miniCartItems) {
       miniCartItems = [];
@@ -218,6 +222,22 @@ class WishListContainer extends React.Component {
 
     if (this.context.cart) {
       this.context.cart.addToCart(item.variant.id);
+    }
+  }
+
+  sendCartDataToSegment(item) {
+    const cart = this.getCartSegmentData(item);
+    analytics.track(STRING_RESOURCES.addToCartEventName, cart);
+  }
+
+  getCartSegmentData(cartData) {
+    return {
+      'productName': cartData.title,
+      'productColor': cartData.colorName,
+      'productSize': cartData.size,
+      'productQuantity': 1,
+      'productPrice': cartData.variant ? cartData.variant.price : 0,
+      'category': STRING_RESOURCES.addToCartCategoryName
     }
   }
 
@@ -282,9 +302,12 @@ class WishListContainer extends React.Component {
     }
   }
 
-  refreshMiniWishList() {
-    const miniCartItems = JSON.parse(localStorage.getItem(STRING_RESOURCES.feastWatsonWishList)) || [];
+  refreshMiniWishList(event) {
+    if (this.isSegmentEnabled() && event.detail && event.detail.item) {
+      this.sendCartDataToSegment(event.detail.item);
+    }
 
+    const miniCartItems = JSON.parse(localStorage.getItem(STRING_RESOURCES.feastWatsonWishList)) || [];
     this.setState({
       ...this.state,
       miniCartItems: miniCartItems
@@ -329,6 +352,7 @@ class WishListContainer extends React.Component {
             reCaptchaToken: token
           }
 
+          $this.trackingSendWishlist();
           WishListApi.sendWishListEmail(wishList)
             .then(response => {
               $this.setState({ isLoading: false });
@@ -365,16 +389,72 @@ class WishListContainer extends React.Component {
   onCheckout() {
     if (this.context.cart) {
       this.setState({...this.state, checkoutInProgress: true});
-      const windowReference = window.open('', '_blank');
+      let windowReference = null;
+
+      if (this.isSafari()) {
+        windowReference = window.open('', '_blank');
+      }
 
       this.context.cart.completeCheckout().then(checkout => {
-        windowReference.location = checkout.webUrl;
-      }, (error) => {
-        console.log(error);
-      }).finally(() => {
+        if (windowReference) {
+          windowReference.location = checkout.webUrl;
+        } else {
+          windowReference = window.open('', '_blank');
+          windowReference.location = checkout.webUrl;
+        }
+
         this.setState({...this.state, checkoutInProgress: false});
+      }, () => {
+        this.setState({
+          ...this.state,
+          checkoutInProgress: false,
+          miniCartItems: [],
+          checkout: {}
+        }, () => {
+          this.setLocalStorage();
+        });
       });
     }
+  }
+
+  trackingSendWishlist() {
+    if (AppConfig.integrations.segmentEnabled) {
+      const miniCartItems = this.state.miniCartItems;
+      const totalValue = miniCartItems.length
+          ? miniCartItems.reduce((total, item) => total + (item.quantity * (item.variant ? item.variant.price : 0)), 0)
+          : 0;
+      const productNames = miniCartItems.map((item) => {
+        return {
+          productName: item.title,
+          size: item.size,
+          colour: item.colorName,
+          quantity: item.quantity,
+        };
+      });
+      analytics.track("Send wishlist", {
+        productList: productNames,
+        totalValue: totalValue,
+        category: 'Submission'
+      });
+    }
+  }
+
+  isSafari() {
+    let safari = false;
+    const ua = navigator.userAgent.toLowerCase();
+    if (ua.indexOf('safari') != -1) {
+      if (ua.indexOf('chrome') > -1) {
+        safari = false;
+      } else {
+        safari = true;
+      }
+    }
+
+    return safari;
+  }
+
+  isSegmentEnabled() {
+    return AppConfig.integrations.segmentEnabled;
   }
 
   render() {
